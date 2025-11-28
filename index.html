@@ -10,10 +10,10 @@
     <style>
         /* Variáveis de Cores Atualizadas */
         :root {
-            --cor-principal-texto: #0056b3; /* Azul escuro (institucional) */
+            --cor-principal-texto: #0056b3; 
             --cor-fundo-corpo: #f0f2f5; 
             --cor-texto-padrao: #333;
-            --cor-header: #e6ffd1; /* NOVO: Verde Pastel Mais Claro */
+            --cor-header: #e6ffd1; 
         }
 
         /* Estilização Base */
@@ -29,11 +29,11 @@
             min-height: 100vh;
         }
         
-        /* Cabeçalho - Ajuste da Cor de Fundo e Texto */
+        /* Cabeçalho */
         header {
             width: 100%;
-            background-color: var(--cor-header); /* Fundo Verde Pastel */
-            color: var(--cor-principal-texto); /* NOVO: Texto em Azul Escuro */
+            background-color: var(--cor-header); 
+            color: var(--cor-principal-texto); 
             padding: 30px 0; 
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
@@ -51,13 +51,13 @@
             opacity: 0.9;
         }
         
-        /* Navegação (Menu) mantida */
+        /* Navegação (Menu) */
         nav {
             background-color: white;
             padding: 20px;
             border-radius: 8px; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
-            max-width: 500px;
+            max-width: 600px; 
             width: 90%;
             margin: 0 auto;
         }
@@ -70,11 +70,10 @@
             margin-bottom: 15px; 
         }
         
-        /* Estilização dos Botões/Links (Container) */
+        /* Estilização dos Botões/Links (Container Principal do Item de Menu) */
         nav ul li a {
             display: flex; 
-            flex-direction: column; 
-            align-items: flex-start; 
+            align-items: center; 
             padding: 15px 20px;
             color: var(--cor-principal-texto); 
             text-decoration: none;
@@ -82,11 +81,28 @@
             transition: opacity 0.3s ease, transform 0.1s;
             border-left: 5px solid var(--cor-principal-texto);
         }
+
+        /* Estilização da Imagem no Menu */
+        .menu-image {
+            width: 60px; 
+            height: 60px;
+            border-radius: 50%; 
+            object-fit: cover; 
+            margin-right: 20px; 
+            flex-shrink: 0; 
+        }
         
+        /* Container para Ícone, Título e Descrição */
+        .menu-content {
+            display: flex;
+            flex-direction: column; 
+            flex-grow: 1; 
+        }
+
         /* Estilização do Título do Menu (Com Ícone) */
         .menu-title {
             display: flex; 
-            align-items: center; /* Alinha o ícone e o texto verticalmente */
+            align-items: center; 
             font-size: 1.2em;
             font-weight: 700;
             text-transform: uppercase;
@@ -99,7 +115,7 @@
             font-size: 0.9em;
             font-weight: 400;
             color: var(--cor-texto-padrao); 
-            margin-left: 35px; /* Alinha a descrição (ajustado para acomodar o ícone + espaço) */
+            margin-left: 35px; 
         }
         
         /* Estilização do Ícone */
@@ -110,41 +126,17 @@
         }
 
         /* Cores Individuais para cada Menu (Mantidas) */
-        /* COR 1: Azul Claro */
-        .menu-1 a {
-            background-color: #e0f7fa; 
-        }
-        .menu-1 a:hover {
-            opacity: 0.85; 
-            background-color: #b2ebf2; 
-        }
+        .menu-1 a { background-color: #e0f7fa; }
+        .menu-1 a:hover { opacity: 0.85; background-color: #b2ebf2; }
         
-        /* COR 2: Amarelo Claro */
-        .menu-2 a {
-            background-color: #fffde7;
-        }
-        .menu-2 a:hover {
-            opacity: 0.85; 
-            background-color: #fff59d;
-        }
+        .menu-2 a { background-color: #fffde7; }
+        .menu-2 a:hover { opacity: 0.85; background-color: #fff59d; }
 
-        /* COR 3: Lilás Claro */
-        .menu-3 a {
-            background-color: #f3e5f5;
-        }
-        .menu-3 a:hover {
-            opacity: 0.85; 
-            background-color: #e1bee7;
-        }
+        .menu-3 a { background-color: #f3e5f5; }
+        .menu-3 a:hover { opacity: 0.85; background-color: #e1bee7; }
 
-        /* COR 4: Rosa/Salmão Claro */
-        .menu-4 a {
-            background-color: #fbe9e7;
-        }
-        .menu-4 a:hover {
-            opacity: 0.85; 
-            background-color: #ffccbc;
-        }
+        .menu-4 a { background-color: #fbe9e7; }
+        .menu-4 a:hover { opacity: 0.85; background-color: #ffccbc; }
         
         /* Efeito Hover (Geral) */
         nav ul li a:hover {
@@ -164,38 +156,50 @@
         <ul>
             <li class="menu-1">
                 <a href="escolas_sefor.html">
-                    <span class="menu-title">
-                        <i class="fas fa-university menu-icon"></i> 
-                        ESCOLAS – SEFOR
-                    </span>
-                    <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756d17730?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8dW5pdmVyc2l0eSxsaWJyYXJ5fHx8fHx8MTcxMzY0ODk0Mw&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone Escolas SEFOR" class="menu-image">
+                    <div class="menu-content">
+                        <span class="menu-title">
+                            <i class="fas fa-university menu-icon"></i> 
+                            ESCOLAS – SEFOR
+                        </span>
+                        <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
+                    </div>
                 </a>
             </li>
             <li class="menu-2">
                 <a href="escolas_emails.html">
-                    <span class="menu-title">
-                        <i class="fas fa-envelope-open-text menu-icon"></i> 
-                        ESCOLAS – E-MAILS
-                    </span>
-                    <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4cd085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZW1haWwsY29tbXVuaWNhdGlvbnx8fHx8fDE3MTM2NDg5NjU&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone E-mails" class="menu-image">
+                    <div class="menu-content">
+                        <span class="menu-title">
+                            <i class="fas fa-envelope-open-text menu-icon"></i> 
+                            ESCOLAS – E-MAILS
+                        </span>
+                        <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
+                    </div>
                 </a>
             </li>
             <li class="menu-3">
                 <a href="mensagem_whatsapp.html">
-                    <span class="menu-title">
-                        <i class="fab fa-whatsapp menu-icon"></i> 
-                        MENSAGEM WHATSAPP
-                    </span>
-                    <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
+                    <img src="https://images.unsplash.com/photo-1610476537704-5f50f7572d4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb29tfHx3aGF0c2FwcCxjaGF0fHx8fHx8MTcxMzY0OTAwMg&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone WhatsApp" class="menu-image">
+                    <div class="menu-content">
+                        <span class="menu-title">
+                            <i class="fab fa-whatsapp menu-icon"></i> 
+                            MENSAGEM WHATSAPP
+                        </span>
+                        <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
+                    </div>
                 </a>
             </li>
             <li class="menu-4">
                 <a href="mensagem_email.html">
-                    <span class="menu-title">
-                        <i class="fas fa-keyboard menu-icon"></i> 
-                        MENSAGEM E-MAIL
-                    </span>
-                    <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
+                    <img src="https://images.unsplash.com/photo-1542315729-efc981242099?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8dGV4dCxkb2N1bWVudHxlbnwwfHx8fDE3MTM2NDkwMjc&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone Mensagem E-mail" class="menu-image">
+                    <div class="menu-content">
+                        <span class="menu-title">
+                            <i class="fas fa-keyboard menu-icon"></i> 
+                            MENSAGEM E-MAIL
+                        </span>
+                        <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
+                    </div>
                 </a>
             </li>
         </ul>
