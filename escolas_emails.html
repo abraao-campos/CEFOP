@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESCOLAS – E-MAILS - CEFOP</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDySjYKTmRUDbOINhhnkX8x5W9qTjW8cWl2s8sH5O5F4M6U5Zt1hA4c/5+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Variáveis de Cores (Mantidas) */
+        :root {
+            --cor-principal-texto: #0056b3; 
+            --cor-fundo-corpo: #f0f2f5; 
+            --cor-header: #e6ffd1; 
+            --cor-fundo-menu-2: #fffde7; /* Amarelo Claro (Cor do botão E-MAILS em index.html) */
+        }
+
+        /* Estilização Base */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo-corpo);
+            color: var(--cor-texto-padrao);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* Cabeçalho */
+        header {
+            width: 100%;
+            background-color: var(--cor-header); 
+            color: var(--cor-principal-texto); 
+            padding: 30px 0; 
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            margin-bottom: 40px;
+            position: relative; /* Para posicionar o botão Voltar */
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em; /* Reduzido para página interna */
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Botão Voltar */
+        .btn-voltar {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            text-decoration: none;
+            color: var(--cor-principal-texto);
+            font-size: 1.2em;
+            padding: 10px 15px;
+            background-color: var(--cor-fundo-menu-2); /* Cor do menu E-MAILS */
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .btn-voltar:hover {
+            background-color: #fce899; 
+        }
+        .btn-voltar i {
+            margin-right: 8px;
+        }
+        
+        /* Container Principal do Conteúdo */
+        main {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+            max-width: 800px; 
+            width: 90%;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Barra de Busca */
+        .busca-container {
+            margin-bottom: 25px;
+        }
+        .busca-container input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--cor-principal-texto);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .busca-container input[type="text"]:focus {
+            border-color: #008cff;
+        }
+
+        /* Tabela de E-mails */
+        .tabela-container {
+            max-height: 500px; /* Limita a altura para ser scrollável */
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table thead {
+            position: sticky;
+            top: 0;
+            background-color: var(--cor-principal-texto);
+            color: white;
+            z-index: 5;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar ao Menu
+        </a>
+        <h1>ESCOLAS – E-MAILS</h1>
+        <p>Listagem e Organização dos E-mails Institucionais</p>
+    </header>
+
+    <main>
+        <div class="busca-container">
+            <input type="text" id="searchInput" onkeyup="filtrarTabela()" placeholder="Buscar escola por nome ou e-mail...">
+        </div>
+
+        <div class="tabela-container">
+            <table id="escolasTable">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Escola</th>
+                        <th style="width: 50%;">E-mail Institucional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // 1. DADOS DAS ESCOLAS (VOCÊ PODE ADICIONAR MAIS AQUI)
+        const ESCOLAS_DATA = [
+            { nome: "E.E.F.M. Maria do Carmo", email: "eeefm.mariadocarmo@escola.ce.gov.br" },
+            { nome: "E.E.F. Padre Cícero", email: "eef.padrecicero@escola.ce.gov.br" },
+            { nome: "E.E.M. Senador Pompeu", email: "eem.senadorpompeu@escola.ce.gov.br" },
+            { nome: "E.E.F. Coronel Virgílio Távora", email: "eef.coronelvirgilio@escola.ce.gov.br" },
+            { nome: "E.E.F. Governador Tasso Jereissati", email: "eef.governador@escola.ce.gov.br" },
+            { nome: "E.E.M. Joaquim Nogueira", email: "eem.joaquimnogueira@escola.ce.gov.br" },
+            { nome: "E.E.F.M. Dep. José Maria Pimpão", email: "eeefm.josemaria@escola.ce.gov.br" },
+            // ... adicione mais escolas aqui
+        ];
+
+        // 2. FUNÇÃO PARA POPULAR A TABELA AO CARREGAR A PÁGINA
+        function popularTabela() {
+            const tbody = document.getElementById('escolasTable').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = ''; // Limpa antes de preencher
+            
+            ESCOLAS_DATA.forEach(escola => {
+                let row = tbody.insertRow();
+                
+                // Coluna 1: Nome da Escola
+                let cellNome = row.insertCell();
+                cellNome.innerHTML = `<strong>${escola.nome}</strong>`;
+                
+                // Coluna 2: E-mail (com um link "mailto")
+                let cellEmail = row.insertCell();
+                cellEmail.innerHTML = `<a href="mailto:${escola.email}">${escola.email}</a>`;
+            });
+        }
+
+        // 3. FUNÇÃO PARA FILTRAR A TABELA
+        function filtrarTabela() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById('escolasTable');
+            const tr = table.getElementsByTagName('tr');
+
+            // Itera sobre todas as linhas da tabela, começando da linha 1 (ignora o cabeçalho)
+            for (let i = 1; i < tr.length; i++) {
+                let displayRow = false;
+                
+                // Itera sobre as células de cada linha (Nome da Escola e E-mail)
+                let td = tr[i].getElementsByTagName('td');
+                for (let j = 0; j < td.length; j++) {
+                    const cellValue = td[j].textContent || td[j].innerText;
+                    
+                    if (cellValue.toUpperCase().indexOf(filter) > -1) {
+                        displayRow = true;
+                        break; // Se encontrou na célula, não precisa verificar as outras
+                    }
+                }
+                
+                // Mostra ou esconde a linha
+                tr[i].style.display = displayRow ? "" : "none";
+            }
+        }
+
+        // Chama a função para preencher a tabela quando a página é carregada
+        window.onload = popularTabela;
+    </script>
+
+</body>
+</html>
