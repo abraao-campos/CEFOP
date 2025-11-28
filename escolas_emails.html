@@ -41,13 +41,13 @@
         <!-- Seção de Pesquisa -->
         <section class="mb-8">
             <label for="searchInput" class="block text-lg font-semibold text-gray-700 mb-2">
-                Pesquisar Escola
+                Pesquisar Escola(s)
             </label>
             <div class="relative">
                 <input 
                     type="text" 
                     id="searchInput" 
-                    placeholder="Digite parte do nome da escola (ex: 'adelino', 'patativa')" 
+                    placeholder="Digite nomes separados por vírgula (ex: 'adelino, patativa, gent')" 
                     class="w-full p-4 pl-12 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150 outline-none"
                     oninput="filterSchools()"
                 >
@@ -90,23 +90,31 @@
     <!-- Script de Funcionalidade (type="module" para usar o import) -->
     <script type="module">
         // Importa a lista de escolas do arquivo externo escolas_data.js
+        // Este caminho ('./escolas_data.js') pressupõe que o arquivo de dados está no mesmo diretório.
         import { SCHOOLS } from './escolas_data.js';
 
         let filteredSchools = [];
 
         /**
          * Filtra a lista de escolas em tempo real com base no texto digitado.
+         * Suporta múltiplos termos separados por vírgula.
          * É anexada ao window para ser acessível via oninput no HTML.
          */
         window.filterSchools = function() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const input = document.getElementById('searchInput').value.toLowerCase().trim();
             const resultsList = document.getElementById('results-list');
             const matchCount = document.getElementById('matchCount');
             const copyButton = document.getElementById('copyEmailsButton');
             const emailCount = document.getElementById('emailCount');
 
-            // Define um limite mínimo de caracteres para iniciar a busca
-            if (searchTerm.length < 2) {
+            // Divide a string de busca em termos individuais e limpa.
+            const searchTerms = input
+                .split(',') 
+                .map(term => term.trim())
+                .filter(term => term.length > 1);
+
+            // Condição para mostrar o estado inicial (sem resultados)
+            if (searchTerms.length === 0 && input.length < 2) {
                 filteredSchools = [];
                 resultsList.innerHTML = '<li class="p-3 text-center text-gray-500 italic">Digite no campo de busca para começar a filtrar.</li>';
                 matchCount.textContent = '0 escolas encontradas.';
@@ -115,16 +123,29 @@
                 return;
             }
 
-            // Filtra as escolas: verifica se o termo de busca está contido no nome (case-insensitive)
-            filteredSchools = SCHOOLS.filter(school => {
-                // A estrutura de dados SCHOOLS precisa ter a propriedade 'nome'
-                return school.nome.toLowerCase().includes(searchTerm);
+            // 1. Coleta escolas que correspondem a QUALQUER um dos termos
+            const uniqueFilteredSchools = new Set();
+            
+            SCHOOLS.forEach(school => {
+                const schoolName = school.nome.toLowerCase();
+                
+                // Verifica se o nome da escola inclui pelo menos um dos termos de busca
+                const isMatch = searchTerms.some(term => schoolName.includes(term));
+                
+                if (isMatch) {
+                    uniqueFilteredSchools.add(school);
+                }
             });
 
-            // Atualiza a interface com os resultados
+            filteredSchools = Array.from(uniqueFilteredSchools);
+            
+            // 2. Ordena os resultados pelo nome da escola
+            filteredSchools.sort((a, b) => a.nome.localeCompare(b.nome));
+
+            // 3. Atualiza a interface
             renderResults(filteredSchools);
 
-            // Atualiza o contador e o botão de copiar
+            // 4. Atualiza o contador e o botão de copiar
             matchCount.textContent = `${filteredSchools.length} escolas encontradas.`;
             emailCount.textContent = filteredSchools.length;
             copyButton.disabled = filteredSchools.length === 0;
@@ -140,7 +161,7 @@
             if (schools.length === 0) {
                 resultsList.innerHTML = `
                     <li class="p-3 text-center text-red-500 font-semibold">
-                        <i class="fas fa-exclamation-triangle mr-1"></i> Nenhuma escola corresponde ao termo.
+                        <i class="fas fa-exclamation-triangle mr-1"></i> Nenhuma escola corresponde aos termos de busca.
                     </li>
                 `;
                 return;
@@ -201,6 +222,7 @@
          * @param {string} text - O texto a ser copiado.
          */
         function copyToClipboard(text) {
+             // Método execCommand é mais compatível em ambientes restritos (como iframes/Canvas)
              const tempInput = document.createElement('textarea');
              tempInput.value = text;
              document.body.appendChild(tempInput);
