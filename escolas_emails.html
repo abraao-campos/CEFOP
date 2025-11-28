@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEFOP - Extrator de E-mails de Escolas</title>
-    <!-- Carregando Tailwind CSS para estilização moderna e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
@@ -25,20 +24,18 @@
 </head>
 <body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
 
-    <!-- Container Principal -->
     <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-8 sm:p-12 mt-4">
 
-        <!-- Cabeçalho -->
         <header class="text-center mb-10 p-4 rounded-lg bg-blue-100 shadow-md border-b-4 border-blue-500">
             <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-800 leading-none">
-                <i class="fas fa-envelope-open-text mr-2"></i> Extrator de E-mails
+                <i class="fas fa-envelope-open-text mr-2"></i> 
+                Extrator de E-mails
             </h1>
             <p class="text-base sm:text-lg font-semibold text-blue-700 mt-1">
                 Busque as escolas e extraia os e-mails desejados.
             </p>
         </header>
 
-        <!-- Seção de Pesquisa -->
         <section class="mb-8">
             <label for="searchInput" class="block text-lg font-semibold text-gray-700 mb-2">
                 Pesquisar Escola(s)
@@ -48,7 +45,8 @@
                     type="text" 
                     id="searchInput" 
                     placeholder="Digite nomes separados por vírgula (ex: 'adelino, patativa, gent')" 
-                    class="w-full p-4 pl-12 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150 outline-none"
+                    class="w-full p-4 pl-12 
+                    border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150 outline-none"
                     oninput="filterSchools()"
                 >
                 <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -56,20 +54,20 @@
             <p id="matchCount" class="text-sm text-gray-500 mt-2">0 escolas encontradas.</p>
         </section>
 
-        <!-- Botão de Copiar E-mails -->
         <div class="mb-8 flex justify-end">
             <button 
                 id="copyEmailsButton"
                 onclick="copyAllEmails()"
-                class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition 
+                duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                 disabled
             >
                 <i class="fas fa-copy mr-2"></i> Copiar Todos E-mails (<span id="emailCount">0</span>)
             </button>
         </div>
 
-        <!-- Lista de Resultados -->
-        <section class="bg-gray-50 p-6 rounded-xl shadow-inner border border-gray-200">
+        <section class="bg-gray-50 p-6 rounded-xl 
+        shadow-inner border border-gray-200">
             <h2 class="text-xl font-bold text-gray-700 mb-4 border-b pb-2">Resultados da Pesquisa</h2>
             
             <ul id="results-list" class="divide-y divide-gray-200">
@@ -79,7 +77,6 @@
             </ul>
         </section>
 
-        <!-- Notificação Customizada (Toast) -->
         <div id="custom-toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white py-3 px-6 rounded-lg shadow-xl hidden toast-enter z-[100]">
             <i class="fas fa-check-circle mr-2"></i>
             <span id="toast-message"></span>
@@ -87,13 +84,194 @@
 
     </div>
 
-    <!-- Script de Funcionalidade (type="module" para usar o import) -->
-    <script type="module">
-        // IMPORTANTE: ESTE IMPORT SÓ FUNCIONA SE SEU ARQUIVO 'escolas_data.js' TIVER 
-        // A LINHA: 'export const SCHOOLS = [...]'
-        import { SCHOOLS } from './escolas_data.js';
+    <script>
+        // =========================================================================================
+        // === INÍCIO DO BLOCO DE DADOS: 125 REGISTROS INSERIDOS AQUI ==============================
+        // =========================================================================================
+
+        const initialEscolasData = [
+            {"nome": "CCI NORTH SHOPPING JOQUEI", "email": "ccijoquei@escola.ce.gov.br"},
+            {"nome": "CCI RIOMAR KENNEDY", "email": "ccikennedy@escola.ce.gov.br"},
+            {"nome": "CEJA – ADELINO ALCÂNTARA FILHO", "email": "cejaadelinoa@escola.ce.gov.br"},
+            {"nome": "CEJA – JOSÉ WALTER", "email": "cejajwalter@escola.ce.gov.br"},
+            {"nome": "CEJA – MILTON CUNHA", "email": "cejamiltoncunha@escola.ce.gov.br"},
+            {"nome": "CEJA – MONS. HÉLIO CAMPOS", "email": "cejamcampos@escola.ce.gov.br"},
+            {"nome": "CEJA – MOREIRA CAMPOS", "email": "mhcampos@escola.ce.gov.br"},
+            {"nome": "CEJA – PAULO FREIRE", "email": "cejapfreire@escola.ce.gov.br"},
+            {"nome": "CEJA – PROF. EUDES VERAS", "email": "everas@escola.ce.gov.br"},
+            {"nome": "CEJA – PROF. GILMAR MAIA DE SOUZA", "email": "cejagmsousa@escola.ce.gov.br"},
+            {"nome": "CEJA – PROF. JOSÉ NEUDSON BRAGA", "email": "cejanbraga@escola.ce.gov.br"},
+            {"nome": "CAIC RAIMUNDO GOMES DE CARVALHO", "email": "rcarvalho@escola.ce.gov.br"},
+            {"nome": "COLÉGIO DA POLÍCIA MILITAR", "email": "pmilitar@escola.ce.gov.br"},
+            {"nome": "COLÉGIO MILITAR DO CORPO DE BOMBEIROS", "email": "cbombeiros@escola.ce.gov.br"},
+            {"nome": "EEEP DONA CREUSA DO CARMO ROCHA", "email": "ccarmo@escola.ce.gov.br"},
+            {"nome": "EEEP JOAQUIM NOGUEIRA", "email": "jnogueira@escola.ce.gov.br"},
+            {"nome": "EEEP JÚLIA GIFFONI", "email": "jgiffoni@escola.ce.gov.br"},
+            {"nome": "EEEP MARWIN", "email": "marvin@escola.ce.gov.br"},
+            {"nome": "EEEP PAULO PETROLA", "email": "paulopetrola@escola.ce.gov.br"},
+            {"nome": "EEEP PRES. ROOSEVELT", "email": "proosevelt@escola.ce.gov.br"},
+            {"nome": "EEFM DEP. FRANCISCO DE ALMEIDA MONTE", "email": "amonte@escola.ce.gov.br"},
+            {"nome": "EEFM DOM HÉLDER CÂMARA", "email": "dhelder@escola.ce.gov.br"},
+            {"nome": "EEFM DOM HÉLIO CAMPOS", "email": "dhcampos@escola.ce.gov.br"},
+            {"nome": "EEFM FÉLIX DE AZEVEDO", "email": "fazevedo@escola.ce.gov.br"},
+            {"nome": "EEFM FERNANDO CAVALCANTE MOTA", "email": "cmota@escola.ce.gov.br"},
+            {"nome": "EEFM GOV. FLÁVIO MARCÍLIO", "email": "fmarcilio@escola.ce.gov.br"},
+            {"nome": "EEFM HERÁCLITO DE CASTRO E SILVA", "email": "csilva@escola.ce.gov.br"},
+            {"nome": "EEFM JESUS MARIA JOSE", "email": "jmjose@escola.ce.gov.br"},
+            {"nome": "EEFM JOÃO PAULO II", "email": "jpsegundo@escola.ce.gov.br"},
+            {"nome": "EEFM JOSÉ WALDEMAR DE ALCÂNTARA E SILVA", "email": "walcantara@escola.ce.gov.br"},
+            {"nome": "EEFM MÁRIO HUGO CIDRACK DO VALE", "email": "mcidrack@escola.ce.gov.br"},
+            {"nome": "EEFM PATRONATO DA SAGRADA FAMÍLIA", "email": "patronato@escola.ce.gov.br"},
+            {"nome": "EEFM SÃO JOSÉ DO PICI DAS PEDREIRAS", "email": "jpici@escola.ce.gov.br"},
+            {"nome": "EEM DR. CÉSAR CALS", "email": "ccals@escola.ce.gov.br"},
+            {"nome": "EEM MARIANO MARTINS", "email": "mmartins@escola.ce.gov.br"},
+            {"nome": "EEMTI ANTONIETA SIQUEIRA", "email": "asiqueira@escola.ce.gov.br"},
+            {"nome": "EEMTI ANTÔNIO BEZERRA", "email": "abezerra@escola.ce.gov.br"},
+            {"nome": "EEMTI ANTÔNIO SALES", "email": "asales@escola.ce.gov.br"},
+            {"nome": "EEMTI AYRTON SENNA DA SILVA", "email": "asenna@escola.ce.gov.br"},
+            {"nome": "EEMTI CLÁUDIO MARTINS", "email": "cmartins@escola.ce.gov.br"},
+            {"nome": "EEMTI DONA HILZA DIOGO DE OLIVEIRA", "email": "hdiogo@escola.ce.gov.br"},
+            {"nome": "EEMTI DONA MARIA MENEZES DE SERPA", "email": "mmserpa@escola.ce.gov.br"},
+            {"nome": "EEMTI ESTADO DE ALAGOAS", "email": "ealagoas@escola.ce.gov.br"},
+            {"nome": "EEMTI GAL. EUDORO CORRÊA", "email": "eudoroc@escola.ce.gov.br"},
+            {"nome": "EEMTI HERMINIO BARROSO", "email": "hbarroso@escola.ce.gov.br"},
+            {"nome": "EEMTI JOSÉ BEZERRA DE MENEZES", "email": "jbezerra@escola.ce.gov.br"},
+            {"nome": "EEMTI JOSÉ VALDO RIBEIRO RAMOS", "email": "wramos@escola.ce.gov.br"},
+            {"nome": "EEMTI LICEU VILA VELHA", "email": "liceuvvelha@escola.ce.gov.br"},
+            {"nome": "EEMTI LIONS JANGADA", "email": "ljangada@escola.ce.gov.br"},
+            {"nome": "EEMTI MOEMA TÁVORA", "email": "mtavora@escola.ce.gov.br"},
+            {"nome": "EEMTI MONS. DOURADO", "email": "mdourado@escola.ce.gov.br"},
+            {"nome": "EEMTI PROF. PAULO FREIRE", "email": "pfreire@escola.ce.gov.br"},
+            {"nome": "EEMTI PROFª. BALBINA JUCÁ ALBUQUERQUE", "email": "bjuca@escola.ce.gov.br"},
+            {"nome": "EEMTI PROFª. MARIA JOSÉ SANTOS FERREIRA GOMES", "email": "ceremjose@escola.ce.gov.br"},
+            {"nome": "EEMTI SÃO JOSÉ DOS ARPOADORES", "email": "jarpoadores@escola.ce.gov.br"},
+            {"nome": "EEMTI SALES CAMPOS", "email": "scampos@escola.ce.gov.br"},
+            {"nome": "EEMTI SANTO AFONSO", "email": "safonso@escola.ce.gov.br"},
+            {"nome": "EEMTI WALDEMAR FALCÃO", "email": "vfalcao@escola.ce.gov.br"},
+            {"nome": "CCI RIOMAR FORTALEZA", "email": "ccipapicu@escola.ce.gov.br"},
+            {"nome": "CCI VIA SUL SHOPPING", "email": "ccisul@escola.ce.gov.br"},
+            {"nome": "COLÉGIO ESTADUAL JUSTINIANO DE SERPA", "email": "jserpa@escola.ce.gov.br"},
+            {"nome": "EEEP COMENDADOR MIGUEL GURGEL", "email": "miguelgurgel@escola.ce.gov.br"},
+            {"nome": "EEEP JAIME ALENCAR DE OLIVEIRA", "email": "eeepjaime.alencar@escola.ce.gov.br"},
+            {"nome": "EEEP JOAQUIM ANTÔNIO ALBANO", "email": "jalbano@escola.ce.gov.br"},
+            {"nome": "EEEP JOSÉ DE BARCELOS", "email": "jbarcelos@escola.ce.gov.br"},
+            {"nome": "EEEP MARIA ÂNGELA DA SILVEIRA BORGES", "email": "angelaborges@escola.ce.gov.br"},
+            {"nome": "EEEP MARIA JOSÉ MEDEIROS", "email": "mmedeiros@escola.ce.gov.br"},
+            {"nome": "EEEP MÁRIO DE ALENCAR", "email": "marioalencar@escola.ce.gov.br"},
+            {"nome": "EEFM ALMIRANTE TAMANDARÉ", "email": "atamandare@escola.ce.gov.br"},
+            {"nome": "EEFM ANTÔNIO DIAS MACEDO", "email": "admacedo@escola.ce.gov.br"},
+            {"nome": "EEFM ARQUITETO ROGÉRIO FRÓES", "email": "rfroes@escola.ce.gov.br"},
+            {"nome": "EEFM BÁRBARA DE ALENCAR", "email": "balencar@escola.ce.gov.br"},
+            {"nome": "EEFM CLÓVIS BEVILÁQUIA", "email": "cbevilaqua@escola.ce.gov.br"},
+            {"nome": "EEFM CONSTANÇA TÁVORA", "email": "ctavora@escola.ce.gov.br"},
+            {"nome": "EEFM DEP. MANOEL RODRIGUES", "email": "mrodrigues@escola.ce.gov.br"},
+            {"nome": "EEFM DRA. ALDACI BARBOSA", "email": "abarbosa@escola.ce.gov.br"},
+            {"nome": "EEFM GEN. MURILO BORGES MOREIRA", "email": "mborges@escola.ce.gov.br"},
+            {"nome": "EEFM JOSÉ DE ALENCAR", "email": "jalencar@escola.ce.gov.br"},
+            {"nome": "EEFM LUÍZA TÁVORA – PIO XII", "email": "ltavora@escola.ce.gov.br"},
+            {"nome": "EEFM LUIZA TÁVORA – PROMORAR", "email": "ltpromorar@escola.ce.gov.br"},
+            {"nome": "EEFM NOEL HUGNEN DE OLIVEIRA PAIVA", "email": "nhugnen@escola.ce.gov.br"},
+            {"nome": "EEFM OTÁVIO TERCEIRO DE FARIAS", "email": "otaviot@escola.ce.gov.br"},
+            {"nome": "EEFM PADRE ROCHA", "email": "procha@escola.ce.gov.br"},
+            {"nome": "EEFM PARÓQUIA DA PAZ", "email": "ppaz@escola.ce.gov.br"},
+            {"nome": "EEFM POLIVALENTE MODELO DE FORTALEZA", "email": "polivalentemf@escola.ce.gov.br"},
+            {"nome": "EEFM PROF. ALOYSIO BARROS LEAL", "email": "ableal@escola.ce.gov.br"},
+            {"nome": "EEFM PROF. PAULO AYRTON ARAÚJO", "email": "payrton@escola.ce.gov.br"},
+            {"nome": "EEFM PROFª. MARIA DA CONCEIÇÃO PORFÍRIO TELES", "email": "pteles@escola.ce.gov.br"},
+            {"nome": "EEFM PROFª. MARIA GONÇALVES", "email": "mgoncalves@escola.ce.gov.br"},
+            {"nome": "EEFM SANTA LUZIA", "email": "sluzia@escola.ce.gov.br"},
+            {"nome": "EEM LICEU DE MESSEJANA", "email": "liceum@escola.ce.gov.br"},
+            {"nome": "EEMTI COLÉGIO ESTADUAL LICEU DO CEARÁ", "email": "lceara@escola.ce.gov.br"},
+            {"nome": "EEMTI DEP. PAULINO ROCHA", "email": "paulinorocha@escola.ce.gov.br"},
+            {"nome": "EEMTI DEP. PAULO BENEVIDES", "email": "pbenevides@escola.ce.gov.br"},
+            {"nome": "EEMTI DOM ANTÔNIO DE ALMEIDA LUSTOSA", "email": "amlustosa@escola.ce.gov.br"},
+            {"nome": "EEMTI DRAGÃO DO MAR", "email": "dmar@escola.ce.gov.br"},
+            {"nome": "EEMTI ESTADO DO PARÁ", "email": "estpara@escola.ce.gov.br"},
+            {"nome": "EEMTI GOV. LUIZ GONZAGA FONSECA MOTA", "email": "gmota@escola.ce.gov.br"},
+            {"nome": "EEMTI GOV. VIRGÍLIO TÁVORA", "email": "vtavora@escola.ce.gov.br"},
+            {"nome": "EEMTI HELENITA MOTA", "email": "hmota@escola.ce.gov.br"},
+            {"nome": "EEMTI INTEGRADA 02 DE MAIO", "email": "2demaio@escola.ce.gov.br"},
+            {"nome": "EEMTI IRACEMA", "email": "iracema@escola.ce.gov.br"},
+            {"nome": "EEMTI JOÃO NOGUEIRA JUCÁ", "email": "jnjuca@escola.ce.gov.br"},
+            {"nome": "EEMTI JOHNSON", "email": "johnson@escola.ce.gov.br"},
+            {"nome": "EEMTI MATIAS BECK", "email": "mbeck@escola.ce.gov.br"},
+            {"nome": "EEMTI MIRIAN PORTO MOTA", "email": "mpmota@escola.ce.gov.br"},
+            {"nome": "EEMTI PADRE GUILHERME WASSEN", "email": "gwaessen@escola.ce.gov.br"},
+            {"nome": "EEFM PADRE MARCELINO CHAMPAGNAT", "email": "pmarcelino@escola.ce.gov.br"},
+            {"nome": "EEMTI POETA OTÁCILIO COLARES", "email": "ocolares@escola.ce.gov.br"},
+            {"nome": "EEMTI PROFª FERNANDA MARIA GOMES DE AMORIM", "email": ""}, 
+            {"nome": "EEMTI PROFª TECLA FERREIRA", "email": "tferreira@escola.ce.gov.br"},
+            {"nome": "EEMTI PROFª TELINA BARBOSA DA COSTA", "email": "tbarbosa@escola.ce.gov.br"},
+            {"nome": "EEMTI RENATO BRAGA", "email": "rbraga@escola.ce.gov.br"},
+            {"nome": "EEMTI VISCONDE DO RIO BRANCO", "email": "vrbranco@escola.ce.gov.br"},
+            {"nome": "EEMTI WALTER DE SÁ CAVALCANTE", "email": "wscavalcante@escola.ce.gov.br"},
+            {"nome": "INSTITUTO CEARENSE DE EDUCAÇÃO DE SURDOS", "email": "isurdos@escola.ce.gov.br"},
+            {"nome": "INSTITUTO DOS CEGOS", "email": "icegos@escola.ce.gov.br"},
+            {"nome": "CCI CONJUNTO CEARÁ", "email": "cciconjuntoceara@escola.ce.gov.br"},
+            {"nome": "CCI SHOPPING BENFICA", "email": "ccibenfica@escola.ce.gov.br"},
+            {"nome": "EEEP DARCY RIBEIRO", "email": "darcyribeiro@escola.ce.gov.br"},
+            {"nome": "EEEP ICARO DE SOUSA", "email": "icarosm@escola.ce.gov.br"},
+            {"nome": "EEEP JOAQUIM MOREIRA DE SOUSA", "email": "jmsousa@escola.ce.gov.br"},
+            {"nome": "EEEP JUAREZ TÁVORA", "email": "jtavora@escola.ce.gov.br"},
+            {"nome": "EEEP LEONEL DE MOURA BRIZOLA", "email": "leonelbrizola@escola.ce.gov.br"},
+            {"nome": "EEEP PAULO VI", "email": "paulovi@escola.ce.gov.br"},
+            {"nome": "EEEP PROF. CÉSAR CAMPELO", "email": "uv5ccampelo@escola.ce.gov.br"},
+            {"nome": "EEEP PROF. ONÉLIO PORTO", "email": "oneliop@escola.ce.gov.br"},
+            {"nome": "EEFM DEP. JOACI PEREIRA", "email": "joacip@escola.ce.gov.br"},
+            {"nome": "EEFM DIVA CABRAL", "email": "divacabral@escola.ce.gov.br"},
+            {"nome": "EEFM DR. GENTIL BARREIRA", "email": "uv2gentilb@escola.ce.gov.br"},
+            {"nome": "EEFM DR. UBIRAJARA INDIO DO CEARÁ", "email": "uv7ubirajara@escola.ce.gov.br"},
+            {"nome": "EEFM FIGUEIREDO CORREIA", "email": "figueiredo@escola.ce.gov.br"},
+            {"nome": "EEFM HERMENEGILDO FIRMEZA", "email": "hermenegildo@escola.ce.gov.br"},
+            {"nome": "EEFM JÁDER MOREIRA DE CARVALHO", "email": "jadermc@escola.ce.gov.br"},
+            {"nome": "EEFM JOAQUIM ALVES", "email": "joaquimalves@escola.ce.gov.br"},
+            {"nome": "EEFM JOSÉ LEOPOLDINO DA SILVA", "email": "uv4leopoldino@escola.ce.gov.br"},
+            {"nome": "EEFM DONA JÚLIA ALVES PESSOA", "email": "juliaalves@escola.ce.gov.br"},
+            {"nome": "EEFM MARIO SCHEMBERG", "email": "mschemberg@escola.ce.gov.br"},
+            {"nome": "EEFM MICHELSON NOBRE DA SILVA", "email": "michelson@escola.ce.gov.br"},
+            {"nome": "EEFM PARQUE PRESIDENTE VARGAS", "email": "vargas@escola.ce.gov.br"},
+            {"nome": "EEFM PAULO ELPIDIO", "email": "pauloelpidio@escola.ce.gov.br"},
+            {"nome": "EEFM SANTO AMARO", "email": "santoamaro@escola.ce.gov.br"},
+            {"nome": "EEFM SÃO FRANCISCO DE ASSIS – CANINDEZINHO", "email": "sfassiscan@escola.ce.gov.br"},
+            {"nome": "EEFM SÃO JOSÉ", "email": "saojose@escola.ce.gov.br"},
+            {"nome": "EEM GOV. ADAUTO BEZERRA", "email": "adautob@escola.ce.gov.br"},
+            {"nome": "EEMTI PROFª. ADÉLIA BRASIL FEIJÓ", "email": "adeliab@escola.ce.gov.br"},
+            {"nome": "EEMTI PROFª. ADALGISA BONFIM SOARES", "email": "adalgisa@escola.ce.gov.br"},
+            {"nome": "EEMTI ANISIO TEIXEIRA", "email": "anisiot@escola.ce.gov.br"},
+            {"nome": "EEMTI ESTADO DO AMAZONAS", "email": "amazonas@escola.ce.gov.br"},
+            {"nome": "EEMTI ESTADO DO MARANHÃO", "email": "maranhao@escola.ce.gov.br"},
+            {"nome": "EEMTI ESTADO DO PARANÁ", "email": "parana@escola.ce.gov.br"},
+            {"nome": "EEMTI IRAPUAN CAVALCANTE PINHEIRO", "email": "irapuanc@escola.ce.gov.br"},
+            {"nome": "EEMTI IRMÃO URBANO GONZALEZ ROGRIGUEZ", "email": "iurbano@escola.ce.gov.br"},
+            {"nome": "EEMTI JENNY GOMES", "email": "jennygomes@escola.ce.gov.br"},
+            {"nome": "EEMTI JOÃO MATTOS", "email": "jmatos@escola.ce.gov.br"},
+            {"nome": "EEMTI JOSÉ AURÉLIO CÂMARA", "email": "jacamara@escola.ce.gov.br"},
+            {"nome": "EEMTI LICEU PROF. DOMINGOS BRASILEIRO", "email": "liceupantanal@escola.ce.gov.br"},
+            {"nome": "EEMTI MAL. HUMBERTO DE ALENCAR CASTELO BRANCO", "email": "mcastelobranco@escola.ce.gov.br"},
+            {"nome": "EEMTI MARIA ALVES CARIOCA", "email": "caicmacarioca@escola.ce.gov.br"},
+            {"nome": "EEMTI MARIA MARGARIDA DE CASTRO ALMEIDA", "email": "mmca@escola.ce.gov.br"},
+            {"nome": "EEMTI MARIA THOMÁSIA", "email": "mthomasia@escola.ce.gov.br"},
+            {"nome": "EEMTI PLÁCIDO ADERALDO CASTELO", "email": "uv7placido@escola.ce.gov.br"},
+            {"nome": "EEMTI POETA PATATIVA DO ASSARÉ", "email": "patativa@escola.ce.gov.br"},
+            {"nome": "EEMTI PRES. HUMBERTO DE ALENCAR CASTELO BRANCO", "email": "pcastelobranco@escola.ce.gov.br"},
+            {"nome": "EEMTI PROF. EDMILSON GUIMARÃES DE ALMEIDA", "email": "uv10edmilson@escola.ce.gov.br"},
+            {"nome": "EEMTI PROF. JOCIÊ CAMINHA DE MENESES", "email": "jociec@escola.ce.gov.br"},
+            {"nome": "EEMTI PROF. JOSÉ MARIA CAMPOS", "email": "uv8mcampos@escola.ce.gov.br"},
+            {"nome": "EEMTI PROFª. MARIA ANTONIETA NUNES", "email": "uv9anunes@escola.ce.gov.br"},
+            {"nome": "EEMTI SÃO FRANCISCO DE ASSIS – BOM JARDIM", "email": "sfassis@escola.ce.gov.br"},
+            {"nome": "EEMTI SÃO JOÃO DO PIAMARTA", "email": "sjpiamarta@escola.ce.gov.br"},
+            {"nome": "EEMTI SEN. FERNANDES TÁVORA", "email": "ftavora@escola.ce.gov.br"},
+            {"nome": "EEMTI SEN. OSIRES PONTES", "email": "osiresp@escola.ce.gov.br"},
+            {"nome": "EEMTI LICEU DO CONJUNTO CEARÁ", "email": "liceucc@escola.ce.gov.br"},
+            {"nome": "INSTITUTO DE EDUCAÇÃO", "email": "iec@escola.ce.gov.br"}
+        ];
+
+        // =========================================================================================
+        // === FIM DO BLOCO DE DADOS ===============================================================
+        // =========================================================================================
 
         let filteredSchools = [];
+        const allSchools = initialEscolasData;
 
         /**
          * Filtra a lista de escolas em tempo real com base no texto digitado.
@@ -126,12 +304,11 @@
             // 1. Coleta escolas que correspondem a QUALQUER um dos termos
             const uniqueFilteredSchools = new Set();
             
-            // Verifica se a lista SCHOOLS está carregada antes de tentar filtrar
-            const schoolsToFilter = SCHOOLS || [];
+            const schoolsToFilter = allSchools; 
 
             schoolsToFilter.forEach(school => {
-                // Certifica-se de que a escola tem a propriedade 'nome'
-                if (!school.nome) return; 
+                // Garante que a escola tem 'nome' e um 'email' válido
+                if (!school.nome || !school.email || school.email.trim() === '' || !school.email.includes('@')) return; 
                 
                 const schoolName = school.nome.toLowerCase();
                 
@@ -152,7 +329,7 @@
             renderResults(filteredSchools);
 
             // 4. Atualiza o contador e o botão de copiar
-            matchCount.textContent = `${filteredSchools.length} escolas encontradas.`;
+            matchCount.textContent = `${filteredSchools.length} escolas encontradas com e-mail válido.`;
             emailCount.textContent = filteredSchools.length;
             copyButton.disabled = filteredSchools.length === 0;
         }
@@ -167,7 +344,7 @@
             if (schools.length === 0) {
                 resultsList.innerHTML = `
                     <li class="p-3 text-center text-red-500 font-semibold">
-                        <i class="fas fa-exclamation-triangle mr-1"></i> Nenhuma escola corresponde aos termos de busca.
+                        <i class="fas fa-exclamation-triangle mr-1"></i> Nenhuma escola corresponde aos termos de busca OU elas não possuem e-mail válido.
                     </li>
                 `;
                 return;
@@ -188,7 +365,6 @@
                     </button>
                 </li>
             `).join('');
-
             resultsList.innerHTML = listItems;
         }
 
@@ -203,7 +379,7 @@
 
             copyToClipboard(email);
             showToast(`E-mail de ${email.split('@')[0]} copiado!`);
-
+            
             setTimeout(() => {
                 button.disabled = false;
                 button.innerHTML = '<i class="fas fa-clipboard mr-1"></i> Copiar';
@@ -216,8 +392,8 @@
          */
         window.copyAllEmails = function() {
             if (filteredSchools.length === 0) return;
-
-            const emails = filteredSchools.map(school => school.email).join(', ');
+            // Junta os e-mails separados por vírgula e espaço, ideal para a maioria dos clientes de e-mail
+            const emails = filteredSchools.map(school => school.email).join(', '); 
             
             copyToClipboard(emails);
             showToast(`Todos os ${filteredSchools.length} e-mails copiados com sucesso!`);
@@ -228,6 +404,11 @@
          * @param {string} text - O texto a ser copiado.
          */
         function copyToClipboard(text) {
+             if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text);
+                return;
+             }
+             // Fallback
              const tempInput = document.createElement('textarea');
              tempInput.value = text;
              document.body.appendChild(tempInput);
@@ -254,7 +435,7 @@
             
             // 2. Define a mensagem
             toastMessage.textContent = message;
-
+            
             // 3. Exibe com animação
             setTimeout(() => {
                 toast.classList.remove('hidden');
