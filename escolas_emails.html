@@ -14,6 +14,7 @@
             --cor-fundo-corpo: #f0f2f5; 
             --cor-header: #e6ffd1; 
             --cor-fundo-menu-2: #fffde7; 
+            --cor-botao-copiar: #28a745; /* Verde para copiar */
         }
 
         /* Estilização Base */
@@ -86,7 +87,7 @@
             margin: 0 auto 40px auto;
         }
 
-        /* Área de Busca (TextArea) */
+        /* Área de Busca (TextArea) e Controles */
         .busca-container {
             margin-bottom: 25px;
             display: flex;
@@ -94,7 +95,7 @@
         }
         .busca-container textarea {
             width: 100%;
-            height: 150px; /* Altura maior para lista */
+            height: 150px; 
             padding: 12px;
             border: 2px solid var(--cor-principal-texto);
             border-radius: 6px;
@@ -108,22 +109,49 @@
         .busca-container textarea:focus {
             border-color: #008cff;
         }
-        .busca-container button {
-            background-color: var(--cor-principal-texto);
-            color: white;
+
+        /* Linha de Botões */
+        .controls-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        .controls-row button {
+            flex: 1; /* Faz com que os botões dividam o espaço */
             padding: 12px 20px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-size: 1.1em;
             transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .busca-container button:hover {
+        
+        /* Botão Buscar */
+        #searchButton {
+            background-color: var(--cor-principal-texto);
+            color: white;
+        }
+        #searchButton:hover {
             background-color: #004494;
         }
         
+        /* Botão Copiar E-mails */
+        #copyButton {
+            background-color: var(--cor-botao-copiar);
+            color: white;
+            /* Começa oculto */
+            display: none; 
+        }
+        #copyButton:hover {
+            background-color: #1e7e34;
+        }
+
         /* Tabela de E-mails */
         .tabela-container {
+            margin-top: 25px; /* Adiciona espaço acima da tabela */
             max-height: 500px; 
             overflow-y: auto;
             border: 1px solid #ddd;
@@ -173,7 +201,15 @@
     <main>
         <div class="busca-container">
             <textarea id="schoolListInput" placeholder="Insira a lista de escolas que deseja pesquisar (uma por linha)."></textarea>
-            <button onclick="filtrarTabela()">Buscar E-mails</button>
+            
+            <div class="controls-row">
+                <button id="searchButton" onclick="filtrarTabela()">
+                    <i class="fas fa-search" style="margin-right: 8px;"></i> Buscar E-mails
+                </button>
+                <button id="copyButton" onclick="copiarEmails()">
+                    <i class="fas fa-copy" style="margin-right: 8px;"></i> Copiar E-mails
+                </button>
+            </div>
         </div>
 
         <div class="tabela-container">
@@ -374,6 +410,7 @@
         // 2. FUNÇÃO AUXILIAR PARA RENDERIZAR A TABELA
         function renderizarTabela(dadosParaExibir) {
             const tbody = document.getElementById('escolasTbody');
+            const copyButton = document.getElementById('copyButton');
             tbody.innerHTML = ''; 
             
             if (dadosParaExibir.length === 0) {
@@ -381,6 +418,8 @@
                 mensagem.className = 'mensagem-vazia';
                 mensagem.innerHTML = '<td colspan="3">Nenhum e-mail encontrado para a lista de escolas fornecida.</td>';
                 tbody.appendChild(mensagem);
+                
+                copyButton.style.display = 'none'; // Oculta o botão se não houver resultados
                 return;
             }
 
@@ -401,6 +440,8 @@
                     cellEmail.innerHTML = `<span style="color: #d9534f; font-weight: bold;">E-MAIL PENDENTE</span>`;
                 }
             });
+
+            copyButton.style.display = 'flex'; // Exibe o botão se houver resultados
         }
 
 
@@ -434,7 +475,44 @@
             renderizarTabela(resultados);
         }
 
-        // Não chama nenhuma função no onload para começar com a tabela vazia, apenas com a mensagem.
+        // 4. FUNÇÃO PARA COPIAR APENAS OS E-MAILS DA TABELA
+        async function copiarEmails() {
+            const tbody = document.getElementById('escolasTbody');
+            const rows = tbody.querySelectorAll('tr');
+            let emails = [];
+
+            // Acessa a terceira célula (índice 2) de cada linha
+            rows.forEach(row => {
+                const cellEmail = row.cells[2]; 
+                if (cellEmail) {
+                    const emailText = cellEmail.textContent.trim();
+                    // Garante que é um e-mail válido (contém '@' e não é a mensagem 'PENDENTE')
+                    if (emailText.includes('@') && !emailText.toUpperCase().includes('PENDENTE')) {
+                        emails.push(emailText);
+                    }
+                }
+            });
+
+            const emailString = emails.join('; '); // Junta com ponto e vírgula e espaço (padrão de cliente de e-mail)
+
+            if (emailString.length > 0) {
+                try {
+                    // Usa a API de Clipboard para copiar
+                    await navigator.clipboard.writeText(emailString);
+                    alert('✅ ' + emails.length + ' e-mails copiados para a área de transferência!');
+                } catch (err) {
+                    // Fallback para navegadores mais antigos (embora a maioria moderna suporte)
+                    alert('❌ Não foi possível usar a cópia automática. Por favor, selecione os e-mails e copie manualmente.');
+                }
+            } else {
+                alert('Nenhum e-mail válido para copiar nos resultados atuais.');
+            }
+        }
+
+        // Oculta o botão de cópia ao carregar a página
+        window.onload = function() {
+            document.getElementById('copyButton').style.display = 'none';
+        };
     </script>
 
 </body>
