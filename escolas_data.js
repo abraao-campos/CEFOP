@@ -1,12 +1,6 @@
-// escolas_data.js
-
-/**
- * Array de objetos contendo os dados das escolas da SEFOR 1, SEFOR 2 e SEFOR 3.
- * Telefones da escola padronizados para XXXX-XXXX.
- * Contatos do diretor padronizados para X.XXXX-XXXX (para números de 9 dígitos).
- */
-export const escolasData = [
-    // --- INÍCIO DOS DADOS DA SEFOR 1 ---
+// Este arquivo declara o array de dados das escolas
+// A variável 'escolasData' deve ser usada no seu HTML
+const escolasData = [
     {
         sefor: "SEFOR 1",
         nome: "CCI NORTH SHOPPING JOQUEI",
@@ -1407,3 +1401,4 @@ export const escolasData = [
     }
     // --- FIM DOS DADOS DA SEFOR 3 ---
 ];
+
