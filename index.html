@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEFOP - Célula de Formação, Programas e Projetos</title>
+    <!-- Carregando Tailwind CSS para estilização moderna e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Definindo a fonte "Inter" como padrão e um fundo suave */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        /* Estilos personalizados para o card do menu */
+        .menu-card {
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        .menu-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Container Principal do Conteúdo -->
+    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-8 sm:p-12">
+
+        <!-- Título Principal da Célula (Requisito 1) -->
+        <header class="text-center mb-12">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-700 leading-tight">
+                Célula de Formação, Programas e Projetos
+            </h1>
+            <p class="text-xl font-semibold text-gray-600 mt-2">CEFOP</p>
+        </header>
+
+        <!-- Seção de Menu (Requisito 3) -->
+        <main>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2">
+                Acesso Rápido e Ferramentas
+            </h2>
+
+            <!-- Grid de Opções do Menu -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Card: ESCOLAS – SEFOR -->
+                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <!-- Ícone de Livro/Escola (Exemplo usando SVG Inline) -->
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">ESCOLAS – SEFOR</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Acesso ao banco de dados de informações SEFOR.</p>
+                </a>
+
+                <!-- Card: ESCOLAS – E-MAILS -->
+                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <!-- Ícone de Email (Exemplo usando SVG Inline) -->
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">ESCOLAS – E-MAILS</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Listagem e organização dos e-mails institucionais.</p>
+                </a>
+
+                <!-- Card: MENSAGEM WHATSAPP -->
+                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <!-- Ícone de Balão de Mensagem (Exemplo usando SVG Inline) -->
+                        <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">MENSAGEM WHATSAPP</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Gerador de mensagens padronizadas para WhatsApp.</p>
+                </a>
+
+                <!-- Card: MENSAGEM E-MAIL -->
+                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <!-- Ícone de Envelope (Exemplo usando SVG Inline) -->
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">MENSAGEM E-MAIL</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Gerador de templates de e-mail padronizados.</p>
+                </a>
+
+            </div>
+        </main>
+
+        <!-- Rodapé simples -->
+        <footer class="text-center mt-12 pt-6 border-t border-gray-100">
+            <p class="text-xs text-gray-400">&copy; 2025 CEFOP. Todos os direitos reservados.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
