@@ -10,11 +10,10 @@
     <style>
         /* Variáveis de Cores Atualizadas */
         :root {
-            --cor-principal-texto: #0056b3; /* Azul mais forte para textos e detalhes */
+            --cor-principal-texto: #0056b3; /* Azul escuro (institucional) */
             --cor-fundo-corpo: #f0f2f5; 
             --cor-texto-padrao: #333;
-            --cor-header: #c5e1a5; /* NOVO: Verde Claro para o Header */
-            --cor-header-texto: #388e3c; /* Verde Escuro para o texto do Header */
+            --cor-header: #e6ffd1; /* NOVO: Verde Pastel Mais Claro */
         }
 
         /* Estilização Base */
@@ -30,11 +29,11 @@
             min-height: 100vh;
         }
         
-        /* Cabeçalho */
+        /* Cabeçalho - Ajuste da Cor de Fundo e Texto */
         header {
             width: 100%;
-            background-color: var(--cor-header); /* Cor de fundo Verde Claro */
-            color: var(--cor-header-texto); /* Texto em Verde Escuro */
+            background-color: var(--cor-header); /* Fundo Verde Pastel */
+            color: var(--cor-principal-texto); /* NOVO: Texto em Azul Escuro */
             padding: 30px 0; 
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
@@ -52,7 +51,7 @@
             opacity: 0.9;
         }
         
-        /* Navegação (Menu) */
+        /* Navegação (Menu) mantida */
         nav {
             background-color: white;
             padding: 20px;
@@ -71,7 +70,7 @@
             margin-bottom: 15px; 
         }
         
-        /* Estilização dos Botões/Links */
+        /* Estilização dos Botões/Links (Container) */
         nav ul li a {
             display: flex; 
             flex-direction: column; 
@@ -84,10 +83,10 @@
             border-left: 5px solid var(--cor-principal-texto);
         }
         
-        /* Estilização do Título do Menu */
+        /* Estilização do Título do Menu (Com Ícone) */
         .menu-title {
             display: flex; 
-            align-items: center;
+            align-items: center; /* Alinha o ícone e o texto verticalmente */
             font-size: 1.2em;
             font-weight: 700;
             text-transform: uppercase;
@@ -100,7 +99,7 @@
             font-size: 0.9em;
             font-weight: 400;
             color: var(--cor-texto-padrao); 
-            margin-left: 30px; 
+            margin-left: 35px; /* Alinha a descrição (ajustado para acomodar o ícone + espaço) */
         }
         
         /* Estilização do Ícone */
@@ -110,7 +109,7 @@
             color: var(--cor-principal-texto);
         }
 
-        /* Cores Individuais para cada Menu */
+        /* Cores Individuais para cada Menu (Mantidas) */
         /* COR 1: Azul Claro */
         .menu-1 a {
             background-color: #e0f7fa; 
