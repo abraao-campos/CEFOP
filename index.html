@@ -1,278 +1,597 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Célula de Formação, Programas e Projetos – CEFOP</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDySjYKTmRUDbOINhhnkX8x5W9qTjW8cWl2s8sH5O5F4M6U5Zt1hA4c/5+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <title>CEFOP - Célula de Formação, Programas e Projetos</title>
+    <!-- Carregando Tailwind CSS para estilização moderna e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Variáveis de Cores */
-        :root {
-            --cor-principal-texto: #0056b3; 
-            --cor-fundo-corpo: #f0f2f5; 
-            --cor-header: #e6ffd1; 
-            --cor-erro: #d9534f;
-        }
-
-        /* Estilização Base */
+        /* Definindo a fonte "Inter" como padrão e um fundo suave */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--cor-fundo-corpo);
-            color: var(--cor-texto-padrao);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
         }
-        
-        /* Cabeçalho */
-        header {
-            width: 100%;
-            background-color: var(--cor-header); 
-            color: var(--cor-principal-texto); 
-            padding: 30px 0; 
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-            /* Importante: O cabeçalho deve estar acima do conteúdo protegido */
-            z-index: 10; 
+        /* Estilos personalizados para o card do menu */
+        .menu-card {
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        .menu-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        /* Estilo para células do calendário com evento */
+        .event-day {
+            background-color: #4f46e5; /* indigo-600 */
+            color: white;
+            font-weight: bold;
+            border-radius: 9999px; /* rounded-full */
+            cursor: pointer;
             position: relative;
         }
-        header h1 {
-            margin: 0;
-            font-size: 3.5em; 
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        header p {
-            margin: 5px 0 0 0;
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-        
-        /* Navegação (Menu) e Estilos de Menu (Mantidos) */
-        nav {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
-            max-width: 500px; 
-            width: 90%;
-            margin: 0 auto;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        nav ul li {
-            margin-bottom: 15px; 
-        }
-        
-        /* Estilização dos Botões/Links (Container Principal) */
-        nav ul li a {
-            display: flex; 
-            flex-direction: column; 
-            align-items: flex-start; 
-            padding: 15px 20px;
-            color: var(--cor-principal-texto); 
-            text-decoration: none;
-            border-radius: 6px;
-            transition: opacity 0.3s ease, transform 0.1s;
-            border-left: 5px solid var(--cor-principal-texto);
-        }
-
-        /* Estilização do Título do Menu (Com Ícone) */
-        .menu-title {
-            display: flex; 
-            align-items: center; 
-            font-size: 1.2em;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 5px; 
-            color: var(--cor-principal-texto); 
-        }
-
-        /* Estilização da Descrição */
-        .menu-description {
-            font-size: 0.9em;
-            font-weight: 400;
-            color: var(--cor-texto-padrao); 
-            margin-left: 35px; 
-        }
-        
-        /* Estilização do Ícone SVG */
-        .menu-icon-svg {
-            width: 24px; 
-            height: 24px;
-            margin-right: 15px;
-            stroke-width: 2;
-            stroke: var(--cor-principal-texto);
-        }
-
-        /* Cores Individuais para cada Menu (Mantidas) */
-        .menu-1 a { background-color: #e0f7fa; }
-        .menu-1 a:hover { opacity: 0.85; background-color: #b2ebf2; }
-        
-        .menu-2 a { background-color: #fffde7; }
-        .menu-2 a:hover { opacity: 0.85; background-color: #fff59d; }
-
-        .menu-3 a { background-color: #f3e5f5; }
-        .menu-3 a:hover { opacity: 0.85; background-color: #e1bee7; }
-
-        .menu-4 a { background-color: #fbe9e7; }
-        .menu-4 a:hover { opacity: 0.85; background-color: #ffccbc; }
-        
-        /* Efeito Hover (Geral) */
-        nav ul li a:hover {
-            transform: translateY(-2px); 
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* --- ESTILOS DE SENHA --- */
-        #senha-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.95); /* Fundo semi-transparente */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 20; 
-        }
-        .senha-box {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        .senha-box h2 {
-            color: var(--cor-principal-texto);
-            margin-top: 0;
-        }
-        .senha-box input[type="password"] {
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-            text-align: center;
-            display: block;
-            width: 200px;
-        }
-        .senha-box button {
-            padding: 10px 20px;
-            background-color: var(--cor-principal-texto);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .mensagem-erro {
-            color: var(--cor-erro);
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
     </style>
 </head>
-<body>
+<body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
 
-    <header>
-        <h1>CEFOP</h1>
-        <p>Célula de Formação, Programas e Projetos</p>
-    </header>
+    <!-- Container Principal do Conteúdo -->
+    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 sm:p-12 mt-4">
 
-    <div id="senha-overlay">
-        <div class="senha-box">
-            <h2>Acesso Restrito</h2>
-            <p>Insira a senha para continuar.</p>
-            <input type="password" id="senhaInput" placeholder="Senha" onkeypress="handleKey(event)">
-            <button onclick="verificarSenha()">Acessar</button>
-            <div id="mensagemErro" class="mensagem-erro" style="display: none;">
-                Senha incorreta.
+        <!-- Título Principal da Célula -->
+        <header class="text-center mb-12">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-700 leading-tight">
+                Célula de Formação, Programas e Projetos
+            </h1>
+            <p class="text-xl font-semibold text-gray-600 mt-2">CEFOP</p>
+        </header>
+
+        <!-- Seção de Menu -->
+        <main>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2">
+                Acesso Rápido e Ferramentas
+            </h2>
+
+            <!-- Grid de Opções do Menu -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+
+                <!-- Card: ESCOLAS – SEFOR (Link Atualizado para busca e edição) -->
+                <a href="escolas_sefor.html" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">ESCOLAS – SEFOR</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Acesso ao banco de dados de informações, busca e edição.</p>
+                </a>
+
+                <!-- Card: ESCOLAS – E-MAILS (Link Atualizado para extrator em massa) -->
+                <a href="escolas_emails.html" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">ESCOLAS – E-MAILS</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Extrator de e-mails em massa para uso no campo CCO/CC.</p>
+                </a>
+
+                <!-- Card: MENSAGEM WHATSAPP -->
+                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">MENSAGEM WHATSAPP</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Gerador de mensagens padronizadas para WhatsApp.</p>
+                </a>
+
+                <!-- Card: MENSAGEM E-MAIL -->
+                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                    <div class="flex items-center space-x-4">
+                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
+                        <span class="text-xl font-semibold text-gray-900">MENSAGEM E-MAIL</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Gerador de templates de e-mail padronizados.</p>
+                </a>
+            </div>
+
+            <!-- Seção de Calendário e Eventos -->
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
+                Agenda CEFOP
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- 1. Calendário Mensal -->
+                <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+                    <div class="flex items-center justify-between mb-4">
+                        <button id="prev-month-btn" class="text-indigo-600 hover:text-indigo-800 p-1 rounded-full hover:bg-indigo-100 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <h3 id="current-month-year" class="text-xl font-bold text-gray-800">Mês, Ano</h3>
+                        <button id="next-month-btn" class="text-indigo-600 hover:text-indigo-800 p-1 rounded-full hover:bg-indigo-100 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Tabela do Calendário -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-center text-sm">
+                            <thead>
+                                <tr class="text-xs font-medium text-gray-500 uppercase">
+                                    <th class="py-2 px-1">Dom</th>
+                                    <th class="py-2 px-1">Seg</th>
+                                    <th class="py-2 px-1">Ter</th>
+                                    <th class="py-2 px-1">Qua</th>
+                                    <th class="py-2 px-1">Qui</th>
+                                    <th class="py-2 px-1">Sex</th>
+                                    <th class="py-2 px-1">Sáb</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calendar-body" class="text-gray-700">
+                                <!-- Dias serão injetados aqui pelo JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 2. Lista de Próximos Eventos -->
+                <div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-3">Próximos Eventos</h3>
+                    <div id="events-list" class="space-y-3 p-3 bg-white border border-gray-200 rounded-lg shadow-sm h-[300px] overflow-y-auto">
+                        <p class="text-gray-400">Carregando eventos...</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Botão para Adicionar Eventos -->
+            <div class="mt-6 flex justify-center">
+                <button id="add-event-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg flex items-center space-x-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Adicionar Novo Evento</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Modais para Adicionar/Editar Evento e Exibir Detalhes -->
+        
+        <!-- Modal de Adição/Edição -->
+        <div id="event-modal" class="fixed inset-0 bg-gray-600 bg-opacity-75 hidden items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+                <h3 id="modal-title" class="text-xl font-bold text-gray-800 mb-4">Adicionar Novo Evento</h3>
+                <form id="event-form" class="space-y-4">
+                    <div>
+                        <label for="event-title-input" class="block text-sm font-medium text-gray-700">Título do Evento</label>
+                        <input type="text" id="event-title-input" required class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="event-date-input" class="block text-sm font-medium text-gray-700">Data</label>
+                        <input type="date" id="event-date-input" required class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="event-description-input" class="block text-sm font-medium text-gray-700">Descrição (Opcional)</label>
+                        <textarea id="event-description-input" rows="3" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancel-modal-btn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition">Cancelar</button>
+                        <button type="submit" id="save-event-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Salvar Evento</button>
+                        <button type="button" id="delete-event-btn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition hidden">Excluir</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-    <div id="conteudo-principal" style="display: none;">
-        <nav>
-            <ul>
-                <li class="menu-1">
-                    <a href="escolas_sefor.html">
-                        <span class="menu-title">
-                            <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg> 
-                            ESCOLAS – SEFOR
-                        </span>
-                        <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
-                    </a>
-                </li>
-                <li class="menu-2">
-                    <a href="escolas_emails.html">
-                        <span class="menu-title">
-                            <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
-                            ESCOLAS – E-MAILS
-                        </span>
-                        <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
-                    </a>
-                </li>
-                <li class="menu-3">
-                    <a href="mensagem_whatsapp.html">
-                        <span class="menu-title">
-                            <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
-                            MENSAGEM WHATSAPP
-                        </span>
-                        <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
-                    </a>
-                </li>
-                <li class="menu-4">
-                    <a href="mensagem_email.html">
-                        <span class="menu-title">
-                            <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
-                            MENSAGEM E-MAIL
-                        </span>
-                        <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <script>
-        // *** CONFIGURAÇÃO DA SENHA ***
-        const SENHA_CORRETA = "090883"; 
-        // ******************************
 
-        function verificarSenha() {
-            const senhaDigitada = document.getElementById('senhaInput').value;
-            const mensagemErro = document.getElementById('mensagemErro');
-            const senhaOverlay = document.getElementById('senha-overlay');
-            const conteudoPrincipal = document.getElementById('conteudo-principal');
+        <!-- Rodapé simples -->
+        <footer class="text-center mt-12 pt-6 border-t border-gray-100">
+            <p class="text-xs text-gray-400">&copy; 2025 CEFOP. Todos os direitos reservados.</p>
+        </footer>
 
-            if (senhaDigitada === SENHA_CORRETA) {
-                // Senha correta: esconde o overlay e mostra o conteúdo
-                senhaOverlay.style.display = 'none';
-                conteudoPrincipal.style.display = 'block';
-            } else {
-                // Senha incorreta: exibe mensagem de erro e limpa o campo
-                mensagemErro.style.display = 'block';
-                document.getElementById('senhaInput').value = '';
-                document.getElementById('senhaInput').focus(); // Foca no campo para nova tentativa
+    </div>
+
+    <!-- Firebase Imports e Script de Lógica -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // --- Configuração e Inicialização do Firebase ---
+        
+        // As variáveis globais __app_id, __firebase_config e __initial_auth_token
+        // são fornecidas pelo ambiente Canvas.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-cefo-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db;
+        let auth;
+        let userId = null;
+        let eventsRef;
+
+        let currentViewDate = new Date(); // Data atualmente exibida no calendário
+        let allEvents = []; // Cache de todos os eventos carregados do Firestore
+        let editingEventId = null; // ID do evento que está sendo editado
+
+        // Referências DOM
+        const calendarBody = document.getElementById('calendar-body');
+        const currentMonthYear = document.getElementById('current-month-year');
+        const prevMonthBtn = document.getElementById('prev-month-btn');
+        const nextMonthBtn = document.getElementById('next-month-btn');
+        const eventsListDiv = document.getElementById('events-list');
+        const addEventBtn = document.getElementById('add-event-btn');
+        const eventModal = document.getElementById('event-modal');
+        const eventForm = document.getElementById('event-form');
+        const modalTitle = document.getElementById('modal-title');
+        const titleInput = document.getElementById('event-title-input');
+        const dateInput = document.getElementById('event-date-input');
+        const descriptionInput = document.getElementById('event-description-input');
+        const cancelModalBtn = document.getElementById('cancel-modal-btn');
+        const saveEventBtn = document.getElementById('save-event-btn');
+        const deleteEventBtn = document.getElementById('delete-event-btn');
+
+
+        /**
+         * Inicializa o Firebase e a Autenticação.
+         */
+        async function initializeFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // Tentativa de autenticação
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                
+                // O listener onAuthStateChanged garante que userId seja definido após a autenticação
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        // O caminho da coleção de eventos é público (compartilhado entre todos os usuários do CEFOP)
+                        eventsRef = collection(db, `artifacts/${appId}/public/data/events`); 
+                        setupRealtimeListener();
+                    } else {
+                        console.error("Autenticação falhou ou usuário deslogado.");
+                    }
+                });
+
+            } catch (error) {
+                console.error("Erro na inicialização do Firebase ou Autenticação:", error);
+            }
+        }
+
+        // --- Funções do Calendário ---
+
+        /**
+         * Desenha o calendário para o mês e ano da data atual.
+         */
+        function renderCalendar() {
+            const year = currentViewDate.getFullYear();
+            const month = currentViewDate.getMonth();
+            const today = new Date();
+
+            currentMonthYear.textContent = `${getMonthName(month)} de ${year}`;
+            
+            const firstDayOfMonth = new Date(year, month, 1);
+            const lastDayOfMonth = new Date(year, month + 1, 0);
+            
+            // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
+            const firstDayOfWeek = firstDayOfMonth.getDay(); 
+            const daysInMonth = lastDayOfMonth.getDate();
+            
+            let html = '';
+            let dayCount = 1;
+            let currentDayIndex = 0;
+
+            // Inicia as semanas
+            for (let week = 0; week < 6; week++) {
+                html += '<tr>';
+                
+                // Itera pelos 7 dias da semana
+                for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+                    let cellContent = '';
+                    let cellClasses = 'p-1 h-10 w-10 text-xs sm:text-sm';
+                    let isCurrentMonth = false;
+                    let dateKey = null;
+
+                    // Preenche os dias vazios no início do mês
+                    if (week === 0 && dayOfWeek < firstDayOfWeek) {
+                        cellContent = '';
+                    } 
+                    // Preenche os dias do mês
+                    else if (dayCount <= daysInMonth) {
+                        isCurrentMonth = true;
+                        cellContent = dayCount;
+                        dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayCount).padStart(2, '0')}`;
+
+                        // Marca o dia atual
+                        if (dayCount === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                            cellClasses += ' border-2 border-indigo-500 rounded-full';
+                        }
+                        
+                        // Verifica se há eventos para este dia
+                        const eventsOnDay = allEvents.filter(e => e.date === dateKey);
+                        if (eventsOnDay.length > 0) {
+                            cellClasses += ' event-day cursor-pointer relative';
+                        }
+                        
+                        cellClasses += ' hover:bg-gray-200 transition';
+                        
+                        dayCount++;
+                    }
+
+                    // Renderiza a célula
+                    html += `<td class="${cellClasses}" data-date-key="${dateKey || ''}" ${eventsOnDay && eventsOnDay.length > 0 ? `data-has-event="true"` : ''}>${cellContent}</td>`;
+                    
+                    if (dayCount > daysInMonth && dayOfWeek === 6) break;
+                }
+                
+                html += '</tr>';
+                if (dayCount > daysInMonth) break;
+            }
+
+            calendarBody.innerHTML = html;
+            
+            // Adiciona listener para cliques nos dias
+            calendarBody.querySelectorAll('td[data-has-event="true"]').forEach(cell => {
+                cell.addEventListener('click', (e) => showEventsForDay(e.target.getAttribute('data-date-key')));
+            });
+        }
+        
+        /**
+         * Pega o nome do mês em português.
+         */
+        function getMonthName(monthIndex) {
+            const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            return months[monthIndex];
+        }
+
+        // --- Funções da Lista de Eventos ---
+
+        /**
+         * Renderiza a lista de eventos futuros (a partir de hoje).
+         */
+        function renderEventsList() {
+            // Filtra e ordena eventos futuros
+            const todayKey = formatDate(new Date());
+            const futureEvents = allEvents
+                .filter(e => e.date >= todayKey)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            if (futureEvents.length === 0) {
+                eventsListDiv.innerHTML = '<p class="text-gray-500 italic p-2">Nenhum evento futuro agendado. Adicione um!</p>';
+                return;
+            }
+
+            let html = '';
+            futureEvents.forEach(event => {
+                const displayDate = new Date(event.date + 'T00:00:00'); // Adiciona T00 para garantir que a data é tratada como local/UTC
+                const formattedDate = displayDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+                
+                html += `
+                    <div class="event-item p-3 border-l-4 border-indigo-500 bg-white rounded-md shadow-sm cursor-pointer hover:bg-indigo-50 transition" data-id="${event.id}">
+                        <p class="text-xs font-semibold text-gray-500">${formattedDate.replace('.', '')}</p>
+                        <p class="text-base font-medium text-gray-800">${event.title}</p>
+                    </div>
+                `;
+            });
+
+            eventsListDiv.innerHTML = html;
+            
+            // Adiciona listeners para edição ao clicar no evento
+            eventsListDiv.querySelectorAll('.event-item').forEach(item => {
+                item.addEventListener('click', () => openEditModal(item.getAttribute('data-id')));
+            });
+        }
+        
+        /**
+         * Exibe no painel de lista de eventos, apenas os eventos de um dia específico.
+         */
+        function showEventsForDay(dateKey) {
+            const eventsOnDay = allEvents.filter(e => e.date === dateKey);
+
+            if (eventsOnDay.length === 0) return;
+            
+            const displayDate = new Date(dateKey + 'T00:00:00');
+            const formattedDate = displayDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+
+            let html = `<h4 class="text-sm font-bold text-gray-600 mb-2">Eventos em: ${formattedDate}</h4>`;
+            
+            eventsOnDay.forEach(event => {
+                html += `
+                    <div class="event-item p-3 border-l-4 border-indigo-500 bg-white rounded-md shadow-sm cursor-pointer hover:bg-indigo-50 transition" data-id="${event.id}">
+                        <p class="text-base font-medium text-gray-800">${event.title}</p>
+                        ${event.description ? `<p class="text-sm text-gray-500 italic mt-1">${event.description}</p>` : ''}
+                    </div>
+                `;
+            });
+            
+            eventsListDiv.innerHTML = html;
+            
+            // Adiciona listeners para edição ao clicar no evento
+            eventsListDiv.querySelectorAll('.event-item').forEach(item => {
+                item.addEventListener('click', () => openEditModal(item.getAttribute('data-id')));
+            });
+        }
+
+
+        // --- Funções de Persistência (Firestore) ---
+
+        /**
+         * Configura o listener em tempo real para o Firestore.
+         */
+        function setupRealtimeListener() {
+            // Consulta para buscar todos os eventos ordenados por data
+            const q = query(eventsRef, orderBy("date", "asc"));
+
+            onSnapshot(q, (snapshot) => {
+                allEvents = [];
+                snapshot.forEach((doc) => {
+                    // Adiciona o ID do documento aos dados do evento
+                    allEvents.push({ id: doc.id, ...doc.data() }); 
+                });
+                
+                // Após carregar ou atualizar os dados, renderiza tudo novamente
+                renderCalendar(); 
+                renderEventsList();
+            }, (error) => {
+                console.error("Erro ao ouvir eventos em tempo real:", error);
+                eventsListDiv.innerHTML = '<p class="text-red-500 p-2">Erro ao carregar os eventos.</p>';
+            });
+        }
+
+        /**
+         * Adiciona ou atualiza um evento no Firestore.
+         */
+        async function saveEvent(e) {
+            e.preventDefault();
+
+            const eventData = {
+                title: titleInput.value.trim(),
+                date: dateInput.value,
+                description: descriptionInput.value.trim(),
+                createdAt: new Date().toISOString(),
+                createdBy: userId
+            };
+            
+            if (eventData.title.length < 3 || eventData.date === "") {
+                alert("O título e a data são obrigatórios.");
+                return;
+            }
+
+            try {
+                saveEventBtn.disabled = true;
+                saveEventBtn.textContent = editingEventId ? 'Salvando...' : 'Adicionando...';
+
+                if (editingEventId) {
+                    // Atualiza evento existente
+                    const eventDocRef = doc(db, `artifacts/${appId}/public/data/events`, editingEventId);
+                    await updateDoc(eventDocRef, eventData);
+                } else {
+                    // Adiciona novo evento
+                    await addDoc(eventsRef, eventData);
+                }
+
+                closeModal();
+                // O listener do Firestore (onSnapshot) fará a re-renderização automaticamente
+            } catch (error) {
+                console.error("Erro ao salvar evento:", error);
+                alert(`Erro ao salvar evento: ${error.message}`);
+            } finally {
+                saveEventBtn.disabled = false;
+                saveEventBtn.textContent = 'Salvar Evento';
             }
         }
         
-        // Permite pressionar Enter para acessar
-        function handleKey(event) {
-            if (event.key === "Enter") {
-                verificarSenha();
+        /**
+         * Exclui um evento do Firestore.
+         */
+        async function deleteEvent() {
+            if (!editingEventId) return;
+
+            const confirmDelete = prompt("Para confirmar a exclusão, digite 'EXCLUIR':");
+            if (confirmDelete !== 'EXCLUIR') return;
+
+            try {
+                deleteEventBtn.disabled = true;
+                deleteEventBtn.textContent = 'Excluindo...';
+
+                const eventDocRef = doc(db, `artifacts/${appId}/public/data/events`, editingEventId);
+                await deleteDoc(eventDocRef);
+
+                closeModal();
+                // O listener do Firestore (onSnapshot) fará a re-renderização automaticamente
+            } catch (error) {
+                console.error("Erro ao excluir evento:", error);
+                alert(`Erro ao excluir evento: ${error.message}`);
+            } finally {
+                deleteEventBtn.disabled = false;
+                deleteEventBtn.textContent = 'Excluir';
             }
         }
+
+
+        // --- Funções de Modal ---
+        
+        /**
+         * Abre o modal para adicionar um novo evento.
+         */
+        function openAddModal(date = null) {
+            editingEventId = null;
+            modalTitle.textContent = "Adicionar Novo Evento";
+            eventForm.reset();
+            deleteEventBtn.classList.add('hidden');
+            
+            // Pré-seleciona a data, se fornecida
+            if (date) {
+                dateInput.value = date;
+            }
+            
+            eventModal.classList.remove('hidden');
+            eventModal.classList.add('flex');
+        }
+
+        /**
+         * Abre o modal para editar um evento existente.
+         */
+        function openEditModal(id) {
+            const event = allEvents.find(e => e.id === id);
+            if (!event) return;
+
+            editingEventId = id;
+            modalTitle.textContent = `Editar Evento: ${event.title}`;
+            
+            titleInput.value = event.title;
+            dateInput.value = event.date; // A data já está no formato YYYY-MM-DD
+            descriptionInput.value = event.description || '';
+            
+            deleteEventBtn.classList.remove('hidden');
+            
+            eventModal.classList.remove('hidden');
+            eventModal.classList.add('flex');
+        }
+
+        /**
+         * Fecha o modal.
+         */
+        function closeModal() {
+            eventModal.classList.add('hidden');
+            eventModal.classList.remove('flex');
+            eventForm.reset();
+            editingEventId = null;
+        }
+
+        // --- Funções Utilitárias ---
+        
+        /**
+         * Formata uma data para o formato YYYY-MM-DD.
+         */
+        function formatDate(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+        
+        // --- Listeners de Eventos DOM ---
+        
+        prevMonthBtn.addEventListener('click', () => {
+            currentViewDate.setMonth(currentViewDate.getMonth() - 1);
+            renderCalendar();
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            currentViewDate.setMonth(currentViewDate.getMonth() + 1);
+            renderCalendar();
+        });
+        
+        addEventBtn.addEventListener('click', () => openAddModal());
+        cancelModalBtn.addEventListener('click', closeModal);
+        eventForm.addEventListener('submit', saveEvent);
+        deleteEventBtn.addEventListener('click', deleteEvent);
+
+        // Inicializa o aplicativo
+        initializeFirebase();
+
     </script>
 
 </body>
