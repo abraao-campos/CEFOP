@@ -10,10 +10,10 @@
     <style>
         /* Variáveis de Cores Atualizadas */
         :root {
-            --cor-principal-texto: #0056b3; 
+            --cor-principal-texto: #0056b3; /* Azul escuro (institucional) */
             --cor-fundo-corpo: #f0f2f5; 
             --cor-texto-padrao: #333;
-            --cor-header: #e6ffd1; 
+            --cor-header: #e6ffd1; /* Verde Pastel Mais Claro */
         }
 
         /* Estilização Base */
@@ -57,7 +57,7 @@
             padding: 20px;
             border-radius: 8px; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
-            max-width: 600px; 
+            max-width: 500px; /* Reduz a largura máxima, já que não há mais imagem */
             width: 90%;
             margin: 0 auto;
         }
@@ -72,8 +72,9 @@
         
         /* Estilização dos Botões/Links (Container Principal do Item de Menu) */
         nav ul li a {
-            display: flex; 
-            align-items: center; 
+            display: flex; /* Mantém Flexbox */
+            flex-direction: column; /* Conteúdo em coluna */
+            align-items: flex-start; /* Alinha o conteúdo à esquerda */
             padding: 15px 20px;
             color: var(--cor-principal-texto); 
             text-decoration: none;
@@ -82,17 +83,10 @@
             border-left: 5px solid var(--cor-principal-texto);
         }
 
-        /* Estilização da Imagem no Menu */
-        .menu-image {
-            width: 60px; 
-            height: 60px;
-            border-radius: 50%; 
-            object-fit: cover; 
-            margin-right: 20px; 
-            flex-shrink: 0; 
-        }
+        /* Removendo a estilização de .menu-image, pois a tag img será removida */
+        /* .menu-image foi removido */
         
-        /* Container para Ícone, Título e Descrição */
+        /* Container para Ícone, Título e Descrição (mantido) */
         .menu-content {
             display: flex;
             flex-direction: column; 
@@ -110,12 +104,12 @@
             color: var(--cor-principal-texto); 
         }
 
-        /* Estilização da Descrição */
+        /* Estilização da Descrição - Ajuste de margem */
         .menu-description {
             font-size: 0.9em;
             font-weight: 400;
             color: var(--cor-texto-padrao); 
-            margin-left: 35px; 
+            margin-left: 30px; /* Ajuste para alinhar com o texto após o ícone */
         }
         
         /* Estilização do Ícone */
@@ -156,50 +150,38 @@
         <ul>
             <li class="menu-1">
                 <a href="escolas_sefor.html">
-                    <img src="https://images.unsplash.com/photo-1541339907198-e08756d17730?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8dW5pdmVyc2l0eSxsaWJyYXJ5fHx8fHx8MTcxMzY0ODk0Mw&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone Escolas SEFOR" class="menu-image">
-                    <div class="menu-content">
-                        <span class="menu-title">
-                            <i class="fas fa-university menu-icon"></i> 
-                            ESCOLAS – SEFOR
-                        </span>
-                        <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
-                    </div>
+                    <span class="menu-title">
+                        <i class="fas fa-university menu-icon"></i> 
+                        ESCOLAS – SEFOR
+                    </span>
+                    <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
                 </a>
             </li>
             <li class="menu-2">
                 <a href="escolas_emails.html">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4cd085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZW1haWwsY29tbXVuaWNhdGlvbnx8fHx8fDE3MTM2NDg5NjU&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone E-mails" class="menu-image">
-                    <div class="menu-content">
-                        <span class="menu-title">
-                            <i class="fas fa-envelope-open-text menu-icon"></i> 
-                            ESCOLAS – E-MAILS
-                        </span>
-                        <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
-                    </div>
+                    <span class="menu-title">
+                        <i class="fas fa-envelope-open-text menu-icon"></i> 
+                        ESCOLAS – E-MAILS
+                    </span>
+                    <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
                 </a>
             </li>
             <li class="menu-3">
                 <a href="mensagem_whatsapp.html">
-                    <img src="https://images.unsplash.com/photo-1610476537704-5f50f7572d4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb29tfHx3aGF0c2FwcCxjaGF0fHx8fHx8MTcxMzY0OTAwMg&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone WhatsApp" class="menu-image">
-                    <div class="menu-content">
-                        <span class="menu-title">
-                            <i class="fab fa-whatsapp menu-icon"></i> 
-                            MENSAGEM WHATSAPP
-                        </span>
-                        <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
-                    </div>
+                    <span class="menu-title">
+                        <i class="fab fa-whatsapp menu-icon"></i> 
+                        MENSAGEM WHATSAPP
+                    </span>
+                    <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
                 </a>
             </li>
             <li class="menu-4">
                 <a href="mensagem_email.html">
-                    <img src="https://images.unsplash.com/photo-1542315729-efc981242099?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8dGV4dCxkb2N1bWVudHxlbnwwfHx8fDE3MTM2NDkwMjc&ixlib=rb-4.0.3&q=80&w=400" alt="Ícone Mensagem E-mail" class="menu-image">
-                    <div class="menu-content">
-                        <span class="menu-title">
-                            <i class="fas fa-keyboard menu-icon"></i> 
-                            MENSAGEM E-MAIL
-                        </span>
-                        <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
-                    </div>
+                    <span class="menu-title">
+                        <i class="fas fa-keyboard menu-icon"></i> 
+                        MENSAGEM E-MAIL
+                    </span>
+                    <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
                 </a>
             </li>
         </ul>
