@@ -89,8 +89,8 @@
 
     <!-- Script de Funcionalidade (type="module" para usar o import) -->
     <script type="module">
-        // Importa a lista de escolas do arquivo externo escolas_data.js
-        // Este caminho ('./escolas_data.js') pressupõe que o arquivo de dados está no mesmo diretório.
+        // IMPORTANTE: ESTE IMPORT SÓ FUNCIONA SE SEU ARQUIVO 'escolas_data.js' TIVER 
+        // A LINHA: 'export const SCHOOLS = [...]'
         import { SCHOOLS } from './escolas_data.js';
 
         let filteredSchools = [];
@@ -126,7 +126,13 @@
             // 1. Coleta escolas que correspondem a QUALQUER um dos termos
             const uniqueFilteredSchools = new Set();
             
-            SCHOOLS.forEach(school => {
+            // Verifica se a lista SCHOOLS está carregada antes de tentar filtrar
+            const schoolsToFilter = SCHOOLS || [];
+
+            schoolsToFilter.forEach(school => {
+                // Certifica-se de que a escola tem a propriedade 'nome'
+                if (!school.nome) return; 
+                
                 const schoolName = school.nome.toLowerCase();
                 
                 // Verifica se o nome da escola inclui pelo menos um dos termos de busca
@@ -222,7 +228,6 @@
          * @param {string} text - O texto a ser copiado.
          */
         function copyToClipboard(text) {
-             // Método execCommand é mais compatível em ambientes restritos (como iframes/Canvas)
              const tempInput = document.createElement('textarea');
              tempInput.value = text;
              document.body.appendChild(tempInput);
