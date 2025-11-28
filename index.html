@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Célula de Formação, Programas e Projetos – CEFOP</title>
     <style>
-        /* Estilização básica para legibilidade e ajustes */
+        /* Estilização básica original mantida para legibilidade */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f4f4f4;
-            text-align: center; /* Centraliza o corpo, incluindo o cabeçalho */
         }
         header {
             background-color: #004a99;
@@ -18,37 +17,41 @@
             padding: 15px;
             text-align: center;
             border-radius: 5px 5px 0 0;
-            margin-bottom: 20px;
+            /* Adicionado um pequeno margin-bottom para separar do menu */
+            margin-bottom: 20px; 
         }
+        /* Ajuste do cabeçalho para a inversão do título */
         header h1 {
-            /* CEFOP em cima */
+            /* CEFOP em cima (Agora é o h1) */
             margin-bottom: 0;
-            font-size: 2.5em; /* Aumenta o tamanho de CEFOP */
+            font-size: 2.2em; 
         }
         header p {
-            /* Célula de Formação, Programas e Projetos embaixo */
+            /* Célula de Formação, Programas e Projetos embaixo (Novo elemento p) */
             margin-top: 5px;
             font-size: 1em;
             opacity: 0.8;
+            margin-bottom: 0;
         }
         
-        /* Estilização do Menu Horizontal */
+        /* Estilização da navegação original (Vertical) */
         nav {
+            margin-top: 0; /* Removemos o margin-top, pois o header já tem margin-bottom */
             background-color: white;
-            padding: 15px 0;
+            padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: inline-block; /* Garante que o nav se ajuste ao conteúdo */
+            max-width: 400px; /* Limita a largura para centralizar melhor o menu */
+            margin-left: auto;
+            margin-right: auto;
         }
         nav ul {
             list-style: none;
             padding: 0;
             margin: 0;
-            display: flex; /* Habilita o layout horizontal */
-            justify-content: center; /* Centraliza os itens no nav */
         }
         nav ul li {
-            margin: 0 10px; /* Espaçamento lateral entre os itens */
+            margin-bottom: 10px;
         }
         nav ul li a {
             display: block;
@@ -58,7 +61,7 @@
             text-decoration: none;
             border-radius: 4px;
             transition: background-color 0.3s;
-            white-space: nowrap; /* Impede quebras de linha nos links */
+            text-align: left; /* Alinha o texto do link à esquerda */
         }
         nav ul li a:hover {
             background-color: #d1d1d1;
