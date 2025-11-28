@@ -44,7 +44,7 @@
                 <input 
                     type="text" 
                     id="searchInput" 
-                    placeholder="Digite nomes separados por vírgula (ex: 'adelino, patativa, gent')" 
+                    placeholder="Digite o nome (ex: 'a', 'gent', 'lyceu')" 
                     class="w-full p-4 pl-12 
                     border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150 outline-none"
                     oninput="filterSchools()"
@@ -86,7 +86,7 @@
 
     <script>
         // =========================================================================================
-        // === INÍCIO DO BLOCO DE DADOS: 125 REGISTROS INSERIDOS AQUI ==============================
+        // === INÍCIO DO BLOCO DE DADOS: 125 REGISTROS DE E-MAIL (EMBUTIDOS) =======================
         // =========================================================================================
 
         const initialEscolasData = [
@@ -271,12 +271,13 @@
         // =========================================================================================
 
         let filteredSchools = [];
+        // A lista de todas as escolas usa a variável embutida, não havendo chamada a arquivos externos.
         const allSchools = initialEscolasData;
 
         /**
          * Filtra a lista de escolas em tempo real com base no texto digitado.
          * Suporta múltiplos termos separados por vírgula.
-         * É anexada ao window para ser acessível via oninput no HTML.
+         * CORREÇÃO: Permite a busca com 1 ou mais caracteres.
          */
         window.filterSchools = function() {
             const input = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -285,14 +286,14 @@
             const copyButton = document.getElementById('copyEmailsButton');
             const emailCount = document.getElementById('emailCount');
 
-            // Divide a string de busca em termos individuais e limpa.
+            // Divide a string de busca em termos individuais e limpa, aceitando termos com length > 0.
             const searchTerms = input
                 .split(',') 
                 .map(term => term.trim())
-                .filter(term => term.length > 1);
+                .filter(term => term.length > 0); // CORRIGIDO: Permite 1 caractere ou mais
 
-            // Condição para mostrar o estado inicial (sem resultados)
-            if (searchTerms.length === 0 && input.length < 2) {
+            // Se não houver termos válidos para busca (campo vazio ou só espaços)
+            if (searchTerms.length === 0) {
                 filteredSchools = [];
                 resultsList.innerHTML = '<li class="p-3 text-center text-gray-500 italic">Digite no campo de busca para começar a filtrar.</li>';
                 matchCount.textContent = '0 escolas encontradas.';
@@ -370,7 +371,6 @@
 
         /**
          * Copia um único e-mail para a área de transferência.
-         * É anexada ao window para ser acessível via onclick no HTML.
          */
         window.copySingleEmail = function(email, event) {
             const button = event.currentTarget;
@@ -388,7 +388,6 @@
 
         /**
          * Copia todos os e-mails filtrados para a área de transferência.
-         * É anexada ao window para ser acessível via onclick no HTML.
          */
         window.copyAllEmails = function() {
             if (filteredSchools.length === 0) return;
