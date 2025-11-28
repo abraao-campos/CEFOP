@@ -8,32 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDySjYKTmRUDbOINhhnkX8x5W9qTjW8cWl2s8sH5O5F4M6U5Zt1hA4c/5+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* Variáveis de Cores mantidas */
+        /* Variáveis de Cores Atualizadas */
         :root {
-            --cor-principal: #0056b3; 
-            --cor-secundaria: #e0f2ff;
-            --cor-fundo: #f0f2f5; 
-            --cor-texto: #333;
+            --cor-principal-texto: #0056b3; /* Azul mais forte para textos e detalhes */
+            --cor-fundo-corpo: #f0f2f5; 
+            --cor-texto-padrao: #333;
+            --cor-header: #c5e1a5; /* NOVO: Verde Claro para o Header */
+            --cor-header-texto: #388e3c; /* Verde Escuro para o texto do Header */
         }
 
-        /* Estilização Base mantida */
+        /* Estilização Base */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
+            background-color: var(--cor-fundo-corpo);
+            color: var(--cor-texto-padrao);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
         
-        /* Cabeçalho mantido */
+        /* Cabeçalho */
         header {
             width: 100%;
-            background-color: var(--cor-principal);
-            color: white;
+            background-color: var(--cor-header); /* Cor de fundo Verde Claro */
+            color: var(--cor-header-texto); /* Texto em Verde Escuro */
             padding: 30px 0; 
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
@@ -51,7 +52,7 @@
             opacity: 0.9;
         }
         
-        /* Navegação (Menu) mantida */
+        /* Navegação (Menu) */
         nav {
             background-color: white;
             padding: 20px;
@@ -70,49 +71,84 @@
             margin-bottom: 15px; 
         }
         
-        /* Estilização dos Botões/Links - Ajustada para layout de duas linhas */
+        /* Estilização dos Botões/Links */
         nav ul li a {
-            display: flex; /* Habilita o Flexbox para organizar ícone/texto */
-            flex-direction: column; /* Coloca os elementos em coluna */
-            align-items: flex-start; /* Alinha o conteúdo à esquerda */
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; 
             padding: 15px 20px;
-            background-color: var(--cor-secundaria); 
-            color: var(--cor-principal); 
+            color: var(--cor-principal-texto); 
             text-decoration: none;
             border-radius: 6px;
-            transition: background-color 0.3s ease, transform 0.1s;
-            border-left: 5px solid var(--cor-principal); 
+            transition: opacity 0.3s ease, transform 0.1s;
+            border-left: 5px solid var(--cor-principal-texto);
         }
         
         /* Estilização do Título do Menu */
         .menu-title {
-            display: flex; /* Para alinhar ícone e título na mesma linha */
+            display: flex; 
             align-items: center;
             font-size: 1.2em;
-            font-weight: 700; /* Negrito */
-            text-transform: uppercase; /* Caixa Alta */
-            margin-bottom: 5px; /* Espaço entre o título e a descrição */
-            color: var(--cor-principal); /* Cor principal para o título */
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 5px; 
+            color: var(--cor-principal-texto); 
         }
 
         /* Estilização da Descrição */
         .menu-description {
             font-size: 0.9em;
             font-weight: 400;
-            color: var(--cor-texto); /* Cor mais escura para a descrição */
-            margin-left: 30px; /* Alinha a descrição com o texto do título */
+            color: var(--cor-texto-padrao); 
+            margin-left: 30px; 
         }
         
         /* Estilização do Ícone */
         .menu-icon {
             font-size: 1.3em;
             margin-right: 15px;
-            color: var(--cor-principal);
+            color: var(--cor-principal-texto);
+        }
+
+        /* Cores Individuais para cada Menu */
+        /* COR 1: Azul Claro */
+        .menu-1 a {
+            background-color: #e0f7fa; 
+        }
+        .menu-1 a:hover {
+            opacity: 0.85; 
+            background-color: #b2ebf2; 
         }
         
-        /* Efeito Hover (Interação) mantido */
+        /* COR 2: Amarelo Claro */
+        .menu-2 a {
+            background-color: #fffde7;
+        }
+        .menu-2 a:hover {
+            opacity: 0.85; 
+            background-color: #fff59d;
+        }
+
+        /* COR 3: Lilás Claro */
+        .menu-3 a {
+            background-color: #f3e5f5;
+        }
+        .menu-3 a:hover {
+            opacity: 0.85; 
+            background-color: #e1bee7;
+        }
+
+        /* COR 4: Rosa/Salmão Claro */
+        .menu-4 a {
+            background-color: #fbe9e7;
+        }
+        .menu-4 a:hover {
+            opacity: 0.85; 
+            background-color: #ffccbc;
+        }
+        
+        /* Efeito Hover (Geral) */
         nav ul li a:hover {
-            background-color: #cce7ff; 
             transform: translateY(-2px); 
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -127,34 +163,38 @@
 
     <nav>
         <ul>
-            <li>
+            <li class="menu-1">
                 <a href="escolas_sefor.html">
                     <span class="menu-title">
-                        <i class="fas fa-university menu-icon"></i> ESCOLAS – SEFOR
+                        <i class="fas fa-university menu-icon"></i> 
+                        ESCOLAS – SEFOR
                     </span>
                     <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
                 </a>
             </li>
-            <li>
+            <li class="menu-2">
                 <a href="escolas_emails.html">
                     <span class="menu-title">
-                        <i class="fas fa-envelope-open-text menu-icon"></i> ESCOLAS – E-MAILS
+                        <i class="fas fa-envelope-open-text menu-icon"></i> 
+                        ESCOLAS – E-MAILS
                     </span>
                     <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
                 </a>
             </li>
-            <li>
+            <li class="menu-3">
                 <a href="mensagem_whatsapp.html">
                     <span class="menu-title">
-                        <i class="fab fa-whatsapp menu-icon"></i> MENSAGEM WHATSAPP
+                        <i class="fab fa-whatsapp menu-icon"></i> 
+                        MENSAGEM WHATSAPP
                     </span>
                     <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
                 </a>
             </li>
-            <li>
+            <li class="menu-4">
                 <a href="mensagem_email.html">
                     <span class="menu-title">
-                        <i class="fas fa-keyboard menu-icon"></i> MENSAGEM E-MAIL
+                        <i class="fas fa-keyboard menu-icon"></i> 
+                        MENSAGEM E-MAIL
                     </span>
                     <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
                 </a>
