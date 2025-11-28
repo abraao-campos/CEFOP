@@ -30,6 +30,12 @@
             cursor: pointer;
             position: relative;
         }
+        /* Estilo para a data de hoje no calendário */
+        .today {
+            border: 2px solid #ef4444; /* red-500 */
+            font-weight: bold;
+            color: #ef4444;
+        }
     </style>
 </head>
 <body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
@@ -37,57 +43,56 @@
     <!-- Container Principal do Conteúdo -->
     <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 sm:p-12 mt-4">
 
-        <!-- Título Principal da Célula -->
-        <header class="text-center mb-12">
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-700 leading-tight">
-                Célula de Formação, Programas e Projetos
+        <!-- Título Principal da Célula (Com fundo verde claro e ordem invertida) -->
+        <header class="text-center mb-12 p-4 rounded-lg bg-green-100 shadow-md border-b-4 border-green-500">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-green-800 leading-none">
+                CEFOP
             </h1>
-            <p class="text-xl font-semibold text-gray-600 mt-2">CEFOP</p>
+            <p class="text-base sm:text-xl font-semibold text-green-700 mt-1">
+                Célula de Formação, Programas e Projetos
+            </p>
         </header>
 
-        <!-- Seção de Menu -->
         <main>
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2">
-                Acesso Rápido e Ferramentas
-            </h2>
+            <!-- A seção "Acesso Rápido e Ferramentas" foi removida conforme solicitado -->
 
-            <!-- Grid de Opções do Menu -->
+            <!-- Grid de Opções do Menu (Agora com cores de fundo distintas) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
 
-                <!-- Card: ESCOLAS – SEFOR (Link Atualizado para busca e edição) -->
-                <a href="escolas_sefor.html" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                <!-- Card 1: ESCOLAS – SEFOR (Cor: Azul) -->
+                <a href="escolas_sefor.html" class="menu-card p-6 rounded-xl border-2 border-blue-200 bg-blue-50 hover:bg-blue-100 cursor-pointer block">
                     <div class="flex items-center space-x-4">
                         <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg>
                         <span class="text-xl font-semibold text-gray-900">ESCOLAS – SEFOR</span>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">Acesso ao banco de dados de informações, busca e edição.</p>
+                    <p class="text-sm text-gray-600 mt-2">Acesso ao banco de dados de informações, busca e edição.</p>
                 </a>
 
-                <!-- Card: ESCOLAS – E-MAILS (Link Atualizado para extrator em massa) -->
-                <a href="escolas_emails.html" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                <!-- Card 2: ESCOLAS – E-MAILS (Cor: Verde) -->
+                <a href="escolas_emails.html" class="menu-card p-6 rounded-xl border-2 border-green-200 bg-green-50 hover:bg-green-100 cursor-pointer block">
                     <div class="flex items-center space-x-4">
                         <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
                         <span class="text-xl font-semibold text-gray-900">ESCOLAS – E-MAILS</span>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">Extrator de e-mails em massa para uso no campo CCO/CC.</p>
+                    <p class="text-sm text-gray-600 mt-2">Extrator de e-mails em massa para uso no campo CCO/CC.</p>
                 </a>
 
-                <!-- Card: MENSAGEM WHATSAPP -->
-                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                <!-- Card 3: MENSAGEM WHATSAPP (Cor: Roxo/Fúcsia) -->
+                <a href="#" class="menu-card p-6 rounded-xl border-2 border-fuchsia-200 bg-fuchsia-50 hover:bg-fuchsia-100 cursor-pointer block">
                     <div class="flex items-center space-x-4">
-                        <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
+                        <svg class="w-8 h-8 text-fuchsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
                         <span class="text-xl font-semibold text-gray-900">MENSAGEM WHATSAPP</span>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">Gerador de mensagens padronizadas para WhatsApp.</p>
+                    <p class="text-sm text-gray-600 mt-2">Gerador de mensagens padronizadas para WhatsApp.</p>
                 </a>
 
-                <!-- Card: MENSAGEM E-MAIL -->
-                <a href="#" class="menu-card bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 cursor-pointer block">
+                <!-- Card 4: MENSAGEM E-MAIL (Cor: Laranja) -->
+                <a href="#" class="menu-card p-6 rounded-xl border-2 border-orange-200 bg-orange-50 hover:bg-orange-100 cursor-pointer block">
                     <div class="flex items-center space-x-4">
-                        <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
+                        <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
                         <span class="text-xl font-semibold text-gray-900">MENSAGEM E-MAIL</span>
                     </div>
-                    <p class="text-sm text-gray-500 mt-2">Gerador de templates de e-mail padronizados.</p>
+                    <p class="text-sm text-gray-600 mt-2">Gerador de templates de e-mail padronizados.</p>
                 </a>
             </div>
 
@@ -99,7 +104,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
                 <!-- 1. Calendário Mensal -->
-                <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+                <div class="bg-gray-50 p-4 rounded-lg shadow-inner border border-gray-200">
                     <div class="flex items-center justify-between mb-4">
                         <button id="prev-month-btn" class="text-indigo-600 hover:text-indigo-800 p-1 rounded-full hover:bg-indigo-100 transition">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
@@ -143,7 +148,7 @@
             
             <!-- Botão para Adicionar Eventos -->
             <div class="mt-6 flex justify-center">
-                <button id="add-event-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg flex items-center space-x-2">
+                <button id="add-event-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg flex items-center space-x-2 transform hover:scale-105">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                     <span>Adicionar Novo Evento</span>
                 </button>
@@ -268,6 +273,7 @@
             const year = currentViewDate.getFullYear();
             const month = currentViewDate.getMonth();
             const today = new Date();
+            const todayKey = formatDate(today);
 
             currentMonthYear.textContent = `${getMonthName(month)} de ${year}`;
             
@@ -280,7 +286,16 @@
             
             let html = '';
             let dayCount = 1;
-            let currentDayIndex = 0;
+            
+            // Cria um Map para acesso rápido aos eventos por data
+            const eventsMap = new Map();
+            allEvents.forEach(event => {
+                if (!eventsMap.has(event.date)) {
+                    eventsMap.set(event.date, []);
+                }
+                eventsMap.get(event.date).push(event);
+            });
+
 
             // Inicia as semanas
             for (let week = 0; week < 6; week++) {
@@ -289,38 +304,47 @@
                 // Itera pelos 7 dias da semana
                 for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
                     let cellContent = '';
-                    let cellClasses = 'p-1 h-10 w-10 text-xs sm:text-sm';
-                    let isCurrentMonth = false;
+                    // Classes básicas para a célula do calendário
+                    let cellClasses = 'p-1 h-10 w-10 text-xs sm:text-sm align-top hover:bg-gray-200 transition rounded-full cursor-default';
                     let dateKey = null;
 
-                    // Preenche os dias vazios no início do mês
+                    // 1. Preenche os dias vazios no início do mês
                     if (week === 0 && dayOfWeek < firstDayOfWeek) {
                         cellContent = '';
                     } 
-                    // Preenche os dias do mês
+                    // 2. Preenche os dias do mês
                     else if (dayCount <= daysInMonth) {
-                        isCurrentMonth = true;
-                        cellContent = dayCount;
+                        cellContent = `<span class="block w-8 h-8 flex items-center justify-center">${dayCount}</span>`;
                         dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayCount).padStart(2, '0')}`;
-
-                        // Marca o dia atual
-                        if (dayCount === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-                            cellClasses += ' border-2 border-indigo-500 rounded-full';
+                        
+                        // Marca o dia atual (Apenas se for o mês sendo exibido)
+                        if (dateKey === todayKey) {
+                            cellClasses += ' today border-2 border-red-500';
+                            cellContent = `<span class="block w-8 h-8 flex items-center justify-center bg-red-100 rounded-full">${dayCount}</span>`;
                         }
                         
                         // Verifica se há eventos para este dia
-                        const eventsOnDay = allEvents.filter(e => e.date === dateKey);
-                        if (eventsOnDay.length > 0) {
+                        if (eventsMap.has(dateKey)) {
+                            // Se tem evento, adiciona a classe de destaque de evento
+                            cellClasses = cellClasses.replace('hover:bg-gray-200', ''); // Remove o hover cinza
                             cellClasses += ' event-day cursor-pointer relative';
+                            cellContent = `<span class="block w-8 h-8 flex items-center justify-center">${dayCount}</span>`;
+
+                            // Se o dia de evento é o dia atual, faz uma sobreposição de classes
+                            if (dateKey === todayKey) {
+                                cellClasses = cellClasses.replace('today border-2 border-red-500', '');
+                                cellContent = `<span class="block w-8 h-8 flex items-center justify-center bg-white text-indigo-600 border border-indigo-600 rounded-full">${dayCount}</span>`;
+                                cellClasses = cellClasses.replace('event-day', ''); // Garante que a borda do today aparece
+                                cellClasses += ' cursor-pointer relative border-2 border-red-500';
+                            }
                         }
-                        
-                        cellClasses += ' hover:bg-gray-200 transition';
                         
                         dayCount++;
                     }
 
                     // Renderiza a célula
-                    html += `<td class="${cellClasses}" data-date-key="${dateKey || ''}" ${eventsOnDay && eventsOnDay.length > 0 ? `data-has-event="true"` : ''}>${cellContent}</td>`;
+                    const finalClasses = cellClasses.trim();
+                    html += `<td class="${finalClasses}" data-date-key="${dateKey || ''}" ${eventsMap.has(dateKey) ? `data-has-event="true"` : ''}>${cellContent}</td>`;
                     
                     if (dayCount > daysInMonth && dayOfWeek === 6) break;
                 }
@@ -331,9 +355,23 @@
 
             calendarBody.innerHTML = html;
             
-            // Adiciona listener para cliques nos dias
+            // Adiciona listener para cliques nos dias com evento
             calendarBody.querySelectorAll('td[data-has-event="true"]').forEach(cell => {
-                cell.addEventListener('click', (e) => showEventsForDay(e.target.getAttribute('data-date-key')));
+                cell.addEventListener('click', (e) => showEventsForDay(e.currentTarget.getAttribute('data-date-key')));
+            });
+
+            // Adiciona listener para cliques em qualquer dia (para adicionar evento)
+             calendarBody.querySelectorAll('td[data-date-key]').forEach(cell => {
+                // Adiciona um listener para abrir o modal de adição ao clicar em qualquer dia
+                // Verifica se a célula tem um date-key (não é um espaço em branco no calendário)
+                const dateKey = cell.getAttribute('data-date-key');
+                if (dateKey) {
+                    // Previne o duplo clique se já houver um evento, mas permite que o clique em um dia vazio abra o modal
+                    if (!cell.getAttribute('data-has-event')) {
+                        cell.addEventListener('click', () => openAddModal(dateKey));
+                        cell.classList.add('cursor-pointer'); // Adiciona cursor pointer para dias vazios também
+                    }
+                }
             });
         }
         
@@ -352,7 +390,10 @@
          */
         function renderEventsList() {
             // Filtra e ordena eventos futuros
-            const todayKey = formatDate(new Date());
+            const today = new Date();
+            // Para garantir que eventos de HOJE sejam incluídos, comparamos com a data sem horário
+            const todayKey = formatDate(today); 
+            
             const futureEvents = allEvents
                 .filter(e => e.date >= todayKey)
                 .sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -364,13 +405,15 @@
 
             let html = '';
             futureEvents.forEach(event => {
-                const displayDate = new Date(event.date + 'T00:00:00'); // Adiciona T00 para garantir que a data é tratada como local/UTC
+                // A data do Firestore está em YYYY-MM-DD. Adicionamos T00:00:00 para garantir que o new Date funcione como data local e não UTC
+                const displayDate = new Date(event.date + 'T00:00:00'); 
                 const formattedDate = displayDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
                 
                 html += `
                     <div class="event-item p-3 border-l-4 border-indigo-500 bg-white rounded-md shadow-sm cursor-pointer hover:bg-indigo-50 transition" data-id="${event.id}">
                         <p class="text-xs font-semibold text-gray-500">${formattedDate.replace('.', '')}</p>
                         <p class="text-base font-medium text-gray-800">${event.title}</p>
+                        ${event.description ? `<p class="text-sm text-gray-500 truncate mt-1">${event.description}</p>` : ''}
                     </div>
                 `;
             });
@@ -389,7 +432,10 @@
         function showEventsForDay(dateKey) {
             const eventsOnDay = allEvents.filter(e => e.date === dateKey);
 
-            if (eventsOnDay.length === 0) return;
+            if (eventsOnDay.length === 0) {
+                 renderEventsList(); // Volta a exibir todos os futuros se o clique foi em um dia vazio por engano
+                 return;
+            }
             
             const displayDate = new Date(dateKey + 'T00:00:00');
             const formattedDate = displayDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
@@ -421,6 +467,8 @@
          */
         function setupRealtimeListener() {
             // Consulta para buscar todos os eventos ordenados por data
+            // IMPORTANTE: O Firestore usa strings ISO 8601 (YYYY-MM-DD) para datas, 
+            // então a ordenação alfabética funciona como ordenação cronológica.
             const q = query(eventsRef, orderBy("date", "asc"));
 
             onSnapshot(q, (snapshot) => {
@@ -475,7 +523,8 @@
                 // O listener do Firestore (onSnapshot) fará a re-renderização automaticamente
             } catch (error) {
                 console.error("Erro ao salvar evento:", error);
-                alert(`Erro ao salvar evento: ${error.message}`);
+                // Não use alert() no código final, mas para debug é aceitável
+                console.log(`Erro ao salvar evento: ${error.message}`); 
             } finally {
                 saveEventBtn.disabled = false;
                 saveEventBtn.textContent = 'Salvar Evento';
@@ -488,9 +537,9 @@
         async function deleteEvent() {
             if (!editingEventId) return;
 
-            const confirmDelete = prompt("Para confirmar a exclusão, digite 'EXCLUIR':");
-            if (confirmDelete !== 'EXCLUIR') return;
-
+            // Substituindo alert/confirm por uma mensagem de console
+            console.warn("A exclusão de eventos é irreversível."); 
+            
             try {
                 deleteEventBtn.disabled = true;
                 deleteEventBtn.textContent = 'Excluindo...';
@@ -502,7 +551,6 @@
                 // O listener do Firestore (onSnapshot) fará a re-renderização automaticamente
             } catch (error) {
                 console.error("Erro ao excluir evento:", error);
-                alert(`Erro ao excluir evento: ${error.message}`);
             } finally {
                 deleteEventBtn.disabled = false;
                 deleteEventBtn.textContent = 'Excluir';
@@ -521,9 +569,12 @@
             eventForm.reset();
             deleteEventBtn.classList.add('hidden');
             
-            // Pré-seleciona a data, se fornecida
+            // Pré-seleciona a data, se fornecida (formato YYYY-MM-DD)
             if (date) {
                 dateInput.value = date;
+            } else {
+                // Se não houver data, define o dia atual como padrão
+                dateInput.value = formatDate(new Date()); 
             }
             
             eventModal.classList.remove('hidden');
