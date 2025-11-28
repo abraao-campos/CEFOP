@@ -1,519 +1,200 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESCOLAS – E-MAILS - CEFOP</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDySjYKTmRUDbOINhhnkX8x5W9qTjW8cWl2s8sH5O5F4M6U5Zt1hA4c/5+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <title>CEFOP - Gerador de Contatos de Escolas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Variáveis de Cores (Mantidas) */
-        :root {
-            --cor-principal-texto: #0056b3; 
-            --cor-fundo-corpo: #f0f2f5; 
-            --cor-header: #e6ffd1; 
-            --cor-fundo-menu-2: #fffde7; 
-            --cor-botao-copiar: #28a745; /* Verde para copiar */
-        }
-
-        /* Estilização Base */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--cor-fundo-corpo);
-            color: var(--cor-texto-padrao);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        /* Cabeçalho */
-        header {
-            width: 100%;
-            background-color: var(--cor-header); 
-            color: var(--cor-principal-texto); 
-            padding: 30px 0; 
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-            margin-bottom: 40px;
-            position: relative; 
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em; 
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        header p {
-            margin: 5px 0 0 0;
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        /* Botão Voltar */
-        .btn-voltar {
-            position: absolute;
-            top: 50%;
-            left: 20px;
-            transform: translateY(-50%);
-            text-decoration: none;
-            color: var(--cor-principal-texto);
-            font-size: 1.2em;
-            padding: 10px 15px;
-            background-color: var(--cor-fundo-menu-2); 
-            border-radius: 6px;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-        .btn-voltar:hover {
-            background-color: #fce899; 
-        }
-        .btn-voltar i {
-            margin-right: 8px;
-        }
-        
-        /* Container Principal do Conteúdo */
-        main {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
-            max-width: 900px; 
-            width: 90%;
-            margin: 0 auto 40px auto;
-        }
-
-        /* Área de Busca (TextArea) e Controles */
-        .busca-container {
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-        }
-        .busca-container textarea {
-            width: 100%;
-            height: 150px; 
-            padding: 12px;
-            border: 2px solid var(--cor-principal-texto);
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 1em;
-            outline: none;
-            transition: border-color 0.3s;
-            resize: vertical;
-            margin-bottom: 10px;
-        }
-        .busca-container textarea:focus {
-            border-color: #008cff;
-        }
-
-        /* Linha de Botões */
-        .controls-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 5px;
-        }
-        .controls-row button {
-            flex: 1; /* Faz com que os botões dividam o espaço */
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Botão Buscar */
-        #searchButton {
-            background-color: var(--cor-principal-texto);
-            color: white;
-        }
-        #searchButton:hover {
-            background-color: #004494;
-        }
-        
-        /* Botão Copiar E-mails */
-        #copyButton {
-            background-color: var(--cor-botao-copiar);
-            color: white;
-            /* Começa oculto */
-            display: none; 
-        }
-        #copyButton:hover {
-            background-color: #1e7e34;
-        }
-
-        /* Tabela de E-mails */
-        .tabela-container {
-            margin-top: 25px; /* Adiciona espaço acima da tabela */
-            max-height: 500px; 
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        /* Estilos da tabela (mantidos) */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table thead {
-            position: sticky;
-            top: 0;
-            background-color: var(--cor-principal-texto);
-            color: white;
-            z-index: 5;
-        }
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        table tr:hover {
-            background-color: #f0f0f0;
-        }
-        .mensagem-vazia {
-            text-align: center;
-            padding: 20px;
-            color: #6c757d;
-            font-style: italic;
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
 
-    <header>
-        <a href="index.html" class="btn-voltar">
-            <i class="fas fa-arrow-left"></i> Voltar ao Menu
-        </a>
-        <h1>ESCOLAS – E-MAILS</h1>
-        <p>Busca e Organização dos E-mails Institucionais</p>
-    </header>
+    <script src="escolas_data.js"></script>
 
-    <main>
-        <div class="busca-container">
-            <textarea id="schoolListInput" placeholder="Insira a lista de escolas que deseja pesquisar (uma por linha)."></textarea>
-            
-            <div class="controls-row">
-                <button id="searchButton" onclick="filtrarTabela()">
-                    <i class="fas fa-search" style="margin-right: 8px;"></i> Buscar E-mails
-                </button>
-                <button id="copyButton" onclick="copiarEmails()">
-                    <i class="fas fa-copy" style="margin-right: 8px;"></i> Copiar E-mails
-                </button>
+    <div class="w-full max-w-2xl bg-white shadow-2xl rounded-xl p-6 sm:p-8 mt-10">
+
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">📩 Contatos das Escolas</h1>
+        <p class="text-gray-500 mb-8">Selecione o SEFOR e a Escola para visualizar as informações de contato.</p>
+
+        <div class="space-y-6">
+
+            <div>
+                <label for="sefor-select" class="block text-sm font-medium text-gray-700 mb-2">1. Selecione a Regional (SEFOR)</label>
+                <select id="sefor-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                    <option value="" disabled selected>Escolha o SEFOR</option>
+                    <option value="SEFOR 1">SEFOR 1</option>
+                    <option value="SEFOR 2">SEFOR 2</option>
+                    <option value="SEFOR 3">SEFOR 3</option>
+                </select>
             </div>
+
+            <div>
+                <label for="escola-select" class="block text-sm font-medium text-gray-700 mb-2">2. Selecione a Escola</label>
+                <select id="escola-select" disabled class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                    <option value="" disabled selected>Selecione um SEFOR primeiro</option>
+                </select>
+            </div>
+            
         </div>
 
-        <div class="tabela-container">
-            <table id="escolasTable">
-                <thead>
-                    <tr>
-                        <th style="width: 15%;">SEFOR</th>
-                        <th style="width: 45%;">Escola</th>
-                        <th style="width: 40%;">E-mail Institucional</th>
-                    </tr>
-                </thead>
-                <tbody id="escolasTbody">
-                    <tr class="mensagem-vazia"><td colspan="3">Cole sua lista de escolas acima e clique em "Buscar E-mails".</td></tr>
-                </tbody>
-            </table>
+        <div id="contato-info" class="mt-8 p-6 border-l-4 border-blue-500 bg-blue-50 rounded-r-lg shadow-md hidden">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Informações de Contato</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                
+                <div class="flex items-center space-x-3">
+                    <span class="font-medium text-gray-600">Escola:</span>
+                    <p id="info-nome" class="font-bold text-gray-800"></p>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <span class="font-medium text-gray-600">Regional:</span>
+                    <p id="info-sefor" class="font-bold text-blue-600"></p>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <span class="font-medium text-gray-600">E-mail:</span>
+                    <p id="info-email" class="text-red-600 font-semibold truncate"></p>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <span class="font-medium text-gray-600">Telefone:</span>
+                    <p id="info-telefone" class="text-gray-800"></p>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <span class="font-medium text-gray-600">Diretor(a):</span>
+                    <p id="info-diretor" class="text-gray-800"></p>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <span class="font-medium text-gray-600">Celular:</span>
+                    <p id="info-celular" class="text-gray-800"></p>
+                </div>
+            </div>
+            
+            <button id="copy-email-btn" class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 shadow-md disabled:bg-gray-400" disabled>
+                Copiar Endereço de E-mail
+            </button>
+            <span id="copy-message" class="text-green-600 text-sm mt-2 hidden block">E-mail copiado!</span>
         </div>
-    </main>
+
+        <div id="email-vazio-alerta" class="mt-8 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 hidden rounded-lg" role="alert">
+            <p class="font-bold">Atenção!</p>
+            <p>Esta escola não tem um e-mail registrado no nosso banco de dados.</p>
+        </div>
+    </div>
 
     <script>
-        // 1. DADOS DAS ESCOLAS (COMPLETO COM SEUS DADOS)
-        const ESCOLAS_DATA = [
-            { sefor: "SEFOR 1", nome: "CCI NORTH SHOPPING JOQUEI", email: "ccijoquei@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CCI RIOMAR KENNEDY", email: "ccikennedy@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – ADELINO ALCÂNTARA FILHO", email: "cejaadelinoa@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – JOSÉ WALTER", email: "cejajwalter@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – MILTON CUNHA", email: "cejamiltoncunha@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – MONS. HÉLIO CAMPOS", email: "cejamcampos@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – MOREIRA CAMPOS", email: "mhcampos@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – PAULO FREIRE", email: "cejapfreire@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – PROF. EUDES VERAS", email: "everas@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – PROF. GILMAR MAIA DE SOUZA", email: "cejagmsousa@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CEJA – PROF. JOSÉ NEUDSON BRAGA", email: "cejanbraga@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "CAIC RAIMUNDO GOMES DE CARVALHO", email: "rcarvalho@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "COLÉGIO DA POLÍCIA MILITAR", email: "pmilitar@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "COLÉGIO MILITAR DO CORPO DE BOMBEIROS", email: "cbombeiros@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEEP DONA CREUSA DO CARMO ROCHA", email: "ccarmo@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEEP JOAQUIM NOGUEIRA", email: "jnogueira@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEEP JÚLIA GIFFONI", email: "jgiffoni@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEEP MARWIN", email: "marvin@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEEP PAULO PETROLA", email: "paulopetrola@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEEP PRES. ROOSEVELT", email: "proosevelt@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM DEP. FRANCISCO DE ALMEIDA MONTE", email: "amonte@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM DOM HÉLDER CÂMARA", email: "dhelder@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM DOM HÉLIO CAMPOS", email: "dhcampos@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM FÉLIX DE AZEVEDO", email: "fazevedo@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM FERNANDO CAVALCANTE MOTA", email: "cmota@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM GOV. FLÁVIO MARCÍLIO", email: "fmarcilio@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM HERÁCLITO DE CASTRO E SILVA", email: "csilva@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM JESUS MARIA JOSE", email: "jmjose@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM JOÃO PAULO II", email: "jpsegundo@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM JOSÉ WALDEMAR DE ALCÂNTARA E SILVA", email: "walcantara@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM MÁRIO HUGO CIDRACK DO VALE", email: "mcidrack@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM PATRONATO DA SAGRADA FAMÍLIA", email: "patronato@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEFM SÃO JOSÉ DO PICI DAS PEDREIRAS", email: "jpici@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEM DR. CÉSAR CALS", email: "ccals@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEM MARIANO MARTINS", email: "mmartins@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI ANTONIETA SIQUEIRA", email: "asiqueira@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI ANTÔNIO BEZERRA", email: "abezerra@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI ANTÔNIO SALES", email: "asales@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI AYRTON SENNA DA SILVA", email: "asenna@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI CLÁUDIO MARTINS", email: "cmartins@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI DONA HILZA DIOGO DE OLIVEIRA", email: "hdiogo@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI DONA MARIA MENEZES DE SERPA", email: "mmserpa@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI ESTADO DE ALAGOAS", email: "ealagoas@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI GAL. EUDORO CORRÊA", email: "eudoroc@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI HERMINIO BARROSO", email: "hbarroso@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI JOSÉ BEZERRA DE MENEZES", email: "jbezerra@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI JOSÉ VALDO RIBEIRO RAMOS", email: "wramos@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI LICEU VILA VELHA", email: "liceuvvelha@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI LIONS JANGADA", email: "ljangada@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI MOEMA TÁVORA", email: "mtavora@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI MONS. DOURADO", email: "mdourado@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI PROF. PAULO FREIRE", email: "pfreire@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI PROFª. BALBINA JUCÁ ALBUQUERQUE", email: "bjuca@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI PROFª. MARIA JOSÉ SANTOS FERREIRA GOMES", email: "ceremjose@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI SÃO JOSÉ DOS ARPOADORES", email: "jarpoadores@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI SALES CAMPOS", email: "scampos@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI SANTO AFONSO", email: "safonso@escola.ce.gov.br" },
-            { sefor: "SEFOR 1", nome: "EEMTI WALDEMAR FALCÃO", email: "vfalcao@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "CCI RIOMAR FORTALEZA", email: "ccipapicu@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "CCI VIA SUL SHOPPING", email: "ccisul@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "COLÉGIO ESTADUAL JUSTINIANO DE SERPA", email: "jserpa@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEEP COMENDADOR MIGUEL GURGEL", email: "miguelgurgel@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEEP JAIME ALENCAR DE OLIVEIRA", email: "eeepjaime.alencar@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEEP JOAQUIM ANTÔNIO ALBANO", email: "jalbano@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEEP JOSÉ DE BARCELOS", email: "jbarcelos@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEEP MARIA ÂNGELA DA SILVEIRA BORGES", email: "angelaborges@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEEP MARIA JOSÉ MEDEIROS", email: "mmedeiros@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEEP MÁRIO DE ALENCAR", email: "marioalencar@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM ALMIRANTE TAMANDARÉ", email: "atamandare@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM ANTÔNIO DIAS MACEDO", email: "admacedo@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM ARQUITETO ROGÉRIO FRÓES", email: "rfroes@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM BÁRBARA DE ALENCAR", email: "balencar@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM CLÓVIS BEVILÁQUIA", email: "cbevilaqua@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM CONSTANÇA TÁVORA", email: "ctavora@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM DEP. MANOEL RODRIGUES", email: "mrodrigues@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM DRA. ALDACI BARBOSA", email: "abarbosa@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM GEN. MURILO BORGES MOREIRA", email: "mborges@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM JOSÉ DE ALENCAR", email: "jalencar@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM LUÍZA TÁVORA – PIO XII", email: "ltavora@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM LUIZA TÁVORA – PROMORAR", email: "ltpromorar@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM NOEL HUGNEN DE OLIVEIRA PAIVA", email: "nhugnen@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM OTÁVIO TERCEIRO DE FARIAS", email: "otaviot@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM PADRE ROCHA", email: "procha@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM PARÓQUIA DA PAZ", email: "ppaz@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM POLIVALENTE MODELO DE FORTALEZA", email: "polivalentemf@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM PROF. ALOYSIO BARROS LEAL", email: "ableal@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM PROF. PAULO AYRTON ARAÚJO", email: "payrton@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM PROFª. MARIA DA CONCEIÇÃO PORFÍRIO TELES", email: "pteles@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM PROFª. MARIA GONÇALVES", email: "mgoncalves@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM SANTA LUZIA", email: "sluzia@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEM LICEU DE MESSEJANA", email: "liceum@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI COLÉGIO ESTADUAL LICEU DO CEARÁ", email: "lceara@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI DEP. PAULINO ROCHA", email: "paulinorocha@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI DEP. PAULO BENEVIDES", email: "pbenevides@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI DOM ANTÔNIO DE ALMEIDA LUSTOSA", email: "amlustosa@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI DRAGÃO DO MAR", email: "dmar@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI ESTADO DO PARÁ", email: "estpara@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI GOV. LUIZ GONZAGA FONSECA MOTA", email: "gmota@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI GOV. VIRGÍLIO TÁVORA", email: "vtavora@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI HELENITA MOTA", email: "hmota@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI INTEGRADA 02 DE MAIO", email: "2demaio@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI IRACEMA", email: "iracema@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI JOÃO NOGUEIRA JUCÁ", email: "jnjuca@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI JOHNSON", email: "johnson@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI MATIAS BECK", email: "mbeck@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI MIRIAN PORTO MOTA", email: "mpmota@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI PADRE GUILHERME WASSEN", email: "gwaessen@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEFM PADRE MARCELINO CHAMPAGNAT", email: "pmarcelino@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI POETA OTÁCILIO COLARES", email: "ocolares@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI PROFª FERNANDA MARIA GOMES DE AMORIM", email: "" }, 
-            { sefor: "SEFOR 2", nome: "EEMTI PROFª TECLA FERREIRA", email: "tferreira@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI PROFª TELINA BARBOSA DA COSTA", email: "tbarbosa@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI RENATO BRAGA", email: "rbraga@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI VISCONDE DO RIO BRANCO", email: "vrbranco@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI WALTER DE SÁ CAVALCANTE", email: "wscavalcante@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "INSTITUTO CEARENSE DE EDUCAÇÃO DE SURDOS", email: "isurdos@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "INSTITUTO DOS CEGOS", email: "icegos@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "CCI CONJUNTO CEARÁ", email: "cciconjuntoceara@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "CCI SHOPPING BENFICA", email: "ccibenfica@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP DARCY RIBEIRO", email: "darcyribeiro@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP ICARO DE SOUSA", email: "icarosm@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP JOAQUIM MOREIRA DE SOUSA", email: "jmsousa@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP JUAREZ TÁVORA", email: "jtavora@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP LEONEL DE MOURA BRIZOLA", email: "leonelbrizola@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP PAULO VI", email: "paulovi@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP PROF. CÉSAR CAMPELO", email: "uv5ccampelo@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEEP PROF. ONÉLIO PORTO", email: "oneliop@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM DEP. JOACI PEREIRA", email: "joacip@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM DIVA CABRAL", email: "divacabral@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM DR. GENTIL BARREIRA", email: "uv2gentilb@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM DR. UBIRAJARA INDIO DO CEARÁ", email: "uv7ubirajara@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM FIGUEIREDO CORREIA", email: "figueiredo@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM HERMENEGILDO FIRMEZA", email: "hermenegildo@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM JÁDER MOREIRA DE CARVALHO", email: "jadermc@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM JOAQUIM ALVES", email: "joaquimalves@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM JOSÉ LEOPOLDINO DA SILVA", email: "uv4leopoldino@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM DONA JÚLIA ALVES PESSOA", email: "juliaalves@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM MARIO SCHEMBERG", email: "mschemberg@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM MICHELSON NOBRE DA SILVA", email: "michelson@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM PARQUE PRESIDENTE VARGAS", email: "vargas@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM PAULO ELPIDIO", email: "pauloelpidio@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM SANTO AMARO", email: "santoamaro@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM SÃO FRANCISCO DE ASSIS – CANINDEZINHO", email: "sfassiscan@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEFM SÃO JOSÉ", email: "saojose@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEM GOV. ADAUTO BEZERRA", email: "adautob@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PROFª. ADÉLIA BRASIL FEIJÓ", email: "adeliab@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PROFª. ADALGISA BONFIM SOARES", email: "adalgisa@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI ANISIO TEIXEIRA", email: "anisiot@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI ESTADO DO AMAZONAS", email: "amazonas@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI ESTADO DO MARANHÃO", email: "maranhao@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI ESTADO DO PARANÁ", email: "parana@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI IRAPUAN CAVALCANTE PINHEIRO", email: "irapuanc@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI IRMÃO URBANO GONZALEZ ROGRIGUEZ", email: "iurbano@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI JENNY GOMES", email: "jennygomes@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI JOÃO MATTOS", email: "jmatos@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI JOSÉ AURÉLIO CÂMARA", email: "jacamara@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI LICEU PROF. DOMINGOS BRASILEIRO", email: "liceupantanal@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI MAL. HUMBERTO DE ALENCAR CASTELO BRANCO", email: "mcastelobranco@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI MARIA ALVES CARIOCA", email: "caicmacarioca@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI MARIA MARGARIDA DE CASTRO ALMEIDA", email: "mmca@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI MARIA THOMÁSIA", email: "mthomasia@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PLÁCIDO ADERALDO CASTELO", email: "uv7placido@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI POETA PATATIVA DO ASSARÉ", email: "patativa@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PRES. HUMBERTO DE ALENCAR CASTELO BRANCO", email: "pcastelobranco@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PROF. EDMILSON GUIMARÃES DE ALMEIDA", email: "uv10edmilson@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PROF. JOCIÊ CAMINHA DE MENESES", email: "jociec@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PROF. JOSÉ MARIA CAMPOS", email: "uv8mcampos@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI PROFª. MARIA ANTONIETA NUNES", email: "uv9anunes@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI SÃO FRANCISCO DE ASSIS – BOM JARDIM", email: "sfassis@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI SÃO JOÃO DO PIAMARTA", email: "sjpiamarta@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI SEN. FERNANDES TÁVORA", email: "ftavora@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI SEN. OSIRES PONTES", email: "osiresp@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "EEMTI LICEU DO CONJUNTO CEARÁ", email: "liceucc@escola.ce.gov.br" },
-            { sefor: "SEFOR 3", nome: "INSTITUTO DE EDUCAÇÃO", email: "iec@escola.ce.gov.br" },
-        ];
+        // O array 'escolas_data' é carregado do arquivo escolas_data.js
+        const seforSelect = document.getElementById('sefor-select');
+        const escolaSelect = document.getElementById('escola-select');
+        const contatoInfoDiv = document.getElementById('contato-info');
+        const emailVazioAlerta = document.getElementById('email-vazio-alerta');
+        const copyEmailBtn = document.getElementById('copy-email-btn');
+        const copyMessage = document.getElementById('copy-message');
 
-        // 2. FUNÇÃO AUXILIAR PARA RENDERIZAR A TABELA
-        function renderizarTabela(dadosParaExibir) {
-            const tbody = document.getElementById('escolasTbody');
-            const copyButton = document.getElementById('copyButton');
-            tbody.innerHTML = ''; 
+        let escolasFiltradas = [];
+
+        // 1. Função para carregar as escolas após a seleção do SEFOR
+        seforSelect.addEventListener('change', (event) => {
+            const seforSelecionado = event.target.value;
             
-            if (dadosParaExibir.length === 0) {
-                const mensagem = document.createElement('tr');
-                mensagem.className = 'mensagem-vazia';
-                mensagem.innerHTML = '<td colspan="3">Nenhum e-mail encontrado para a lista de escolas fornecida.</td>';
-                tbody.appendChild(mensagem);
+            // Filtra o array global 'escolas_data'
+            escolasFiltradas = escolas_data.filter(escola => escola.sefor === seforSelecionado);
+            
+            // Limpa o select de escolas e o resultado
+            escolaSelect.innerHTML = '<option value="" disabled selected>Selecione a Escola</option>';
+            contatoInfoDiv.classList.add('hidden');
+            emailVazioAlerta.classList.add('hidden');
+            copyMessage.classList.add('hidden');
+
+            if (escolasFiltradas.length > 0) {
+                // Habilita o select e preenche as opções
+                escolaSelect.disabled = false;
+                escolaSelect.classList.remove('bg-gray-100');
                 
-                copyButton.style.display = 'none'; // Oculta o botão se não houver resultados
-                return;
+                escolasFiltradas.sort((a, b) => a.nome.localeCompare(b.nome)); // Ordena por nome
+                
+                escolasFiltradas.forEach(escola => {
+                    const option = document.createElement('option');
+                    option.value = escola.nome;
+                    option.textContent = escola.nome;
+                    escolaSelect.appendChild(option);
+                });
+            } else {
+                escolaSelect.disabled = true;
+                escolaSelect.classList.add('bg-gray-100');
             }
+        });
 
-            dadosParaExibir.forEach(escola => {
-                let row = tbody.insertRow();
-                
-                // Coluna 1: SEFOR
-                row.insertCell().innerHTML = `<strong>${escola.sefor}</strong>`;
+        // 2. Função para exibir os dados de contato da escola selecionada
+        escolaSelect.addEventListener('change', (event) => {
+            const nomeEscolaSelecionada = event.target.value;
+            const escola = escolasFiltradas.find(e => e.nome === nomeEscolaSelecionada);
 
-                // Coluna 2: Nome da Escola
-                row.insertCell().innerHTML = escola.nome;
+            if (escola) {
+                // Atualiza a área de informações
+                document.getElementById('info-nome').textContent = escola.nome || 'N/A';
+                document.getElementById('info-sefor').textContent = escola.sefor || 'N/A';
+                document.getElementById('info-email').textContent = escola.email || 'E-mail não registrado';
+                document.getElementById('info-telefone').textContent = escola.telefone || 'N/A';
+                document.getElementById('info-diretor').textContent = escola.diretor || 'N/A';
+                document.getElementById('info-celular').textContent = escola.celular || 'N/A';
                 
-                // Coluna 3: E-mail (com link mailto)
-                let cellEmail = row.insertCell();
-                if (escola.email && escola.email !== "") {
-                    cellEmail.innerHTML = `<a href="mailto:${escola.email}">${escola.email}</a>`;
+                contatoInfoDiv.classList.remove('hidden');
+                emailVazioAlerta.classList.add('hidden');
+                copyMessage.classList.add('hidden');
+
+                // Lógica do botão de copiar
+                if (escola.email && escola.email !== 'E-mail não registrado' && escola.email.trim() !== "") {
+                    copyEmailBtn.disabled = false;
+                    copyEmailBtn.classList.remove('disabled:bg-gray-400');
                 } else {
-                    cellEmail.innerHTML = `<span style="color: #d9534f; font-weight: bold;">E-MAIL PENDENTE</span>`;
-                }
-            });
-
-            copyButton.style.display = 'flex'; // Exibe o botão se houver resultados
-        }
-
-
-        // 3. FUNÇÃO PARA FILTRAR A TABELA BASEADA NA LISTA
-        function filtrarTabela() {
-            const textarea = document.getElementById('schoolListInput');
-            const listaInput = textarea.value;
-            
-            // 1. Processa a lista de entrada (remove linhas vazias, espaços e converte para maiúsculas)
-            const nomesBuscados = listaInput
-                .split('\n')
-                .map(nome => nome.trim().toUpperCase())
-                .filter(nome => nome.length > 0);
-
-            if (nomesBuscados.length === 0) {
-                // Se a lista estiver vazia, renderiza uma tabela vazia com a mensagem inicial
-                renderizarTabela([]);
-                return;
-            }
-
-            // 2. Filtra os dados originais
-            const resultados = ESCOLAS_DATA.filter(escola => {
-                // Normaliza o nome da escola do BD para comparação
-                const nomeEscolaBD = escola.nome.toUpperCase().trim();
-                
-                // Verifica se o nome da escola do BD está na lista de nomes buscados
-                return nomesBuscados.includes(nomeEscolaBD);
-            });
-
-            // 3. Renderiza a tabela apenas com os resultados
-            renderizarTabela(resultados);
-        }
-
-        // 4. FUNÇÃO PARA COPIAR APENAS OS E-MAILS DA TABELA
-        async function copiarEmails() {
-            const tbody = document.getElementById('escolasTbody');
-            const rows = tbody.querySelectorAll('tr');
-            let emails = [];
-
-            // Acessa a terceira célula (índice 2) de cada linha
-            rows.forEach(row => {
-                const cellEmail = row.cells[2]; 
-                if (cellEmail) {
-                    const emailText = cellEmail.textContent.trim();
-                    // Garante que é um e-mail válido (contém '@' e não é a mensagem 'PENDENTE')
-                    if (emailText.includes('@') && !emailText.toUpperCase().includes('PENDENTE')) {
-                        emails.push(emailText);
-                    }
-                }
-            });
-
-            const emailString = emails.join('; '); // Junta com ponto e vírgula e espaço (padrão de cliente de e-mail)
-
-            if (emailString.length > 0) {
-                try {
-                    // Usa a API de Clipboard para copiar
-                    await navigator.clipboard.writeText(emailString);
-                    alert('✅ ' + emails.length + ' e-mails copiados para a área de transferência!');
-                } catch (err) {
-                    // Fallback para navegadores mais antigos (embora a maioria moderna suporte)
-                    alert('❌ Não foi possível usar a cópia automática. Por favor, selecione os e-mails e copie manualmente.');
+                    copyEmailBtn.disabled = true;
+                    copyEmailBtn.classList.add('disabled:bg-gray-400');
+                    emailVazioAlerta.classList.remove('hidden');
                 }
             } else {
-                alert('Nenhum e-mail válido para copiar nos resultados atuais.');
+                contatoInfoDiv.classList.add('hidden');
             }
-        }
+        });
 
-        // Oculta o botão de cópia ao carregar a página
-        window.onload = function() {
-            document.getElementById('copyButton').style.display = 'none';
-        };
+        // 3. Funcionalidade para copiar o email
+        copyEmailBtn.addEventListener('click', () => {
+            const email = document.getElementById('info-email').textContent;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(email).then(() => {
+                    copyMessage.classList.remove('hidden');
+                    setTimeout(() => {
+                        copyMessage.classList.add('hidden');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Erro ao copiar o texto: ', err);
+                    alert('Erro ao copiar o e-mail. Tente copiar manualmente.');
+                });
+            } else {
+                // Fallback para navegadores sem suporte a navigator.clipboard
+                const textarea = document.createElement('textarea');
+                textarea.value = email;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                copyMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    copyMessage.classList.add('hidden');
+                }, 2000);
+            }
+        });
+
     </script>
-
 </body>
 </html>
