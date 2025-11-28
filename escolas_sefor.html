@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEFOP - Busca e Edição de Escolas</title>
+    <title>CEFOP - Informações das Escolas da SEFOR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -26,42 +26,36 @@
 
     <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 sm:p-8 mt-10">
 
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">🔍 Busca e Gerenciamento de Escolas</h1>
-        <p id="total-escolas" class="text-lg text-gray-500 mb-4 font-semibold">Carregando total...</p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Informações das Escolas da SEFOR</h1>
 
-        <div class="mb-6 flex justify-end">
-            <button id="export-json-btn" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold 
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6">
+            <p id="total-escolas" class="text-lg text-gray-500 font-semibold mb-2 sm:mb-0">Carregando total...</p>
+            
+            <button id="import-agenda-btn" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold 
             py-2 px-4 rounded-lg transition duration-300 shadow-md">
-                Exportar Dados Atualizados (JSON)
+                Importar agenda completa
             </button>
         </div>
-
-        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8 rounded-lg" role="alert">
-            <p class="font-bold">Atenção!</p>
-            <p class="text-sm">As alterações são salvas apenas no seu navegador via **LocalStorage**.
-            Use o botão "Exportar Dados" para salvar permanentemente.</p>
-        </div>
-
+        
         <div class="mb-6">
             <label for="search-input" class="block text-sm font-medium text-gray-700 mb-2">Pesquisar por Nome da Escola (parte ou nome completo):</label>
-            <input type="text" id="search-input" placeholder="Ex: liceu, adauto, filomeno..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 text-base">
+            <input type="text" id="search-input" placeholder="Digite pelo menos 3 letras..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 text-base">
         </div>
         
         <div id="results-container" class="space-y-4">
-            <p class="text-gray-500">Aguardando carregamento da lista inicial...</p>
+            <p class="text-gray-500">Digite pelo menos 3 letras para iniciar a busca.</p>
         </div>
         
     </div>
 
     <script>
         // =========================================================================================
-        // === INÍCIO DO BLOCO DE DADOS (SUA VARIÁVEL ESCOLAS_DATA VEM PARA ESTE LOCAL) ==========
+        // === INÍCIO DO BLOCO DE DADOS: COLE AQUI SEUS 174 REGISTROS DE ESCOLA ====================
         // =========================================================================================
 
-        // SE VOCÊ TEM O CONTEÚDO DO SEU escolas_data.js, COPIE E COLE A VARIÁVEL AQUI.
-        // O nome da variável DEVE ser 'initialEscolasData'
         const initialEscolasData = [
-            {
+            // EXEMPLOS:
+                {
         sefor: "SEFOR 1",
         nome: "CCI NORTH SHOPPING JOQUEI",
         email: "ccijoquei@escola.ce.gov.br",
@@ -1463,14 +1457,13 @@
         // === FIM DO BLOCO DE DADOS ===============================================================
         // =========================================================================================
         
-        // Variável de trabalho que contém a lista atual (inicializada com os dados embutidos ou LocalStorage)
         let dataArray = []; 
         const LOCAL_STORAGE_KEY = 'escolas_data_updated';
 
         const searchInput = document.getElementById('search-input');
         const resultsContainer = document.getElementById('results-container');
         const totalEscolasElement = document.getElementById('total-escolas');
-        const exportJsonBtn = document.getElementById('export-json-btn');
+        const importAgendaBtn = document.getElementById('import-agenda-btn'); // Novo botão
 
         function loadData() {
             const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -1480,18 +1473,14 @@
                 try {
                     escolasFonte = JSON.parse(storedData);
                 } catch (e) {
-                    // Se o LocalStorage estiver corrompido, usa os dados embutidos (garantia de funcionamento)
                     escolasFonte = initialEscolasData; 
                 }
             } else { 
-                // Se não houver dados no LocalStorage, usa os dados embutidos
                 escolasFonte = initialEscolasData;
             }
             
-            // Atribui a fonte de dados à variável de trabalho
             dataArray = escolasFonte; 
 
-            // Garante que cada escola tenha um índice único
             dataArray = dataArray.map((escola, index) => ({
                 ...escola,
                 data_id: escola.nome 
@@ -1505,15 +1494,11 @@
                 totalEscolasElement.classList.add('text-red-500');
             }
             
-            // Chamada inicial para mostrar todas as escolas ao carregar a página
-            if (dataArray.length > 0) {
-                searchAndRender(); 
-            }
+            // REMOVIDO: A chamada searchAndRender() para que a lista não apareça na inicialização.
         }
 
         function saveData() {
             try {
-                // Usando 'dataArray'
                 const dataToSave = dataArray.map(e => {
                     const { data_id, ...rest } = e;
                     return rest;
@@ -1526,7 +1511,7 @@
 
         /**
          * 3. Executa a pesquisa e renderiza os resultados
-         * A busca funciona em tempo real (autocompletar)
+         * CRÍTICO: Agora exige searchTerm.length >= 3
          */
         function searchAndRender() {
             const searchTerm = searchInput.value.trim().toUpperCase();
@@ -1535,13 +1520,12 @@
                 return; 
             }
             
-            // Se o campo de busca estiver vazio, mostre TODAS as escolas
-            if (searchTerm.length === 0) {
-                renderSearchResults(dataArray); 
+            // CRÍTICO: Bloqueia a exibição da lista se houver menos de 3 caracteres.
+            if (searchTerm.length < 3) {
+                 resultsContainer.innerHTML = '<p class="text-gray-500">Digite pelo menos 3 letras para iniciar a busca.</p>'; 
                 return; 
             }
 
-            // Filtra as escolas: verifica se o NOME inclui o termo pesquisado
             const filteredSchools = dataArray.filter(escola => {
                 if (escola.nome) {
                     return escola.nome.toUpperCase().includes(searchTerm);
@@ -1552,7 +1536,6 @@
             filteredSchools.sort((a, b) => a.nome.localeCompare(b.nome));
             renderSearchResults(filteredSchools);
         }
-
 
         function renderSearchResults(schools) {
             if (schools.length === 0 && searchInput.value.trim().length > 0) {
@@ -1581,9 +1564,8 @@
             const schoolIndex = index !== undefined ?
                 index + 1 : '';
 
-            // Mapeamento de campos para visualização
-            const diretorContatoField = 'Contato Diretor(a)';
-            const diretorContatoValue = escola.contato_diretor || 'N/A';
+            // Tenta obter o valor usando 'contato_diretor', ou 'celular', ou 'telefone_diretor' (o que existir)
+            const diretorContatoValue = escola.contato_diretor || escola.celular || escola.telefone_diretor || 'N/A';
             
             return `
                 <li id="school-${escola.data_id}" class="school-list-item p-4 transition duration-150 ease-in-out hover:bg-gray-50 data-id-${escola.data_id}" data-id="${escola.data_id}">
@@ -1605,8 +1587,9 @@
                             <span class="${detailTextColor} font-medium">Diretor(a):</span> 
                             <span data-field="diretor">${escola.diretor || 'N/A'}</span>
                         </div>
+                        
                         <div class="flex flex-wrap gap-x-4">
-                            <span class="${detailTextColor} font-medium">${diretorContatoField}:</span>
+                            <span class="${detailTextColor} font-medium">Contato Diretor(a):</span>
                             <span data-field="contato_diretor">${diretorContatoValue}</span>
                         </div>
                         
@@ -1649,11 +1632,13 @@
                 };
                 const label = labelMap[field];
                 
+                const fieldValue = escola[field] || escola.celular || escola.telefone_diretor || '';
+
                 editHtml += `
                     <div class="flex items-center">
                         <label for="edit-${escola.data_id}-${field}" class="w-1/4 font-medium 
                         text-gray-700 text-xs">${label}:</label>
-                        <input id="edit-${escola.data_id}-${field}" type="text" value="${escola[field] || ''}" data-field="${field}" class="editable-input w-3/4">
+                        <input id="edit-${escola.data_id}-${field}" type="text" value="${fieldValue}" data-field="${field}" class="editable-input w-3/4">
                     </div>
                 `;
             });
@@ -1687,7 +1672,14 @@
                 const field = input.getAttribute('data-field');
                 const newValue = input.value.trim();
                 
-                if (escola[field] !== newValue) {
+                if (field === 'contato_diretor') {
+                    if (escola.contato_diretor !== newValue) {
+                        escola.contato_diretor = newValue;
+                        escola.celular = undefined;
+                        escola.telefone_diretor = undefined;
+                        updated = true;
+                    }
+                } else if (escola[field] !== newValue) {
                     escola[field] = newValue;
                     updated = true;
                 }
@@ -1702,28 +1694,72 @@
             }
         }
 
-        exportJsonBtn.addEventListener('click', () => {
+        // =========================================================================================
+        // === FUNÇÕES DE EXPORTAÇÃO CSV ===========================================================
+        // =========================================================================================
+
+        function escapeCSV(str) {
+            if (str === null || str === undefined) return '';
+            str = String(str).replace(/"/g, '""'); // Escapa aspas
+            if (str.includes(';') || str.includes('\n') || str.includes('"')) {
+                return `"${str}"`; // Coloca entre aspas se houver separador, quebra de linha ou aspas
+            }
+            return str;
+        }
+
+        function convertToCSV(objArray) {
+            // 1. Obtém todos os cabeçalhos (chaves)
+            const allKeys = new Set();
+            objArray.forEach(item => {
+                Object.keys(item).forEach(key => allKeys.add(key));
+            });
+            // Filtra o campo interno 'data_id'
+            const headers = Array.from(allKeys).filter(key => key !== 'data_id');
+
+            // 2. Constrói o cabeçalho CSV (delimitado por ';')
+            let csvString = headers.map(escapeCSV).join(';') + '\n';
+
+            // 3. Constrói as linhas de dados
+            objArray.forEach(item => {
+                const row = headers.map(header => {
+                    return escapeCSV(item[header]);
+                }).join(';');
+                csvString += row + '\n';
+            });
+
+            return csvString;
+        }
+
+        function exportToCSV() {
+            // Pega os dados limpos (sem a chave interna data_id)
             const exportData = dataArray.map(e => {
                 const { data_id, ...rest } = e;
                 return rest;
             });
-            const json = JSON.stringify(exportData, null, 4);
-            const blob = new Blob([json], { type: 'application/json' });
+
+            const csvContent = convertToCSV(exportData);
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'escolas_data_atualizado.json';
+            a.download = 'agenda_escolas_completa.csv';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            alert('Arquivo JSON com os dados atualizados gerado com sucesso!');
-        });
+            alert('Arquivo CSV com a agenda completa gerado com sucesso!');
+        }
+
+        // =========================================================================================
+        // === LISTENERS E INICIALIZAÇÃO ===========================================================
+        // =========================================================================================
         
         searchInput.addEventListener('input', searchAndRender);
-        // Inicializa o carregamento dos dados
+        importAgendaBtn.addEventListener('click', exportToCSV); // Listener para o novo botão
+        
         loadData();
     </script>
 </body>
