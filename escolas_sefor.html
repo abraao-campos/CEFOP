@@ -8,17 +8,17 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7f9fb; /* [cite: 2] */
+            background-color: #f7f9fb; /* */
         }
         /* Estilo para inputs no modo de edição */
         .editable-input {
-            border: 1px solid #ccc; /* [cite: 3] */
-            padding: 2px 6px; /* [cite: 3] */
+            border: 1px solid #ccc;
+            padding: 2px 6px; /* */
             border-radius: 4px;
             width: 100%;
             font-size: 0.875rem; /* text-sm */
             line-height: 1.25rem;
-            color: #1f2937; /* text-gray-800 [cite: 4] */
+            color: #1f2937; /* text-gray-800 */
         }
     </style>
 </head>
@@ -32,14 +32,15 @@
         <p id="total-escolas" class="text-lg text-gray-500 mb-4 font-semibold">Carregando total...</p>
 
         <div class="mb-6 flex justify-end">
-            <button id="export-json-btn" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md"> Exportar Dados Atualizados (JSON)
+            <button id="export-json-btn" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold 
+            py-2 px-4 rounded-lg transition duration-300 shadow-md"> Exportar Dados Atualizados (JSON)
             </button>
         </div>
 
         <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8 rounded-lg" role="alert">
             <p class="font-bold">Atenção!</p>
             <p class="text-sm">As alterações são salvas apenas no seu navegador via **LocalStorage**.
-            Use o botão "Exportar Dados" para salvar permanentemente. </p>
+            Use o botão "Exportar Dados" para salvar permanentemente.</p>
         </div>
 
         <div class="mb-6">
@@ -47,6 +48,7 @@
             <input type="text" id="search-input" placeholder="Ex: liceu, adauto, filomeno..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 text-base">
         </div>
         
+      
         <div id="results-container" class="space-y-4"> <p class="text-gray-500">Comece a digitar para buscar escolas.</p>
         </div>
         
@@ -54,29 +56,30 @@
 
     <script>
         // Variável global que armazenará o array de dados, carregado do localStorage ou do arquivo.
-        let escolasData = []; // [cite: 8]
+        let escolasData = []; //
         const LOCAL_STORAGE_KEY = 'escolas_data_updated';
 
         const searchInput = document.getElementById('search-input');
         const resultsContainer = document.getElementById('results-container');
         const totalEscolasElement = document.getElementById('total-escolas');
-        const exportJsonBtn = document.getElementById('export-json-btn'); // [cite: 9]
+        const exportJsonBtn = document.getElementById('export-json-btn'); //
 
         /**
          * 1. Carrega os dados, priorizando o localStorage
          */
         function loadData() {
             const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (storedData) { // [cite: 10]
+            if (storedData) { //
                 try {
-                    escolasData = JSON.parse(storedData); // [cite: 11]
+                    escolasData = JSON.parse(storedData);
                 } catch (e) {
-                    escolasData = window.escolasData; // [cite: 12]
+                    // CORREÇÃO AQUI: A variável global é 'escolasData' (camelCase), não 'escolas_data'
+                    escolasData = window.escolasData; 
                 }
-            } else if (typeof window.escolasData !== 'undefined') {
-                escolasData = window.escolasData; // [cite: 13]
+            } else if (typeof window.escolasData !== 'undefined') { // CORREÇÃO AQUI
+                escolasData = window.escolasData;
             } else {
-                escolasData = []; // [cite: 14]
+                escolasData = []; //
             }
 
             // Garante que cada escola tenha um índice único
@@ -84,13 +87,14 @@
                 ...escola,
                 // Usamos o nome da escola como ID primário, mas fallback para o índice
                 data_id: escola.nome 
-                    ? escola.nome.replace(/\s/g, '_') : index // [cite: 15]
+                    ? escola.nome.replace(/\s/g, '_') : index //
             }));
-            if (escolasData.length > 0) { // [cite: 16]
-                totalEscolasElement.textContent = `Total de Escolas Registradas: ${escolasData.length}`; // [cite: 17]
+            if (escolasData.length > 0) { //
+                totalEscolasElement.textContent = `Total de Escolas Registradas: ${escolasData.length}`; //
             } else {
-                totalEscolasElement.textContent = "Erro: Dados das escolas não encontrados ou vazios."; // [cite: 17]
-                totalEscolasElement.classList.add('text-red-500'); // [cite: 18]
+                // Se esta mensagem aparecer, a CORREÇÃO do item 2 não foi feita.
+                totalEscolasElement.textContent = "Erro: Dados das escolas não encontrados ou vazios."; //
+                totalEscolasElement.classList.add('text-red-500'); //
             }
         }
 
@@ -100,13 +104,13 @@
         function saveData() {
             try {
                 // Remove o índice temporário 'data_id' antes de salvar
-                const dataToSave = escolasData.map(e => { // [cite: 19]
+                const dataToSave = escolasData.map(e => { //
                     const { data_id, ...rest } = e;
                     return rest;
                 });
-                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave)); // [cite: 20]
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave)); //
             } catch (e) {
-                alert('Erro ao salvar os dados no navegador (localStorage).'); // [cite: 21]
+                alert('Erro ao salvar os dados no navegador (localStorage).'); //
             }
         }
 
@@ -115,18 +119,18 @@
          */
         function searchAndRender() {
             const searchTerm = searchInput.value.trim().toUpperCase();
-            if (searchTerm.length < 3) { // [cite: 22]
+            if (searchTerm.length < 3) { //
                 resultsContainer.innerHTML = '<p class="text-gray-500">Continue digitando para refinar a busca.</p>';
-                return; // [cite: 23]
+                return; //
             }
 
-            // Filtra as escolas por parte do nome (atende ao requisito de pesquisa parcial)
+            // Filtra as escolas por parte do nome
             const filteredSchools = escolasData.filter(escola => 
                 escola.nome && escola.nome.toUpperCase().includes(searchTerm)
             );
             // Ordena por nome para melhor visualização
-            filteredSchools.sort((a, b) => a.nome.localeCompare(b.nome)); // [cite: 24]
-            renderSearchResults(filteredSchools); // [cite: 25]
+            filteredSchools.sort((a, b) => a.nome.localeCompare(b.nome)); //
+            renderSearchResults(filteredSchools); //
         }
 
         /**
@@ -135,13 +139,13 @@
         function renderSearchResults(schools) {
             if (schools.length === 0) {
                 resultsContainer.innerHTML = '<p class="text-red-500 font-semibold">Nenhuma escola encontrada com o termo pesquisado.</p>';
-                return; // [cite: 26]
+                return; //
             }
 
             let listHtml = '';
             // Define a cor fixa (azul) para os resultados da busca, pois não estamos agrupando por SEFOR
-            const detailTextColor = 'text-blue-700'; // [cite: 27]
-            schools.forEach((escola, index) => { // [cite: 28]
+            const detailTextColor = 'text-blue-700'; //
+            schools.forEach((escola, index) => { //
                 listHtml += generateSchoolListItem(escola, detailTextColor, index);
             });
             resultsContainer.innerHTML = `
@@ -149,9 +153,9 @@
                 <div class="border border-gray-200 rounded-xl shadow-md overflow-hidden bg-white divide-y divide-gray-200">
                     ${listHtml}
                 </div>
-            `; // [cite: 29]
+            `; //
             // Re-adiciona os listeners de edição para os novos elementos
-            addSchoolActionListeners(); // [cite: 30]
+            addSchoolActionListeners(); //
         }
 
 
@@ -161,7 +165,7 @@
         function generateSchoolListItem(escola, detailTextColor, index) {
             // Este índice (index) é apenas para numeração na lista
             const schoolIndex = index !== undefined ?
-                index + 1 : ''; // [cite: 32] 
+                index + 1 : ''; // 
 
             return `
                 <li id="school-${escola.data_id}" class="school-list-item p-4 transition duration-150 ease-in-out hover:bg-gray-50 data-id-${escola.data_id}" data-id="${escola.data_id}">
@@ -169,24 +173,31 @@
                         ${schoolIndex ? `${schoolIndex}. ` : ''} ${escola.nome} <span class="text-xs font-medium text-gray-500 ml-2">(${escola.sefor || 'Regional N/A'})</span> </div>
 
                     <div class="view-mode space-y-1 text-sm">
+                     
                         <div class="flex flex-wrap gap-x-4"> <span class="${detailTextColor} font-medium">E-mail:</span> 
                             <span data-field="email">${escola.email || 'N/A'}</span> </div>
-                        <div class="flex flex-wrap gap-x-4"> <span class="${detailTextColor} font-medium">Telefone:</span> 
+                        <div class="flex flex-wrap gap-x-4">
+                            <span class="${detailTextColor} font-medium">Telefone:</span> 
+                  
                             <span data-field="telefone">${escola.telefone || 'N/A'}</span> </div>
-                        <div class="flex flex-wrap gap-x-4"> <span class="${detailTextColor} font-medium">Diretor(a):</span> 
+                        <div class="flex flex-wrap gap-x-4">
+                            <span class="${detailTextColor} font-medium">Diretor(a):</span> 
+                  
                             <span data-field="diretor">${escola.diretor || 'N/A'}</span> </div>
-                        <div class="flex flex-wrap gap-x-4"> <span class="${detailTextColor} font-medium">Contato Diretor(a):</span> 
-                            <span data-field="contato_diretor">${escola.contato_diretor || 'N/A'}</span> 
-                        </div>
+                        <div class="flex flex-wrap gap-x-4">
+                            <span class="${detailTextColor} font-medium">Contato Diretor(a):</span> <span data-field="contato_diretor">${escola.contato_diretor || 'N/A'}</span> </div>
                         
                         <div class="mt-3">
+                           
                             <button class="btn-edit bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300 shadow-sm" data-action="edit"> Atualizar Informação
                             </button>
                         </div>
+ 
                     </div> <div class="edit-mode space-y-2 hidden p-3 border border-gray-200 rounded-lg bg-gray-100 mt-2">
                     </div>
                 </li>
-            `; // [cite: 44]
+            
+            `; //
         }
 
         /**
@@ -195,28 +206,28 @@
         function addSchoolActionListeners() {
             // Usamos o querySelectorAll na resultsContainer para garantir que pegamos apenas os elementos recém-renderizados
             resultsContainer.querySelectorAll('.school-list-item').forEach(item => {
-                const schoolId = item.getAttribute('data-id'); // [cite: 45]
+               
+                const schoolId = item.getAttribute('data-id'); //
                 // Encontra a escola no array global usando o ID único
                 const escola = escolasData.find(e => e.data_id === schoolId);
                 
                 const btnEdit = item.querySelector('.btn-edit');
-                
-                btnEdit.addEventListener('click', () => enterEditMode(item, escola)); // [cite: 46]
+            
+                btnEdit.addEventListener('click', () => enterEditMode(item, escola)); //
             });
-        } // [cite: 47]
+        } //
 
         /**
          * 7. Entra no modo de edição (exibe inputs)
          */
         function enterEditMode(listItem, escola) {
-            listItem.querySelector('.view-mode').classList.add('hidden'); // [cite: 48]
+            listItem.querySelector('.view-mode').classList.add('hidden'); //
             const editModeDiv = listItem.querySelector('.edit-mode');
             editModeDiv.classList.remove('hidden');
 
-            // CORREÇÃO: Usando 'contato_diretor' para alinhar com escolas_data.js
+            // AJUSTE: Mudar 'celular' para 'contato_diretor'
             const fields = ['email', 'telefone', 'diretor', 'contato_diretor']; 
-            
-            let editHtml = `<h3 class="font-bold text-gray-800 text-sm mb-2">Editar Contatos</h3>`; // [cite: 49]
+            let editHtml = `<h3 class="font-bold text-gray-800 text-sm mb-2">Editar Contatos</h3>`; //
             
             fields.forEach(field => {
                 // Adapta o label para o usuário
@@ -237,32 +248,35 @@
             });
             // Botões de Salvar e Cancelar
             editHtml += `
-                <div class="flex justify-end space-x-2 pt-2"> <button class="btn-save bg-green-500 hover:bg-green-600 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300" data-id="${escola.data_id}">
-                        Salvar Alterações </button>
-                    <button class="btn-cancel bg-gray-400 hover:bg-gray-500 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300" data-id="${escola.data_id}">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button class="btn-save bg-green-500 hover:bg-green-600 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300" data-id="${escola.data_id}">
+                        Salvar Alterações
+    
+                    </button> <button class="btn-cancel bg-gray-400 hover:bg-gray-500 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300" data-id="${escola.data_id}">
                         Cancelar
-                    </button> </div>
-            `;
-            editModeDiv.innerHTML = editHtml; // [cite: 54]
+                    </button>
+        
+                </div> `;
+            editModeDiv.innerHTML = editHtml; //
 
             // Adiciona listeners para os novos botões no modo de edição
-            listItem.querySelector('.btn-save').addEventListener('click', () => saveChanges(listItem, escola)); // [cite: 55]
-            listItem.querySelector('.btn-cancel').addEventListener('click', () => exitEditMode(listItem, escola)); // [cite: 55]
+            listItem.querySelector('.btn-save').addEventListener('click', () => saveChanges(listItem, escola));
+            listItem.querySelector('.btn-cancel').addEventListener('click', () => exitEditMode(listItem, escola)); //
         }
 
         /**
          * 8. Sai do modo de edição (retorna à visualização)
          */
         function exitEditMode(listItem, escola) {
-            listItem.querySelector('.edit-mode').classList.add('hidden'); // [cite: 56]
-            listItem.querySelector('.view-mode').classList.remove('hidden'); // [cite: 56]
+            listItem.querySelector('.edit-mode').classList.add('hidden'); //
+            listItem.querySelector('.view-mode').classList.remove('hidden'); //
         }
 
         /**
          * 9. Salva as alterações
          */
         function saveChanges(listItem, escola) {
-            const inputs = listItem.querySelectorAll('.edit-mode input'); // [cite: 57]
+            const inputs = listItem.querySelectorAll('.edit-mode input'); //
             let updated = false;
 
             inputs.forEach(input => {
@@ -270,52 +284,17 @@
                 const newValue = input.value.trim();
                 
                 if (escola[field] !== newValue) {
-                    escola[field] = newValue; // [cite: 58]
+                    
+                    escola[field] = newValue; //
                     updated = true;
                 }
             });
-            if (updated) { // [cite: 59]
-                saveData(); // Salva no localStorage [cite: 60]
+            if (updated) { //
+                saveData(); //
                 
                 // Em vez de re-renderizar o painel inteiro, vamos re-executar a pesquisa
                 // Isso garante que a lista de resultados atual seja mantida, mas com os dados novos
-                searchAndRender(); // [cite: 63]
+       
+                searchAndRender(); // 
 
-                alert(`Informação da escola "${escola.nome}" atualizada e salva no seu navegador.`); // [cite: 64]
-            } else {
-                alert('Nenhuma alteração detectada.'); // [cite: 65]
-                // Se não houver alteração, apenas sai do modo de edição
-                exitEditMode(listItem, escola); // [cite: 66]
-            }
-        }
-
-        /**
-         * 10. Função para exportar os dados atualizados como um arquivo JSON
-         */
-        exportJsonBtn.addEventListener('click', () => {
-            const exportData = escolasData.map(e => {
-                const { data_id, ...rest } = e;
-                return rest; // [cite: 67]
-            });
-            const json = JSON.stringify(exportData, null, 4);
-            const blob = new Blob([json], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a'); // [cite: 68]
-            a.href = url;
-            a.download = 'escolas_data_atualizado.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            alert('Arquivo JSON com os dados atualizados gerado com sucesso!'); // [cite: 69]
-        });
-        
-        // Adiciona o listener para a pesquisa em tempo real [cite: 70]
-        searchInput.addEventListener('input', searchAndRender);
-        // Inicializa o carregamento dos dados [cite: 71]
-        loadData();
-    </script>
-</body>
-</html>
+                alert(`Informação da escola "${escola.nome}" atualizada e salva no seu navegador.`); //
