@@ -3,189 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEFOP - Extrator de E-mails em Massa</title>
+    <title>CEFOP - Extrator de E-mails de Escolas</title>
+    <!-- Carregando Tailwind CSS para estilização moderna e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
+        /* Define a fonte Inter e um fundo suave */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f9fb;
+        }
+        /* Estilo para animação de notificação customizada (Toast) */
+        .toast-enter {
+            animation: slideIn 0.3s forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
 <body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
 
-    <script src="escolas_data.js"></script>
+    <!-- Container Principal -->
+    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-8 sm:p-12 mt-4">
 
-    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 sm:p-8 mt-10">
+        <!-- Cabeçalho -->
+        <header class="text-center mb-10 p-4 rounded-lg bg-blue-100 shadow-md border-b-4 border-blue-500">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-800 leading-none">
+                <i class="fas fa-envelope-open-text mr-2"></i> Extrator de E-mails
+            </h1>
+            <p class="text-base sm:text-lg font-semibold text-blue-700 mt-1">
+                Busque as escolas e extraia os e-mails desejados.
+            </p>
+        </header>
 
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">📧 Extrator de E-mails em Massa</h1>
-        <p class="text-gray-500 mb-6">Cole os nomes completos das escolas (um por linha) para extrair os e-mails.</p>
-
-        <div class="space-y-4 mb-8">
-            <label for="school-names-input" class="block text-sm font-medium text-gray-700">Lista de Nomes de Escolas:</label>
-            
-            <textarea id="school-names-input" rows="8" placeholder="Cole os nomes das escolas aqui. Exemplo:&#10;EEMTI LICEU DO CEARÁ&#10;EEMTI GOV. ADAUTO BEZERRA&#10;EEM CEL. FILOMENO DE MORAIS" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 text-sm"></textarea>
-            
-            <button id="search-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md">
-                Buscar E-mails
-            </button>
-        </div>
-
-        <div id="results-area" class="hidden">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">Resultados da Busca</h2>
-
-            <button id="copy-emails-btn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 shadow-md mb-4 disabled:bg-gray-400" disabled>
-                📋 Copiar Todos os E-mails (0 encontrados)
-            </button>
-            <span id="copy-message" class="text-green-600 text-sm mb-4 hidden block">E-mails copiados para a área de transferência!</span>
-
-            <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">Escola</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">E-mail</th>
-                        </tr>
-                    </thead>
-                    <tbody id="results-body" class="bg-white divide-y divide-gray-200">
-                        </tbody>
-                </table>
+        <!-- Seção de Pesquisa -->
+        <section class="mb-8">
+            <label for="searchInput" class="block text-lg font-semibold text-gray-700 mb-2">
+                Pesquisar Escola
+            </label>
+            <div class="relative">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Digite parte do nome da escola (ex: 'adelino', 'patativa')" 
+                    class="w-full p-4 pl-12 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150 outline-none"
+                    oninput="filterSchools()"
+                >
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             </div>
+            <p id="matchCount" class="text-sm text-gray-500 mt-2">0 escolas encontradas.</p>
+        </section>
 
-            <p id="summary-text" class="text-sm text-gray-600 mt-4 font-medium"></p>
+        <!-- Botão de Copiar E-mails -->
+        <div class="mb-8 flex justify-end">
+            <button 
+                id="copyEmailsButton"
+                onclick="copyAllEmails()"
+                class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                disabled
+            >
+                <i class="fas fa-copy mr-2"></i> Copiar Todos E-mails (<span id="emailCount">0</span>)
+            </button>
         </div>
 
-        <div id="no-emails-alert" class="mt-8 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 hidden rounded-lg" role="alert">
-            <p class="font-bold">Atenção!</p>
-            <p>Nenhuma escola ou e-mail válido foi encontrado com base na sua lista.</p>
+        <!-- Lista de Resultados -->
+        <section class="bg-gray-50 p-6 rounded-xl shadow-inner border border-gray-200">
+            <h2 class="text-xl font-bold text-gray-700 mb-4 border-b pb-2">Resultados da Pesquisa</h2>
+            
+            <ul id="results-list" class="divide-y divide-gray-200">
+                <li class="p-3 text-center text-gray-500 italic">
+                    Digite no campo de busca para começar a filtrar.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Notificação Customizada (Toast) -->
+        <div id="custom-toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white py-3 px-6 rounded-lg shadow-xl hidden toast-enter z-[100]">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toast-message"></span>
         </div>
+
     </div>
 
-    <script>
-        // Variáveis de referência para elementos HTML
-        const schoolNamesInput = document.getElementById('school-names-input');
-        const searchBtn = document.getElementById('search-btn');
-        const resultsArea = document.getElementById('results-area');
-        const resultsBody = document.getElementById('results-body');
-        const copyEmailsBtn = document.getElementById('copy-emails-btn');
-        const copyMessage = document.getElementById('copy-message');
-        const summaryText = document.getElementById('summary-text');
-        const noEmailsAlert = document.getElementById('no-emails-alert');
+    <!-- Script de Funcionalidade (type="module" para usar o import) -->
+    <script type="module">
+        // Importa a lista de escolas do arquivo externo escolas_data.js
+        import { SCHOOLS } from './escolas_data.js';
 
-        let foundEmails = []; // Armazena apenas os e-mails válidos para a função de cópia
+        let filteredSchools = [];
 
         /**
-         * Lógica principal de busca e exibição.
+         * Filtra a lista de escolas em tempo real com base no texto digitado.
+         * É anexada ao window para ser acessível via oninput no HTML.
          */
-        searchBtn.addEventListener('click', () => {
-            const rawInput = schoolNamesInput.value;
-            // 1. Limpa e normaliza os nomes das escolas
-            const inputNames = rawInput
-                .split(/[\n,;]+/) // Divide por nova linha, vírgula ou ponto e vírgula
-                .map(name => name.trim().toUpperCase()) // Remove espaços e coloca em maiúsculo para comparação
-                .filter(name => name.length > 0); // Remove linhas vazias
+        window.filterSchools = function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsList = document.getElementById('results-list');
+            const matchCount = document.getElementById('matchCount');
+            const copyButton = document.getElementById('copyEmailsButton');
+            const emailCount = document.getElementById('emailCount');
 
-            if (inputNames.length === 0) {
-                alert('Por favor, insira pelo menos um nome de escola.');
-                resultsArea.classList.add('hidden');
+            // Define um limite mínimo de caracteres para iniciar a busca
+            if (searchTerm.length < 2) {
+                filteredSchools = [];
+                resultsList.innerHTML = '<li class="p-3 text-center text-gray-500 italic">Digite no campo de busca para começar a filtrar.</li>';
+                matchCount.textContent = '0 escolas encontradas.';
+                copyButton.disabled = true;
+                emailCount.textContent = '0';
                 return;
             }
 
-            // Variáveis de controle
-            let htmlContent = '';
-            let validEmails = [];
-            let totalFound = 0;
-
-            // 2. Busca os e-mails no banco de dados (escolas_data)
-            inputNames.forEach(inputName => {
-                // Tenta encontrar a escola no array global escolas_data
-                const escola = escolas_data.find(e => 
-                    e.nome && e.nome.toUpperCase().trim() === inputName
-                );
-
-                if (escola) {
-                    totalFound++;
-                    const email = escola.email && escola.email.trim() ? escola.email.trim() : 'E-mail não registrado';
-                    const emailClass = email === 'E-mail não registrado' ? 'text-red-500 font-medium' : 'text-blue-600 font-semibold';
-                    
-                    // Se o e-mail for válido, armazena para cópia
-                    if (email !== 'E-mail não registrado') {
-                        validEmails.push(email);
-                    }
-
-                    // Gera o HTML da linha do relatório
-                    htmlContent += `
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${escola.nome}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm ${emailClass}">${email}</td>
-                        </tr>
-                    `;
-                } else {
-                     // Adiciona uma linha para escolas não encontradas (opcional, mas útil para feedback)
-                     htmlContent += `
-                        <tr class="bg-yellow-50 hover:bg-yellow-100">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${inputName}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-700">Escola não encontrada no banco de dados.</td>
-                        </tr>
-                    `;
-                }
+            // Filtra as escolas: verifica se o termo de busca está contido no nome (case-insensitive)
+            filteredSchools = SCHOOLS.filter(school => {
+                // A estrutura de dados SCHOOLS precisa ter a propriedade 'nome'
+                return school.nome.toLowerCase().includes(searchTerm);
             });
 
-            // 3. Atualiza a interface
-            resultsBody.innerHTML = htmlContent;
-            resultsArea.classList.remove('hidden');
-            noEmailsAlert.classList.add('hidden');
-            copyMessage.classList.add('hidden');
+            // Atualiza a interface com os resultados
+            renderResults(filteredSchools);
 
-            // 4. Lógica do botão de cópia
-            foundEmails = validEmails;
-            if (foundEmails.length > 0) {
-                copyEmailsBtn.disabled = false;
-                copyEmailsBtn.textContent = `📋 Copiar Todos os E-mails (${foundEmails.length} encontrados)`;
-                summaryText.textContent = `Encontradas ${totalFound} escolas na sua lista. ${foundEmails.length} e-mails válidos prontos para cópia.`;
-            } else {
-                copyEmailsBtn.disabled = true;
-                copyEmailsBtn.textContent = `📋 Copiar Todos os E-mails (0 encontrados)`;
-                summaryText.textContent = `Encontradas ${totalFound} escolas na sua lista. Nenhum e-mail válido encontrado para cópia.`;
-                if (totalFound === 0) {
-                    noEmailsAlert.classList.remove('hidden');
-                }
-            }
-        });
+            // Atualiza o contador e o botão de copiar
+            matchCount.textContent = `${filteredSchools.length} escolas encontradas.`;
+            emailCount.textContent = filteredSchools.length;
+            copyButton.disabled = filteredSchools.length === 0;
+        }
 
         /**
-         * Lógica de cópia para a área de transferência.
+         * Renderiza a lista de resultados no DOM.
+         * @param {Array<Object>} schools - A lista de escolas filtradas.
          */
-        copyEmailsBtn.addEventListener('click', () => {
-            if (foundEmails.length === 0) return;
-
-            // Junta todos os e-mails com ponto e vírgula, que é o separador padrão de muitos clientes de e-mail (Outlook, Gmail).
-            const emailsToCopy = foundEmails.join('; ');
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(emailsToCopy).then(() => {
-                    copyMessage.classList.remove('hidden');
-                    setTimeout(() => {
-                        copyMessage.classList.add('hidden');
-                    }, 3000);
-                }).catch(err => {
-                    alert('Erro ao copiar os e-mails. Tente novamente.');
-                    console.error('Erro ao copiar:', err);
-                });
-            } else {
-                // Fallback
-                const textarea = document.createElement('textarea');
-                textarea.value = emailsToCopy;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-
-                copyMessage.classList.remove('hidden');
-                setTimeout(() => {
-                    copyMessage.classList.add('hidden');
-                }, 3000);
+        function renderResults(schools) {
+            const resultsList = document.getElementById('results-list');
+            
+            if (schools.length === 0) {
+                resultsList.innerHTML = `
+                    <li class="p-3 text-center text-red-500 font-semibold">
+                        <i class="fas fa-exclamation-triangle mr-1"></i> Nenhuma escola corresponde ao termo.
+                    </li>
+                `;
+                return;
             }
+
+            // Mapeia a lista de escolas para elementos <li>
+            const listItems = schools.map(school => `
+                <li class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-white transition duration-100">
+                    <div>
+                        <p class="font-semibold text-gray-800">${school.nome}</p>
+                        <p class="text-sm text-blue-600 font-medium break-all" id="email-${school.email.replace(/@/g, '-at-')}">${school.email}</p>
+                    </div>
+                    <button 
+                        onclick="copySingleEmail('${school.email}', event)"
+                        class="mt-2 sm:mt-0 text-xs text-blue-500 hover:text-blue-700 font-medium flex items-center p-2 rounded-lg hover:bg-blue-50 transition"
+                    >
+                        <i class="fas fa-clipboard mr-1"></i> Copiar
+                    </button>
+                </li>
+            `).join('');
+
+            resultsList.innerHTML = listItems;
+        }
+
+        /**
+         * Copia um único e-mail para a área de transferência.
+         * É anexada ao window para ser acessível via onclick no HTML.
+         */
+        window.copySingleEmail = function(email, event) {
+            const button = event.currentTarget;
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-check mr-1"></i> Copiado!';
+
+            copyToClipboard(email);
+            showToast(`E-mail de ${email.split('@')[0]} copiado!`);
+
+            setTimeout(() => {
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-clipboard mr-1"></i> Copiar';
+            }, 2000);
+        }
+
+        /**
+         * Copia todos os e-mails filtrados para a área de transferência.
+         * É anexada ao window para ser acessível via onclick no HTML.
+         */
+        window.copyAllEmails = function() {
+            if (filteredSchools.length === 0) return;
+
+            const emails = filteredSchools.map(school => school.email).join(', ');
+            
+            copyToClipboard(emails);
+            showToast(`Todos os ${filteredSchools.length} e-mails copiados com sucesso!`);
+        }
+
+        /**
+         * Função utilitária para copiar texto para a área de transferência.
+         * @param {string} text - O texto a ser copiado.
+         */
+        function copyToClipboard(text) {
+             const tempInput = document.createElement('textarea');
+             tempInput.value = text;
+             document.body.appendChild(tempInput);
+             tempInput.select();
+             try {
+                 document.execCommand('copy');
+             } catch (err) {
+                 console.error('Falha ao copiar:', err);
+             }
+             document.body.removeChild(tempInput);
+        }
+
+        /**
+         * Exibe uma notificação customizada (Toast).
+         * @param {string} message - A mensagem a ser exibida.
+         */
+        function showToast(message) {
+            const toast = document.getElementById('custom-toast');
+            const toastMessage = document.getElementById('toast-message');
+
+            // 1. Oculta e reseta o estado
+            toast.classList.add('hidden');
+            toast.classList.remove('toast-enter'); 
+            
+            // 2. Define a mensagem
+            toastMessage.textContent = message;
+
+            // 3. Exibe com animação
+            setTimeout(() => {
+                toast.classList.remove('hidden');
+                toast.classList.add('toast-enter'); 
+            }, 10);
+
+            // 4. Oculta após 3 segundos
+            setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Inicializa a página
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('searchInput').focus(); // Foca no campo de busca
         });
     </script>
 </body>
