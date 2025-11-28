@@ -33,18 +33,19 @@
         /* Estilo para a data de hoje no calendário */
         .today {
             border: 2px solid #ef4444; /* red-500 */
+            background-color: #fee2e2; /* red-100 */
+            color: #991b1b; /* red-800 */
             font-weight: bold;
-            color: #ef4444;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
+<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
 
     <!-- Container Principal do Conteúdo -->
-    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 sm:p-12 mt-4">
+    <div class="w-full max-w-6xl bg-white shadow-2xl rounded-xl p-8 sm:p-12 mt-4">
 
-        <!-- Título Principal da Célula (Com fundo verde claro e ordem invertida) -->
-        <header class="text-center mb-12 p-4 rounded-lg bg-green-100 shadow-md border-b-4 border-green-500">
+        <!-- Título Principal da Célula -->
+        <header class="text-center mb-10 p-4 rounded-lg bg-green-100 shadow-md border-b-4 border-green-500">
             <h1 class="text-4xl sm:text-5xl font-extrabold text-green-800 leading-none">
                 CEFOP
             </h1>
@@ -53,135 +54,98 @@
             </p>
         </header>
 
-        <main>
-            <!-- A seção "Acesso Rápido e Ferramentas" foi removida conforme solicitado -->
+        <!-- Layout Principal: Menu (Esquerda) e Calendário (Direita) -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            <!-- Grid de Opções do Menu (Agora com cores de fundo distintas) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-
-                <!-- Card 1: ESCOLAS – SEFOR (Cor: Azul) -->
-                <a href="escolas_sefor.html" class="menu-card p-6 rounded-xl border-2 border-blue-200 bg-blue-50 hover:bg-blue-100 cursor-pointer block">
-                    <div class="flex items-center space-x-4">
-                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg>
-                        <span class="text-xl font-semibold text-gray-900">ESCOLAS – SEFOR</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mt-2">Acesso ao banco de dados de informações, busca e edição.</p>
-                </a>
-
-                <!-- Card 2: ESCOLAS – E-MAILS (Cor: Verde) -->
-                <a href="escolas_emails.html" class="menu-card p-6 rounded-xl border-2 border-green-200 bg-green-50 hover:bg-green-100 cursor-pointer block">
-                    <div class="flex items-center space-x-4">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
-                        <span class="text-xl font-semibold text-gray-900">ESCOLAS – E-MAILS</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mt-2">Extrator de e-mails em massa para uso no campo CCO/CC.</p>
-                </a>
-
-                <!-- Card 3: MENSAGEM WHATSAPP (Cor: Roxo/Fúcsia) -->
-                <a href="#" class="menu-card p-6 rounded-xl border-2 border-fuchsia-200 bg-fuchsia-50 hover:bg-fuchsia-100 cursor-pointer block">
-                    <div class="flex items-center space-x-4">
-                        <svg class="w-8 h-8 text-fuchsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
-                        <span class="text-xl font-semibold text-gray-900">MENSAGEM WHATSAPP</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mt-2">Gerador de mensagens padronizadas para WhatsApp.</p>
-                </a>
-
-                <!-- Card 4: MENSAGEM E-MAIL (Cor: Laranja) -->
-                <a href="#" class="menu-card p-6 rounded-xl border-2 border-orange-200 bg-orange-50 hover:bg-orange-100 cursor-pointer block">
-                    <div class="flex items-center space-x-4">
-                        <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
-                        <span class="text-xl font-semibold text-gray-900">MENSAGEM E-MAIL</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mt-2">Gerador de templates de e-mail padronizados.</p>
-                </a>
-            </div>
-
-            <!-- Seção de Calendário e Eventos -->
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-indigo-500 pb-2">
-                Agenda CEFOP
-            </h2>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
-                <!-- 1. Calendário Mensal -->
-                <div class="bg-gray-50 p-4 rounded-lg shadow-inner border border-gray-200">
-                    <div class="flex items-center justify-between mb-4">
-                        <button id="prev-month-btn" class="text-indigo-600 hover:text-indigo-800 p-1 rounded-full hover:bg-indigo-100 transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                        </button>
-                        <h3 id="current-month-year" class="text-xl font-bold text-gray-800">Mês, Ano</h3>
-                        <button id="next-month-btn" class="text-indigo-600 hover:text-indigo-800 p-1 rounded-full hover:bg-indigo-100 transition">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </button>
-                    </div>
+            <!-- Coluna 1: Grid de Opções do Menu (2/3 da largura no desktop) -->
+            <div class="lg:col-span-2 space-y-6">
+                 <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">Acesso Rápido</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     
-                    <!-- Tabela do Calendário -->
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-center text-sm">
-                            <thead>
-                                <tr class="text-xs font-medium text-gray-500 uppercase">
-                                    <th class="py-2 px-1">Dom</th>
-                                    <th class="py-2 px-1">Seg</th>
-                                    <th class="py-2 px-1">Ter</th>
-                                    <th class="py-2 px-1">Qua</th>
-                                    <th class="py-2 px-1">Qui</th>
-                                    <th class="py-2 px-1">Sex</th>
-                                    <th class="py-2 px-1">Sáb</th>
-                                </tr>
-                            </thead>
-                            <tbody id="calendar-body" class="text-gray-700">
-                                <!-- Dias serão injetados aqui pelo JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <!-- Card 1: ESCOLAS – SEFOR (Cor: Azul) -->
+                    <a href="escolas_sefor.html" class="menu-card p-6 rounded-xl border-2 border-blue-200 bg-blue-50 hover:bg-blue-100 cursor-pointer block">
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg>
+                            <span class="text-xl font-semibold text-gray-900">ESCOLAS – SEFOR</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Acesso ao banco de dados de informações, busca e edição.</p>
+                    </a>
+
+                    <!-- Card 2: ESCOLAS – E-MAILS (Cor: Verde) -->
+                    <a href="escolas_emails.html" class="menu-card p-6 rounded-xl border-2 border-green-200 bg-green-50 hover:bg-green-100 cursor-pointer block">
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
+                            <span class="text-xl font-semibold text-gray-900">ESCOLAS – E-MAILS</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Extrator de e-mails em massa para uso no campo CCO/CC.</p>
+                    </a>
+
+                    <!-- Card 3: MENSAGEM WHATSAPP (Cor: Roxo/Fúcsia) -->
+                    <a href="#" class="menu-card p-6 rounded-xl border-2 border-fuchsia-200 bg-fuchsia-50 hover:bg-fuchsia-100 cursor-pointer block">
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-8 h-8 text-fuchsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
+                            <span class="text-xl font-semibold text-gray-900">MENSAGEM WHATSAPP</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Gerador de mensagens padronizadas para WhatsApp.</p>
+                    </a>
+
+                    <!-- Card 4: MENSAGEM E-MAIL (Cor: Laranja) -->
+                    <a href="#" class="menu-card p-6 rounded-xl border-2 border-orange-200 bg-orange-50 hover:bg-orange-100 cursor-pointer block">
+                        <div class="flex items-center space-x-4">
+                            <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
+                            <span class="text-xl font-semibold text-gray-900">MENSAGEM E-MAIL</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Gerador de templates de e-mail padronizados.</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Coluna 2: Calendário de Prazos (1/3 da largura no desktop) -->
+            <div class="lg:col-span-1 bg-gray-50 p-6 rounded-xl shadow-lg border border-gray-200">
+                <h2 class="text-xl font-bold text-indigo-700 mb-4 border-b pb-2">Agenda de Prazos</h2>
+
+                <!-- Navegação do Calendário -->
+                <div class="flex justify-between items-center mb-4">
+                    <button id="prev-month" class="p-2 rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition duration-150" aria-label="Mês Anterior">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <h3 id="current-month-year" class="text-lg font-semibold text-gray-800">Mês, Ano</h3>
+                    <button id="next-month" class="p-2 rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition duration-150" aria-label="Próximo Mês">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
                 </div>
 
-                <!-- 2. Lista de Próximos Eventos -->
-                <div>
-                    <h3 class="text-lg font-bold text-gray-700 mb-3">Próximos Eventos</h3>
-                    <div id="events-list" class="space-y-3 p-3 bg-white border border-gray-200 rounded-lg shadow-sm h-[300px] overflow-y-auto">
-                        <p class="text-gray-400">Carregando eventos...</p>
-                    </div>
+                <!-- Tabela do Calendário -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-center text-xs sm:text-sm">
+                        <thead>
+                            <tr class="text-xs font-medium text-gray-500 uppercase">
+                                <th class="py-1">Dom</th>
+                                <th class="py-1">Seg</th>
+                                <th class="py-1">Ter</th>
+                                <th class="py-1">Qua</th>
+                                <th class="py-1">Qui</th>
+                                <th class="py-1">Sex</th>
+                                <th class="py-1">Sáb</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendar-body" class="text-gray-700">
+                            <!-- Dias serão injetados aqui pelo JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
 
+                <!-- Lista de Eventos/Legenda -->
+                <div class="mt-6 p-3 bg-indigo-50 rounded-lg text-sm text-indigo-800 border-l-4 border-indigo-500">
+                    <p class="font-bold mb-1">Próximos Prazos:</p>
+                    <div id="events-display">
+                        <p class="text-xs text-gray-600 italic">Clique nos dias destacados para ver os detalhes.</p>
+                        <!-- Detalhes dos eventos aparecerão aqui -->
+                    </div>
+                </div>
             </div>
-            
-            <!-- Botão para Adicionar Eventos -->
-            <div class="mt-6 flex justify-center">
-                <button id="add-event-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg flex items-center space-x-2 transform hover:scale-105">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    <span>Adicionar Novo Evento</span>
-                </button>
-            </div>
+
         </main>
-
-        <!-- Modais para Adicionar/Editar Evento e Exibir Detalhes -->
-        
-        <!-- Modal de Adição/Edição -->
-        <div id="event-modal" class="fixed inset-0 bg-gray-600 bg-opacity-75 hidden items-center justify-center p-4 z-50">
-            <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-                <h3 id="modal-title" class="text-xl font-bold text-gray-800 mb-4">Adicionar Novo Evento</h3>
-                <form id="event-form" class="space-y-4">
-                    <div>
-                        <label for="event-title-input" class="block text-sm font-medium text-gray-700">Título do Evento</label>
-                        <input type="text" id="event-title-input" required class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label for="event-date-input" class="block text-sm font-medium text-gray-700">Data</label>
-                        <input type="date" id="event-date-input" required class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label for="event-description-input" class="block text-sm font-medium text-gray-700">Descrição (Opcional)</label>
-                        <textarea id="event-description-input" rows="3" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"></textarea>
-                    </div>
-                    <div class="flex justify-end space-x-3">
-                        <button type="button" id="cancel-modal-btn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition">Cancelar</button>
-                        <button type="submit" id="save-event-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">Salvar Evento</button>
-                        <button type="button" id="delete-event-btn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition hidden">Excluir</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
         <!-- Rodapé simples -->
         <footer class="text-center mt-12 pt-6 border-t border-gray-100">
@@ -190,114 +154,120 @@
 
     </div>
 
-    <!-- Firebase Imports e Script de Lógica -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        
-        // --- Configuração e Inicialização do Firebase ---
-        
-        // As variáveis globais __app_id, __firebase_config e __initial_auth_token
-        // são fornecidas pelo ambiente Canvas.
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-cefo-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db;
-        let auth;
-        let userId = null;
-        let eventsRef;
-
-        let currentViewDate = new Date(); // Data atualmente exibida no calendário
-        let allEvents = []; // Cache de todos os eventos carregados do Firestore
-        let editingEventId = null; // ID do evento que está sendo editado
-
-        // Referências DOM
+    <script>
+        // Variáveis globais para o calendário
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
         const calendarBody = document.getElementById('calendar-body');
-        const currentMonthYear = document.getElementById('current-month-year');
-        const prevMonthBtn = document.getElementById('prev-month-btn');
-        const nextMonthBtn = document.getElementById('next-month-btn');
-        const eventsListDiv = document.getElementById('events-list');
-        const addEventBtn = document.getElementById('add-event-btn');
-        const eventModal = document.getElementById('event-modal');
-        const eventForm = document.getElementById('event-form');
-        const modalTitle = document.getElementById('modal-title');
-        const titleInput = document.getElementById('event-title-input');
-        const dateInput = document.getElementById('event-date-input');
-        const descriptionInput = document.getElementById('event-description-input');
-        const cancelModalBtn = document.getElementById('cancel-modal-btn');
-        const saveEventBtn = document.getElementById('save-event-btn');
-        const deleteEventBtn = document.getElementById('delete-event-btn');
+        const monthYearDisplay = document.getElementById('current-month-year');
+        const eventsDisplay = document.getElementById('events-display');
+        
+        const MONTHS = [
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+        ];
 
+        // Definição de eventos de exemplo (Hardcoded - Sugestão: conectar ao Firestore para persistência)
+        const EVENTS = {
+            // Formato 'DD/MM/YYYY': 'Descrição'
+            '15/10/2025': 'Prazo Final: Relatório Mensal',
+            '28/10/2025': 'Reunião: Planejamento CEFOP',
+            '05/11/2025': 'Entrega: Relatório de Formação',
+            '15/11/2025': 'Prazo Final: Relatório Mensal',
+            '28/11/2025': 'Reunião: Planejamento CEFOP',
+        };
+        
+        // Estado para armazenar os eventos futuros (para exibição na legenda)
+        let futureEvents = [];
 
         /**
-         * Inicializa o Firebase e a Autenticação.
+         * Função para formatar a data para o padrão DD/MM/YYYY.
          */
-        async function initializeFirebase() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
+        function formatDateKey(date) {
+            const d = String(date.getDate()).padStart(2, '0');
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const y = date.getFullYear();
+            return `${d}/${m}/${y}`;
+        }
+        
+        /**
+         * Atualiza a lista de eventos futuros.
+         */
+        function updateFutureEvents() {
+            const today = new Date();
+            // Reseta as horas para 00:00:00 para comparação de data correta
+            today.setHours(0, 0, 0, 0); 
+            
+            futureEvents = [];
+            for (const dateKey in EVENTS) {
+                const parts = dateKey.split('/');
+                // O mês é base 0, então subtraímos 1.
+                const eventDate = new Date(parts[2], parts[1] - 1, parts[0]);
+                eventDate.setHours(0, 0, 0, 0); 
 
-                // Tentativa de autenticação
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
+                // Adiciona apenas eventos de hoje ou do futuro
+                if (eventDate >= today) {
+                    futureEvents.push({
+                        date: eventDate,
+                        key: dateKey,
+                        description: EVENTS[dateKey]
+                    });
                 }
-                
-                // O listener onAuthStateChanged garante que userId seja definido após a autenticação
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        // O caminho da coleção de eventos é público (compartilhado entre todos os usuários do CEFOP)
-                        eventsRef = collection(db, `artifacts/${appId}/public/data/events`); 
-                        setupRealtimeListener();
-                    } else {
-                        console.error("Autenticação falhou ou usuário deslogado.");
-                    }
-                });
-
-            } catch (error) {
-                console.error("Erro na inicialização do Firebase ou Autenticação:", error);
             }
+
+            // Ordena os eventos por data
+            futureEvents.sort((a, b) => a.date - b.date);
+            
+            // Exibe os 3 próximos eventos
+            renderEventsDisplay();
         }
 
-        // --- Funções do Calendário ---
+        /**
+         * Renderiza a lista de eventos futuros no painel.
+         */
+        function renderEventsDisplay() {
+            if (futureEvents.length === 0) {
+                 eventsDisplay.innerHTML = '<p class="text-xs text-gray-600 italic">Nenhum prazo futuro agendado.</p>';
+                 return;
+            }
+
+            let html = '';
+            // Exibe no máximo 4 eventos para manter o painel compacto
+            futureEvents.slice(0, 4).forEach(event => {
+                const dateParts = event.key.split('/');
+                const day = dateParts[0];
+                const monthName = MONTHS[parseInt(dateParts[1]) - 1].substring(0, 3); // Primeiras 3 letras do mês
+                
+                html += `
+                    <p class="text-sm my-1">
+                        <span class="font-bold text-indigo-700">${day}/${monthName}:</span> ${event.description}
+                    </p>
+                `;
+            });
+            
+            eventsDisplay.innerHTML = html;
+        }
+
 
         /**
-         * Desenha o calendário para o mês e ano da data atual.
+         * Função para renderizar o calendário.
          */
         function renderCalendar() {
-            const year = currentViewDate.getFullYear();
-            const month = currentViewDate.getMonth();
-            const today = new Date();
-            const todayKey = formatDate(today);
+            // Limpa o body anterior
+            calendarBody.innerHTML = '';
+            
+            // Define o primeiro dia do mês e o número de dias no mês
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Domingo
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const todayKey = formatDateKey(new Date());
 
-            currentMonthYear.textContent = `${getMonthName(month)} de ${year}`;
-            
-            const firstDayOfMonth = new Date(year, month, 1);
-            const lastDayOfMonth = new Date(year, month + 1, 0);
-            
-            // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
-            const firstDayOfWeek = firstDayOfMonth.getDay(); 
-            const daysInMonth = lastDayOfMonth.getDate();
+            // Atualiza o cabeçalho
+            monthYearDisplay.textContent = `${MONTHS[currentMonth]} de ${currentYear}`;
             
             let html = '';
             let dayCount = 1;
             
-            // Cria um Map para acesso rápido aos eventos por data
-            const eventsMap = new Map();
-            allEvents.forEach(event => {
-                if (!eventsMap.has(event.date)) {
-                    eventsMap.set(event.date, []);
-                }
-                eventsMap.get(event.date).push(event);
-            });
-
-
-            // Inicia as semanas
+            // Cria um loop para até 6 semanas
             for (let week = 0; week < 6; week++) {
                 html += '<tr>';
                 
@@ -305,46 +275,52 @@
                 for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
                     let cellContent = '';
                     // Classes básicas para a célula do calendário
-                    let cellClasses = 'p-1 h-10 w-10 text-xs sm:text-sm align-top hover:bg-gray-200 transition rounded-full cursor-default';
+                    let cellClasses = 'p-1 h-8 w-8 text-xs sm:text-sm text-center align-middle transition rounded-full cursor-default';
                     let dateKey = null;
 
                     // 1. Preenche os dias vazios no início do mês
-                    if (week === 0 && dayOfWeek < firstDayOfWeek) {
+                    if (week === 0 && dayOfWeek < firstDayOfMonth) {
                         cellContent = '';
                     } 
                     // 2. Preenche os dias do mês
                     else if (dayCount <= daysInMonth) {
-                        cellContent = `<span class="block w-8 h-8 flex items-center justify-center">${dayCount}</span>`;
-                        dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayCount).padStart(2, '0')}`;
-                        
+                        dateKey = `${String(dayCount).padStart(2, '0')}/${String(currentMonth + 1).padStart(2, '0')}/${currentYear}`;
+                        cellContent = `<span class="block w-6 h-6 mx-auto flex items-center justify-center">${dayCount}</span>`;
+
                         // Marca o dia atual (Apenas se for o mês sendo exibido)
                         if (dateKey === todayKey) {
                             cellClasses += ' today border-2 border-red-500';
-                            cellContent = `<span class="block w-8 h-8 flex items-center justify-center bg-red-100 rounded-full">${dayCount}</span>`;
                         }
                         
                         // Verifica se há eventos para este dia
-                        if (eventsMap.has(dateKey)) {
+                        if (EVENTS[dateKey]) {
                             // Se tem evento, adiciona a classe de destaque de evento
-                            cellClasses = cellClasses.replace('hover:bg-gray-200', ''); // Remove o hover cinza
-                            cellClasses += ' event-day cursor-pointer relative';
-                            cellContent = `<span class="block w-8 h-8 flex items-center justify-center">${dayCount}</span>`;
-
-                            // Se o dia de evento é o dia atual, faz uma sobreposição de classes
+                            cellClasses = cellClasses.replace('hover:bg-gray-200', ''); 
+                            cellClasses += ' event-day cursor-pointer relative shadow-sm';
+                            
+                            // Se o dia de evento é o dia atual, ajusta o destaque
                             if (dateKey === todayKey) {
-                                cellClasses = cellClasses.replace('today border-2 border-red-500', '');
-                                cellContent = `<span class="block w-8 h-8 flex items-center justify-center bg-white text-indigo-600 border border-indigo-600 rounded-full">${dayCount}</span>`;
-                                cellClasses = cellClasses.replace('event-day', ''); // Garante que a borda do today aparece
-                                cellClasses += ' cursor-pointer relative border-2 border-red-500';
+                                cellClasses = cellClasses.replace('today', '');
+                                cellClasses = cellClasses.replace('event-day', 'bg-indigo-700 text-white border-2 border-red-300');
                             }
+                        } else {
+                            // Dia sem evento
+                             cellClasses += ' hover:bg-gray-200';
                         }
                         
                         dayCount++;
                     }
 
                     // Renderiza a célula
+                    const eventDescription = EVENTS[dateKey] ? EVENTS[dateKey] : '';
                     const finalClasses = cellClasses.trim();
-                    html += `<td class="${finalClasses}" data-date-key="${dateKey || ''}" ${eventsMap.has(dateKey) ? `data-has-event="true"` : ''}>${cellContent}</td>`;
+                    
+                    // Adiciona um listener de clique aos dias com evento
+                    if (eventDescription) {
+                        html += `<td class="${finalClasses}" data-date-key="${dateKey}" onclick="showEventDetails('${dateKey}', '${eventDescription}')">${cellContent}</td>`;
+                    } else {
+                        html += `<td class="${finalClasses}">${cellContent}</td>`;
+                    }
                     
                     if (dayCount > daysInMonth && dayOfWeek === 6) break;
                 }
@@ -354,296 +330,78 @@
             }
 
             calendarBody.innerHTML = html;
-            
-            // Adiciona listener para cliques nos dias com evento
-            calendarBody.querySelectorAll('td[data-has-event="true"]').forEach(cell => {
-                cell.addEventListener('click', (e) => showEventsForDay(e.currentTarget.getAttribute('data-date-key')));
-            });
-
-            // Adiciona listener para cliques em qualquer dia (para adicionar evento)
-             calendarBody.querySelectorAll('td[data-date-key]').forEach(cell => {
-                // Adiciona um listener para abrir o modal de adição ao clicar em qualquer dia
-                // Verifica se a célula tem um date-key (não é um espaço em branco no calendário)
-                const dateKey = cell.getAttribute('data-date-key');
-                if (dateKey) {
-                    // Previne o duplo clique se já houver um evento, mas permite que o clique em um dia vazio abra o modal
-                    if (!cell.getAttribute('data-has-event')) {
-                        cell.addEventListener('click', () => openAddModal(dateKey));
-                        cell.classList.add('cursor-pointer'); // Adiciona cursor pointer para dias vazios também
-                    }
-                }
-            });
-        }
-        
-        /**
-         * Pega o nome do mês em português.
-         */
-        function getMonthName(monthIndex) {
-            const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            return months[monthIndex];
         }
 
-        // --- Funções da Lista de Eventos ---
+        /**
+         * Exibe os detalhes do evento em uma mensagem temporária customizada.
+         */
+        function showEventDetails(dateString, description) {
+            const message = `Detalhes do Prazo em ${dateString}:\n\n${description}`;
+            alertCustom(message);
+        }
 
         /**
-         * Renderiza a lista de eventos futuros (a partir de hoje).
+         * Função para avançar/voltar o mês.
          */
-        function renderEventsList() {
-            // Filtra e ordena eventos futuros
-            const today = new Date();
-            // Para garantir que eventos de HOJE sejam incluídos, comparamos com a data sem horário
-            const todayKey = formatDate(today); 
-            
-            const futureEvents = allEvents
-                .filter(e => e.date >= todayKey)
-                .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-            if (futureEvents.length === 0) {
-                eventsListDiv.innerHTML = '<p class="text-gray-500 italic p-2">Nenhum evento futuro agendado. Adicione um!</p>';
-                return;
+        function changeMonth(delta) {
+            currentMonth += delta;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
             }
-
-            let html = '';
-            futureEvents.forEach(event => {
-                // A data do Firestore está em YYYY-MM-DD. Adicionamos T00:00:00 para garantir que o new Date funcione como data local e não UTC
-                const displayDate = new Date(event.date + 'T00:00:00'); 
-                const formattedDate = displayDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
-                
-                html += `
-                    <div class="event-item p-3 border-l-4 border-indigo-500 bg-white rounded-md shadow-sm cursor-pointer hover:bg-indigo-50 transition" data-id="${event.id}">
-                        <p class="text-xs font-semibold text-gray-500">${formattedDate.replace('.', '')}</p>
-                        <p class="text-base font-medium text-gray-800">${event.title}</p>
-                        ${event.description ? `<p class="text-sm text-gray-500 truncate mt-1">${event.description}</p>` : ''}
-                    </div>
-                `;
-            });
-
-            eventsListDiv.innerHTML = html;
-            
-            // Adiciona listeners para edição ao clicar no evento
-            eventsListDiv.querySelectorAll('.event-item').forEach(item => {
-                item.addEventListener('click', () => openEditModal(item.getAttribute('data-id')));
-            });
-        }
-        
-        /**
-         * Exibe no painel de lista de eventos, apenas os eventos de um dia específico.
-         */
-        function showEventsForDay(dateKey) {
-            const eventsOnDay = allEvents.filter(e => e.date === dateKey);
-
-            if (eventsOnDay.length === 0) {
-                 renderEventsList(); // Volta a exibir todos os futuros se o clique foi em um dia vazio por engano
-                 return;
-            }
-            
-            const displayDate = new Date(dateKey + 'T00:00:00');
-            const formattedDate = displayDate.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
-
-            let html = `<h4 class="text-sm font-bold text-gray-600 mb-2">Eventos em: ${formattedDate}</h4>`;
-            
-            eventsOnDay.forEach(event => {
-                html += `
-                    <div class="event-item p-3 border-l-4 border-indigo-500 bg-white rounded-md shadow-sm cursor-pointer hover:bg-indigo-50 transition" data-id="${event.id}">
-                        <p class="text-base font-medium text-gray-800">${event.title}</p>
-                        ${event.description ? `<p class="text-sm text-gray-500 italic mt-1">${event.description}</p>` : ''}
-                    </div>
-                `;
-            });
-            
-            eventsListDiv.innerHTML = html;
-            
-            // Adiciona listeners para edição ao clicar no evento
-            eventsListDiv.querySelectorAll('.event-item').forEach(item => {
-                item.addEventListener('click', () => openEditModal(item.getAttribute('data-id')));
-            });
-        }
-
-
-        // --- Funções de Persistência (Firestore) ---
-
-        /**
-         * Configura o listener em tempo real para o Firestore.
-         */
-        function setupRealtimeListener() {
-            // Consulta para buscar todos os eventos ordenados por data
-            // IMPORTANTE: O Firestore usa strings ISO 8601 (YYYY-MM-DD) para datas, 
-            // então a ordenação alfabética funciona como ordenação cronológica.
-            const q = query(eventsRef, orderBy("date", "asc"));
-
-            onSnapshot(q, (snapshot) => {
-                allEvents = [];
-                snapshot.forEach((doc) => {
-                    // Adiciona o ID do documento aos dados do evento
-                    allEvents.push({ id: doc.id, ...doc.data() }); 
-                });
-                
-                // Após carregar ou atualizar os dados, renderiza tudo novamente
-                renderCalendar(); 
-                renderEventsList();
-            }, (error) => {
-                console.error("Erro ao ouvir eventos em tempo real:", error);
-                eventsListDiv.innerHTML = '<p class="text-red-500 p-2">Erro ao carregar os eventos.</p>';
-            });
-        }
-
-        /**
-         * Adiciona ou atualiza um evento no Firestore.
-         */
-        async function saveEvent(e) {
-            e.preventDefault();
-
-            const eventData = {
-                title: titleInput.value.trim(),
-                date: dateInput.value,
-                description: descriptionInput.value.trim(),
-                createdAt: new Date().toISOString(),
-                createdBy: userId
-            };
-            
-            if (eventData.title.length < 3 || eventData.date === "") {
-                alert("O título e a data são obrigatórios.");
-                return;
-            }
-
-            try {
-                saveEventBtn.disabled = true;
-                saveEventBtn.textContent = editingEventId ? 'Salvando...' : 'Adicionando...';
-
-                if (editingEventId) {
-                    // Atualiza evento existente
-                    const eventDocRef = doc(db, `artifacts/${appId}/public/data/events`, editingEventId);
-                    await updateDoc(eventDocRef, eventData);
-                } else {
-                    // Adiciona novo evento
-                    await addDoc(eventsRef, eventData);
-                }
-
-                closeModal();
-                // O listener do Firestore (onSnapshot) fará a re-renderização automaticamente
-            } catch (error) {
-                console.error("Erro ao salvar evento:", error);
-                // Não use alert() no código final, mas para debug é aceitável
-                console.log(`Erro ao salvar evento: ${error.message}`); 
-            } finally {
-                saveEventBtn.disabled = false;
-                saveEventBtn.textContent = 'Salvar Evento';
-            }
-        }
-        
-        /**
-         * Exclui um evento do Firestore.
-         */
-        async function deleteEvent() {
-            if (!editingEventId) return;
-
-            // Substituindo alert/confirm por uma mensagem de console
-            console.warn("A exclusão de eventos é irreversível."); 
-            
-            try {
-                deleteEventBtn.disabled = true;
-                deleteEventBtn.textContent = 'Excluindo...';
-
-                const eventDocRef = doc(db, `artifacts/${appId}/public/data/events`, editingEventId);
-                await deleteDoc(eventDocRef);
-
-                closeModal();
-                // O listener do Firestore (onSnapshot) fará a re-renderização automaticamente
-            } catch (error) {
-                console.error("Erro ao excluir evento:", error);
-            } finally {
-                deleteEventBtn.disabled = false;
-                deleteEventBtn.textContent = 'Excluir';
-            }
-        }
-
-
-        // --- Funções de Modal ---
-        
-        /**
-         * Abre o modal para adicionar um novo evento.
-         */
-        function openAddModal(date = null) {
-            editingEventId = null;
-            modalTitle.textContent = "Adicionar Novo Evento";
-            eventForm.reset();
-            deleteEventBtn.classList.add('hidden');
-            
-            // Pré-seleciona a data, se fornecida (formato YYYY-MM-DD)
-            if (date) {
-                dateInput.value = date;
-            } else {
-                // Se não houver data, define o dia atual como padrão
-                dateInput.value = formatDate(new Date()); 
-            }
-            
-            eventModal.classList.remove('hidden');
-            eventModal.classList.add('flex');
-        }
-
-        /**
-         * Abre o modal para editar um evento existente.
-         */
-        function openEditModal(id) {
-            const event = allEvents.find(e => e.id === id);
-            if (!event) return;
-
-            editingEventId = id;
-            modalTitle.textContent = `Editar Evento: ${event.title}`;
-            
-            titleInput.value = event.title;
-            dateInput.value = event.date; // A data já está no formato YYYY-MM-DD
-            descriptionInput.value = event.description || '';
-            
-            deleteEventBtn.classList.remove('hidden');
-            
-            eventModal.classList.remove('hidden');
-            eventModal.classList.add('flex');
-        }
-
-        /**
-         * Fecha o modal.
-         */
-        function closeModal() {
-            eventModal.classList.add('hidden');
-            eventModal.classList.remove('flex');
-            eventForm.reset();
-            editingEventId = null;
-        }
-
-        // --- Funções Utilitárias ---
-        
-        /**
-         * Formata uma data para o formato YYYY-MM-DD.
-         */
-        function formatDate(date) {
-            const y = date.getFullYear();
-            const m = String(date.getMonth() + 1).padStart(2, '0');
-            const d = String(date.getDate()).padStart(2, '0');
-            return `${y}-${m}-${d}`;
-        }
-        
-        // --- Listeners de Eventos DOM ---
-        
-        prevMonthBtn.addEventListener('click', () => {
-            currentViewDate.setMonth(currentViewDate.getMonth() - 1);
             renderCalendar();
-        });
+        }
 
-        nextMonthBtn.addEventListener('click', () => {
-            currentViewDate.setMonth(currentViewDate.getMonth() + 1);
+        /**
+         * Cria e exibe uma caixa de diálogo de alerta customizada. (Substituindo alert())
+         */
+        function alertCustom(message) {
+            const existingAlert = document.getElementById('custom-alert');
+            if (existingAlert) existingAlert.remove();
+
+            const alertDiv = document.createElement('div');
+            alertDiv.id = 'custom-alert';
+            alertDiv.className = 'fixed top-4 right-4 bg-indigo-600 text-white p-4 rounded-lg shadow-xl z-[9999] max-w-sm transition-all duration-300 transform translate-x-full opacity-0';
+            
+            alertDiv.innerHTML = `
+                <p class="font-semibold mb-2">Detalhes do Prazo</p>
+                <p class="text-sm whitespace-pre-wrap">${message}</p>
+                <button onclick="document.getElementById('custom-alert').remove();" class="mt-3 bg-white text-indigo-600 px-3 py-1 text-xs font-bold rounded hover:bg-indigo-100">Fechar</button>
+            `;
+            document.body.appendChild(alertDiv);
+
+            // Animação de entrada
+            setTimeout(() => {
+                alertDiv.classList.remove('translate-x-full', 'opacity-0');
+                alertDiv.classList.add('translate-x-0', 'opacity-100');
+            }, 10);
+
+            // Auto-ocultar após 8 segundos
+            setTimeout(() => {
+                const currentAlert = document.getElementById('custom-alert');
+                if (currentAlert) {
+                     currentAlert.classList.remove('translate-x-0', 'opacity-100');
+                     currentAlert.classList.add('translate-x-full', 'opacity-0');
+                     setTimeout(() => currentAlert.remove(), 300);
+                }
+            }, 8000);
+        }
+
+        // --- Inicialização ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inicializa a lista de eventos futuros e renderiza o calendário
+            updateFutureEvents();
             renderCalendar();
-        });
-        
-        addEventBtn.addEventListener('click', () => openAddModal());
-        cancelModalBtn.addEventListener('click', closeModal);
-        eventForm.addEventListener('submit', saveEvent);
-        deleteEventBtn.addEventListener('click', deleteEvent);
 
-        // Inicializa o aplicativo
-        initializeFirebase();
+            // Eventos de Navegação do Calendário
+            document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));
+            document.getElementById('next-month').addEventListener('click', () => changeMonth(1));
+        });
 
     </script>
-
 </body>
 </html>
