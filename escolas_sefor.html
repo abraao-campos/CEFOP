@@ -56,7 +56,7 @@
     </div>
 
     <script>
-        // Variável de trabalho renomeada para 'dataArray' para evitar conflito com 'escolasData' do arquivo JS
+        // Variável de trabalho renomeada para 'dataArray' para evitar o erro "escolasData' has already been declared"
         let dataArray = []; 
         const LOCAL_STORAGE_KEY = 'escolas_data_updated';
 
@@ -73,11 +73,11 @@
                 try {
                     escolasFonte = JSON.parse(storedData);
                 } catch (e) {
-                    // Fallback para o arquivo JS em caso de LocalStorage corrompido
+                    // CRÍTICO: Referência corrigida para a variável global 'escolasData'
                     escolasFonte = window.escolasData; 
                 }
             } else if (typeof window.escolasData !== 'undefined') { 
-                // Carrega do arquivo JS
+                // CRÍTICO: Referência corrigida para a variável global 'escolasData'
                 escolasFonte = window.escolasData;
             } else {
                 escolasFonte = [];
@@ -100,7 +100,7 @@
                 totalEscolasElement.classList.add('text-red-500');
             }
             
-            // Chamada inicial para mostrar todas as escolas ao carregar a página
+            // CRÍTICO: Chamada inicial para mostrar todas as escolas ao carregar a página
             if (dataArray.length > 0) {
                 searchAndRender(); 
             }
@@ -121,7 +121,7 @@
 
         /**
          * 3. Executa a pesquisa e renderiza os resultados
-         * CORREÇÃO FINAL DA LÓGICA DE BUSCA
+         * CORRIGIDO: Removido o filtro 'searchTerm.length < 3' para permitir busca em tempo real.
          */
         function searchAndRender() {
             // Pega o termo de busca, remove espaços e transforma em MAIÚSCULAS
@@ -132,13 +132,13 @@
                 return; 
             }
             
-            // Se o campo de busca estiver vazio, mostre TODAS as escolas
+            // Se o campo de busca estiver vazio, mostre TODAS as escolas (para recarga inicial)
             if (searchTerm.length === 0) {
                 renderSearchResults(dataArray); 
                 return; 
             }
 
-            // Filtra as escolas: verifica se o NOME inclui o termo pesquisado (Busca Parcial/Autocompletar)
+            // Filtra as escolas: verifica se o NOME inclui o termo pesquisado
             const filteredSchools = dataArray.filter(escola => {
                 if (escola.nome) {
                     return escola.nome.toUpperCase().includes(searchTerm);
@@ -180,6 +180,10 @@
             const schoolIndex = index !== undefined ?
                 index + 1 : '';
 
+            // Mapeamento correto de campos
+            const diretorContatoField = escola.contato_diretor ? 'Contato Diretor(a)' : 'Celular';
+            const diretorContatoValue = escola.contato_diretor || escola.celular || 'N/A';
+
             return `
                 <li id="school-${escola.data_id}" class="school-list-item p-4 transition duration-150 ease-in-out hover:bg-gray-50 data-id-${escola.data_id}" data-id="${escola.data_id}">
                     <div class="font-semibold text-gray-800 mb-2">
@@ -201,8 +205,8 @@
                             <span data-field="diretor">${escola.diretor || 'N/A'}</span>
                         </div>
                         <div class="flex flex-wrap gap-x-4">
-                            <span class="${detailTextColor} font-medium">Contato Diretor(a):</span>
-                            <span data-field="contato_diretor">${escola.contato_diretor || 'N/A'}</span>
+                            <span class="${detailTextColor} font-medium">${diretorContatoField}:</span>
+                            <span data-field="contato_diretor">${diretorContatoValue}</span>
                         </div>
                         
                         <div class="mt-3">
@@ -233,6 +237,7 @@
             const editModeDiv = listItem.querySelector('.edit-mode');
             editModeDiv.classList.remove('hidden');
 
+            // Mapeamento correto dos campos para edição
             const fields = ['email', 'telefone', 'diretor', 'contato_diretor']; 
             let editHtml = `<h3 class="font-bold text-gray-800 text-sm mb-2">Editar Contatos</h3>`;
             
@@ -320,8 +325,7 @@
         });
         
         searchInput.addEventListener('input', searchAndRender);
-        // Garante que o loadData seja chamado assim que o script é carregado
-        loadData(); 
+        loadData();
     </script>
 </body>
 </html>
