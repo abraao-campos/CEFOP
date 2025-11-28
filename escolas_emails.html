@@ -86,12 +86,15 @@
             margin: 0 auto 40px auto;
         }
 
-        /* Barra de Busca */
+        /* Área de Busca (TextArea) */
         .busca-container {
             margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
         }
-        .busca-container input[type="text"] {
+        .busca-container textarea {
             width: 100%;
+            height: 150px; /* Altura maior para lista */
             padding: 12px;
             border: 2px solid var(--cor-principal-texto);
             border-radius: 6px;
@@ -99,11 +102,26 @@
             font-size: 1em;
             outline: none;
             transition: border-color 0.3s;
+            resize: vertical;
+            margin-bottom: 10px;
         }
-        .busca-container input[type="text"]:focus {
+        .busca-container textarea:focus {
             border-color: #008cff;
         }
-
+        .busca-container button {
+            background-color: var(--cor-principal-texto);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        .busca-container button:hover {
+            background-color: #004494;
+        }
+        
         /* Tabela de E-mails */
         .tabela-container {
             max-height: 500px; 
@@ -111,6 +129,7 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
+        /* Estilos da tabela (mantidos) */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -133,6 +152,12 @@
         table tr:hover {
             background-color: #f0f0f0;
         }
+        .mensagem-vazia {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -142,12 +167,13 @@
             <i class="fas fa-arrow-left"></i> Voltar ao Menu
         </a>
         <h1>ESCOLAS – E-MAILS</h1>
-        <p>Listagem e Organização dos E-mails Institucionais</p>
+        <p>Busca e Organização dos E-mails Institucionais</p>
     </header>
 
     <main>
         <div class="busca-container">
-            <input type="text" id="searchInput" onkeyup="filtrarTabela()" placeholder="Buscar por SEFOR, nome da escola ou e-mail...">
+            <textarea id="schoolListInput" placeholder="Insira a lista de escolas que deseja pesquisar (uma por linha)."></textarea>
+            <button onclick="filtrarTabela()">Buscar E-mails</button>
         </div>
 
         <div class="tabela-container">
@@ -159,14 +185,15 @@
                         <th style="width: 40%;">E-mail Institucional</th>
                     </tr>
                 </thead>
-                <tbody>
-                    </tbody>
+                <tbody id="escolasTbody">
+                    <tr class="mensagem-vazia"><td colspan="3">Cole sua lista de escolas acima e clique em "Buscar E-mails".</td></tr>
+                </tbody>
             </table>
         </div>
     </main>
 
     <script>
-        // 1. DADOS DAS ESCOLAS (DADOS FORNECIDOS PELO USUÁRIO JÁ FORMATADOS)
+        // 1. DADOS DAS ESCOLAS (COMPLETO COM SEUS DADOS)
         const ESCOLAS_DATA = [
             { sefor: "SEFOR 1", nome: "CCI NORTH SHOPPING JOQUEI", email: "ccijoquei@escola.ce.gov.br" },
             { sefor: "SEFOR 1", nome: "CCI RIOMAR KENNEDY", email: "ccikennedy@escola.ce.gov.br" },
@@ -277,7 +304,7 @@
             { sefor: "SEFOR 2", nome: "EEMTI PADRE GUILHERME WASSEN", email: "gwaessen@escola.ce.gov.br" },
             { sefor: "SEFOR 2", nome: "EEFM PADRE MARCELINO CHAMPAGNAT", email: "pmarcelino@escola.ce.gov.br" },
             { sefor: "SEFOR 2", nome: "EEMTI POETA OTÁCILIO COLARES", email: "ocolares@escola.ce.gov.br" },
-            { sefor: "SEFOR 2", nome: "EEMTI PROFª FERNANDA MARIA GOMES DE AMORIM", email: "" }, // Email em branco na fonte
+            { sefor: "SEFOR 2", nome: "EEMTI PROFª FERNANDA MARIA GOMES DE AMORIM", email: "" }, 
             { sefor: "SEFOR 2", nome: "EEMTI PROFª TECLA FERREIRA", email: "tferreira@escola.ce.gov.br" },
             { sefor: "SEFOR 2", nome: "EEMTI PROFª TELINA BARBOSA DA COSTA", email: "tbarbosa@escola.ce.gov.br" },
             { sefor: "SEFOR 2", nome: "EEMTI RENATO BRAGA", email: "rbraga@escola.ce.gov.br" },
@@ -344,25 +371,30 @@
             { sefor: "SEFOR 3", nome: "INSTITUTO DE EDUCAÇÃO", email: "iec@escola.ce.gov.br" },
         ];
 
-        // 2. FUNÇÃO PARA POPULAR A TABELA AO CARREGAR A PÁGINA
-        function popularTabela() {
-            const tbody = document.getElementById('escolasTable').getElementsByTagName('tbody')[0];
+        // 2. FUNÇÃO AUXILIAR PARA RENDERIZAR A TABELA
+        function renderizarTabela(dadosParaExibir) {
+            const tbody = document.getElementById('escolasTbody');
             tbody.innerHTML = ''; 
             
-            ESCOLAS_DATA.forEach(escola => {
+            if (dadosParaExibir.length === 0) {
+                const mensagem = document.createElement('tr');
+                mensagem.className = 'mensagem-vazia';
+                mensagem.innerHTML = '<td colspan="3">Nenhum e-mail encontrado para a lista de escolas fornecida.</td>';
+                tbody.appendChild(mensagem);
+                return;
+            }
+
+            dadosParaExibir.forEach(escola => {
                 let row = tbody.insertRow();
                 
                 // Coluna 1: SEFOR
-                let cellSefor = row.insertCell();
-                cellSefor.innerHTML = `<strong>${escola.sefor}</strong>`;
+                row.insertCell().innerHTML = `<strong>${escola.sefor}</strong>`;
 
                 // Coluna 2: Nome da Escola
-                let cellNome = row.insertCell();
-                cellNome.innerHTML = escola.nome;
+                row.insertCell().innerHTML = escola.nome;
                 
-                // Coluna 3: E-mail (com um link "mailto")
+                // Coluna 3: E-mail (com link mailto)
                 let cellEmail = row.insertCell();
-                // Verifica se o e-mail existe, se não, exibe uma mensagem
                 if (escola.email && escola.email !== "") {
                     cellEmail.innerHTML = `<a href="mailto:${escola.email}">${escola.email}</a>`;
                 } else {
@@ -371,30 +403,38 @@
             });
         }
 
-        // 3. FUNÇÃO PARA FILTRAR A TABELA (BUSCA NAS 3 COLUNAS)
-        function filtrarTabela() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toUpperCase();
-            const table = document.getElementById('escolasTable');
-            const tr = table.getElementsByTagName('tr');
 
-            for (let i = 1; i < tr.length; i++) {
-                let displayRow = false;
-                let td = tr[i].getElementsByTagName('td');
-                
-                // Verificamos a Coluna 1 (SEFOR), Coluna 2 (Nome) e Coluna 3 (E-mail)
-                if (td[0].textContent.toUpperCase().indexOf(filter) > -1 || 
-                    td[1].textContent.toUpperCase().indexOf(filter) > -1 || 
-                    td[2].textContent.toUpperCase().indexOf(filter) > -1) {
-                    displayRow = true;
-                }
-                
-                tr[i].style.display = displayRow ? "" : "none";
+        // 3. FUNÇÃO PARA FILTRAR A TABELA BASEADA NA LISTA
+        function filtrarTabela() {
+            const textarea = document.getElementById('schoolListInput');
+            const listaInput = textarea.value;
+            
+            // 1. Processa a lista de entrada (remove linhas vazias, espaços e converte para maiúsculas)
+            const nomesBuscados = listaInput
+                .split('\n')
+                .map(nome => nome.trim().toUpperCase())
+                .filter(nome => nome.length > 0);
+
+            if (nomesBuscados.length === 0) {
+                // Se a lista estiver vazia, renderiza uma tabela vazia com a mensagem inicial
+                renderizarTabela([]);
+                return;
             }
+
+            // 2. Filtra os dados originais
+            const resultados = ESCOLAS_DATA.filter(escola => {
+                // Normaliza o nome da escola do BD para comparação
+                const nomeEscolaBD = escola.nome.toUpperCase().trim();
+                
+                // Verifica se o nome da escola do BD está na lista de nomes buscados
+                return nomesBuscados.includes(nomeEscolaBD);
+            });
+
+            // 3. Renderiza a tabela apenas com os resultados
+            renderizarTabela(resultados);
         }
 
-        // Chama a função para preencher a tabela quando a página é carregada
-        window.onload = popularTabela;
+        // Não chama nenhuma função no onload para começar com a tabela vazia, apenas com a mensagem.
     </script>
 
 </body>
