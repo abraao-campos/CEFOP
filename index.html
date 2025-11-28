@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Célula de Formação, Programas e Projetos – CEFOP</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDySjYKTmRUDbOINhhnkX8x5W9qTjW8cWl2s8sH5O5F4M6U5Zt1hA4c/5+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <style>
         /* Variáveis de Cores */
         :root {
@@ -67,7 +65,7 @@
             margin: 0;
         }
         nav ul li {
-            margin-bottom: 15px;
+            margin-bottom: 15px; 
         }
         
         /* Estilização dos Botões/Links (Container Principal) */
@@ -99,15 +97,16 @@
             font-size: 0.9em;
             font-weight: 400;
             color: var(--cor-texto-padrao); 
-            /* Ajuste de margem para alinhar após o ícone + espaço */
-            margin-left: 35px; 
+            margin-left: 35px; /* Ajuste para alinhar após o ícone + espaço */
         }
         
-        /* Estilização do Ícone - Aumentando um pouco o tamanho */
-        .menu-icon {
-            font-size: 1.5em; /* Aumentado de 1.3em para 1.5em */
+        /* Estilização do Ícone SVG */
+        .menu-icon-svg {
+            width: 24px; /* Tamanho fixo para o ícone */
+            height: 24px;
             margin-right: 15px;
-            color: var(--cor-principal-texto);
+            stroke-width: 2;
+            stroke: var(--cor-principal-texto);
         }
 
         /* Cores Individuais para cada Menu (Mantidas) */
@@ -142,7 +141,7 @@
             <li class="menu-1">
                 <a href="escolas_sefor.html">
                     <span class="menu-title">
-                        <i class="fas fa-university menu-icon"></i> 
+                        <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg> 
                         ESCOLAS – SEFOR
                     </span>
                     <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
@@ -151,7 +150,7 @@
             <li class="menu-2">
                 <a href="escolas_emails.html">
                     <span class="menu-title">
-                        <i class="fas fa-envelope-open-text menu-icon"></i> 
+                        <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
                         ESCOLAS – E-MAILS
                     </span>
                     <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
@@ -160,7 +159,7 @@
             <li class="menu-3">
                 <a href="mensagem_whatsapp.html">
                     <span class="menu-title">
-                        <i class="fab fa-whatsapp menu-icon"></i> 
+                        <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
                         MENSAGEM WHATSAPP
                     </span>
                     <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
@@ -169,7 +168,7 @@
             <li class="menu-4">
                 <a href="mensagem_email.html">
                     <span class="menu-title">
-                        <i class="fas fa-keyboard menu-icon"></i> 
+                        <svg class="menu-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
                         MENSAGEM E-MAIL
                     </span>
                     <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
