@@ -13,7 +13,7 @@
             --cor-principal-texto: #0056b3; 
             --cor-fundo-corpo: #f0f2f5; 
             --cor-header: #e6ffd1; 
-            --cor-fundo-menu-2: #fffde7; /* Amarelo Claro (Cor do botão E-MAILS em index.html) */
+            --cor-fundo-menu-2: #fffde7; 
         }
 
         /* Estilização Base */
@@ -38,11 +38,11 @@
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
             margin-bottom: 40px;
-            position: relative; /* Para posicionar o botão Voltar */
+            position: relative; 
         }
         header h1 {
             margin: 0;
-            font-size: 2.5em; /* Reduzido para página interna */
+            font-size: 2.5em; 
             letter-spacing: 2px;
             text-transform: uppercase;
         }
@@ -62,7 +62,7 @@
             color: var(--cor-principal-texto);
             font-size: 1.2em;
             padding: 10px 15px;
-            background-color: var(--cor-fundo-menu-2); /* Cor do menu E-MAILS */
+            background-color: var(--cor-fundo-menu-2); 
             border-radius: 6px;
             transition: background-color 0.3s;
             display: flex;
@@ -81,7 +81,7 @@
             padding: 20px;
             border-radius: 8px; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
-            max-width: 800px; 
+            max-width: 900px; 
             width: 90%;
             margin: 0 auto 40px auto;
         }
@@ -106,7 +106,7 @@
 
         /* Tabela de E-mails */
         .tabela-container {
-            max-height: 500px; /* Limita a altura para ser scrollável */
+            max-height: 500px; 
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -147,15 +147,16 @@
 
     <main>
         <div class="busca-container">
-            <input type="text" id="searchInput" onkeyup="filtrarTabela()" placeholder="Buscar escola por nome ou e-mail...">
+            <input type="text" id="searchInput" onkeyup="filtrarTabela()" placeholder="Buscar por SEFOR, nome da escola ou e-mail...">
         </div>
 
         <div class="tabela-container">
             <table id="escolasTable">
                 <thead>
                     <tr>
-                        <th style="width: 50%;">Escola</th>
-                        <th style="width: 50%;">E-mail Institucional</th>
+                        <th style="width: 15%;">SEFOR</th>
+                        <th style="width: 45%;">Escola</th>
+                        <th style="width: 40%;">E-mail Institucional</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -165,59 +166,229 @@
     </main>
 
     <script>
-        // 1. DADOS DAS ESCOLAS (VOCÊ PODE ADICIONAR MAIS AQUI)
+        // 1. DADOS DAS ESCOLAS (DADOS FORNECIDOS PELO USUÁRIO JÁ FORMATADOS)
         const ESCOLAS_DATA = [
-            { nome: "E.E.F.M. Maria do Carmo", email: "eeefm.mariadocarmo@escola.ce.gov.br" },
-            { nome: "E.E.F. Padre Cícero", email: "eef.padrecicero@escola.ce.gov.br" },
-            { nome: "E.E.M. Senador Pompeu", email: "eem.senadorpompeu@escola.ce.gov.br" },
-            { nome: "E.E.F. Coronel Virgílio Távora", email: "eef.coronelvirgilio@escola.ce.gov.br" },
-            { nome: "E.E.F. Governador Tasso Jereissati", email: "eef.governador@escola.ce.gov.br" },
-            { nome: "E.E.M. Joaquim Nogueira", email: "eem.joaquimnogueira@escola.ce.gov.br" },
-            { nome: "E.E.F.M. Dep. José Maria Pimpão", email: "eeefm.josemaria@escola.ce.gov.br" },
-            // ... adicione mais escolas aqui
+            { sefor: "SEFOR 1", nome: "CCI NORTH SHOPPING JOQUEI", email: "ccijoquei@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CCI RIOMAR KENNEDY", email: "ccikennedy@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – ADELINO ALCÂNTARA FILHO", email: "cejaadelinoa@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – JOSÉ WALTER", email: "cejajwalter@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – MILTON CUNHA", email: "cejamiltoncunha@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – MONS. HÉLIO CAMPOS", email: "cejamcampos@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – MOREIRA CAMPOS", email: "mhcampos@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – PAULO FREIRE", email: "cejapfreire@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – PROF. EUDES VERAS", email: "everas@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – PROF. GILMAR MAIA DE SOUZA", email: "cejagmsousa@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CEJA – PROF. JOSÉ NEUDSON BRAGA", email: "cejanbraga@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "CAIC RAIMUNDO GOMES DE CARVALHO", email: "rcarvalho@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "COLÉGIO DA POLÍCIA MILITAR", email: "pmilitar@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "COLÉGIO MILITAR DO CORPO DE BOMBEIROS", email: "cbombeiros@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEEP DONA CREUSA DO CARMO ROCHA", email: "ccarmo@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEEP JOAQUIM NOGUEIRA", email: "jnogueira@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEEP JÚLIA GIFFONI", email: "jgiffoni@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEEP MARWIN", email: "marvin@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEEP PAULO PETROLA", email: "paulopetrola@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEEP PRES. ROOSEVELT", email: "proosevelt@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM DEP. FRANCISCO DE ALMEIDA MONTE", email: "amonte@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM DOM HÉLDER CÂMARA", email: "dhelder@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM DOM HÉLIO CAMPOS", email: "dhcampos@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM FÉLIX DE AZEVEDO", email: "fazevedo@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM FERNANDO CAVALCANTE MOTA", email: "cmota@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM GOV. FLÁVIO MARCÍLIO", email: "fmarcilio@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM HERÁCLITO DE CASTRO E SILVA", email: "csilva@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM JESUS MARIA JOSE", email: "jmjose@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM JOÃO PAULO II", email: "jpsegundo@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM JOSÉ WALDEMAR DE ALCÂNTARA E SILVA", email: "walcantara@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM MÁRIO HUGO CIDRACK DO VALE", email: "mcidrack@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM PATRONATO DA SAGRADA FAMÍLIA", email: "patronato@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEFM SÃO JOSÉ DO PICI DAS PEDREIRAS", email: "jpici@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEM DR. CÉSAR CALS", email: "ccals@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEM MARIANO MARTINS", email: "mmartins@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI ANTONIETA SIQUEIRA", email: "asiqueira@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI ANTÔNIO BEZERRA", email: "abezerra@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI ANTÔNIO SALES", email: "asales@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI AYRTON SENNA DA SILVA", email: "asenna@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI CLÁUDIO MARTINS", email: "cmartins@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI DONA HILZA DIOGO DE OLIVEIRA", email: "hdiogo@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI DONA MARIA MENEZES DE SERPA", email: "mmserpa@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI ESTADO DE ALAGOAS", email: "ealagoas@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI GAL. EUDORO CORRÊA", email: "eudoroc@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI HERMINIO BARROSO", email: "hbarroso@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI JOSÉ BEZERRA DE MENEZES", email: "jbezerra@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI JOSÉ VALDO RIBEIRO RAMOS", email: "wramos@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI LICEU VILA VELHA", email: "liceuvvelha@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI LIONS JANGADA", email: "ljangada@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI MOEMA TÁVORA", email: "mtavora@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI MONS. DOURADO", email: "mdourado@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI PROF. PAULO FREIRE", email: "pfreire@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI PROFª. BALBINA JUCÁ ALBUQUERQUE", email: "bjuca@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI PROFª. MARIA JOSÉ SANTOS FERREIRA GOMES", email: "ceremjose@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI SÃO JOSÉ DOS ARPOADORES", email: "jarpoadores@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI SALES CAMPOS", email: "scampos@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI SANTO AFONSO", email: "safonso@escola.ce.gov.br" },
+            { sefor: "SEFOR 1", nome: "EEMTI WALDEMAR FALCÃO", email: "vfalcao@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "CCI RIOMAR FORTALEZA", email: "ccipapicu@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "CCI VIA SUL SHOPPING", email: "ccisul@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "COLÉGIO ESTADUAL JUSTINIANO DE SERPA", email: "jserpa@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEEP COMENDADOR MIGUEL GURGEL", email: "miguelgurgel@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEEP JAIME ALENCAR DE OLIVEIRA", email: "eeepjaime.alencar@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEEP JOAQUIM ANTÔNIO ALBANO", email: "jalbano@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEEP JOSÉ DE BARCELOS", email: "jbarcelos@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEEP MARIA ÂNGELA DA SILVEIRA BORGES", email: "angelaborges@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEEP MARIA JOSÉ MEDEIROS", email: "mmedeiros@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEEP MÁRIO DE ALENCAR", email: "marioalencar@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM ALMIRANTE TAMANDARÉ", email: "atamandare@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM ANTÔNIO DIAS MACEDO", email: "admacedo@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM ARQUITETO ROGÉRIO FRÓES", email: "rfroes@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM BÁRBARA DE ALENCAR", email: "balencar@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM CLÓVIS BEVILÁQUIA", email: "cbevilaqua@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM CONSTANÇA TÁVORA", email: "ctavora@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM DEP. MANOEL RODRIGUES", email: "mrodrigues@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM DRA. ALDACI BARBOSA", email: "abarbosa@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM GEN. MURILO BORGES MOREIRA", email: "mborges@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM JOSÉ DE ALENCAR", email: "jalencar@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM LUÍZA TÁVORA – PIO XII", email: "ltavora@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM LUIZA TÁVORA – PROMORAR", email: "ltpromorar@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM NOEL HUGNEN DE OLIVEIRA PAIVA", email: "nhugnen@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM OTÁVIO TERCEIRO DE FARIAS", email: "otaviot@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM PADRE ROCHA", email: "procha@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM PARÓQUIA DA PAZ", email: "ppaz@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM POLIVALENTE MODELO DE FORTALEZA", email: "polivalentemf@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM PROF. ALOYSIO BARROS LEAL", email: "ableal@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM PROF. PAULO AYRTON ARAÚJO", email: "payrton@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM PROFª. MARIA DA CONCEIÇÃO PORFÍRIO TELES", email: "pteles@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM PROFª. MARIA GONÇALVES", email: "mgoncalves@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM SANTA LUZIA", email: "sluzia@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEM LICEU DE MESSEJANA", email: "liceum@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI COLÉGIO ESTADUAL LICEU DO CEARÁ", email: "lceara@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI DEP. PAULINO ROCHA", email: "paulinorocha@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI DEP. PAULO BENEVIDES", email: "pbenevides@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI DOM ANTÔNIO DE ALMEIDA LUSTOSA", email: "amlustosa@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI DRAGÃO DO MAR", email: "dmar@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI ESTADO DO PARÁ", email: "estpara@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI GOV. LUIZ GONZAGA FONSECA MOTA", email: "gmota@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI GOV. VIRGÍLIO TÁVORA", email: "vtavora@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI HELENITA MOTA", email: "hmota@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI INTEGRADA 02 DE MAIO", email: "2demaio@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI IRACEMA", email: "iracema@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI JOÃO NOGUEIRA JUCÁ", email: "jnjuca@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI JOHNSON", email: "johnson@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI MATIAS BECK", email: "mbeck@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI MIRIAN PORTO MOTA", email: "mpmota@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI PADRE GUILHERME WASSEN", email: "gwaessen@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEFM PADRE MARCELINO CHAMPAGNAT", email: "pmarcelino@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI POETA OTÁCILIO COLARES", email: "ocolares@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI PROFª FERNANDA MARIA GOMES DE AMORIM", email: "" }, // Email em branco na fonte
+            { sefor: "SEFOR 2", nome: "EEMTI PROFª TECLA FERREIRA", email: "tferreira@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI PROFª TELINA BARBOSA DA COSTA", email: "tbarbosa@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI RENATO BRAGA", email: "rbraga@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI VISCONDE DO RIO BRANCO", email: "vrbranco@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "EEMTI WALTER DE SÁ CAVALCANTE", email: "wscavalcante@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "INSTITUTO CEARENSE DE EDUCAÇÃO DE SURDOS", email: "isurdos@escola.ce.gov.br" },
+            { sefor: "SEFOR 2", nome: "INSTITUTO DOS CEGOS", email: "icegos@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "CCI CONJUNTO CEARÁ", email: "cciconjuntoceara@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "CCI SHOPPING BENFICA", email: "ccibenfica@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP DARCY RIBEIRO", email: "darcyribeiro@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP ICARO DE SOUSA", email: "icarosm@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP JOAQUIM MOREIRA DE SOUSA", email: "jmsousa@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP JUAREZ TÁVORA", email: "jtavora@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP LEONEL DE MOURA BRIZOLA", email: "leonelbrizola@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP PAULO VI", email: "paulovi@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP PROF. CÉSAR CAMPELO", email: "uv5ccampelo@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEEP PROF. ONÉLIO PORTO", email: "oneliop@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM DEP. JOACI PEREIRA", email: "joacip@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM DIVA CABRAL", email: "divacabral@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM DR. GENTIL BARREIRA", email: "uv2gentilb@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM DR. UBIRAJARA INDIO DO CEARÁ", email: "uv7ubirajara@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM FIGUEIREDO CORREIA", email: "figueiredo@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM HERMENEGILDO FIRMEZA", email: "hermenegildo@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM JÁDER MOREIRA DE CARVALHO", email: "jadermc@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM JOAQUIM ALVES", email: "joaquimalves@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM JOSÉ LEOPOLDINO DA SILVA", email: "uv4leopoldino@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM DONA JÚLIA ALVES PESSOA", email: "juliaalves@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM MARIO SCHEMBERG", email: "mschemberg@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM MICHELSON NOBRE DA SILVA", email: "michelson@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM PARQUE PRESIDENTE VARGAS", email: "vargas@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM PAULO ELPIDIO", email: "pauloelpidio@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM SANTO AMARO", email: "santoamaro@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM SÃO FRANCISCO DE ASSIS – CANINDEZINHO", email: "sfassiscan@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEFM SÃO JOSÉ", email: "saojose@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEM GOV. ADAUTO BEZERRA", email: "adautob@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PROFª. ADÉLIA BRASIL FEIJÓ", email: "adeliab@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PROFª. ADALGISA BONFIM SOARES", email: "adalgisa@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI ANISIO TEIXEIRA", email: "anisiot@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI ESTADO DO AMAZONAS", email: "amazonas@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI ESTADO DO MARANHÃO", email: "maranhao@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI ESTADO DO PARANÁ", email: "parana@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI IRAPUAN CAVALCANTE PINHEIRO", email: "irapuanc@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI IRMÃO URBANO GONZALEZ ROGRIGUEZ", email: "iurbano@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI JENNY GOMES", email: "jennygomes@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI JOÃO MATTOS", email: "jmatos@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI JOSÉ AURÉLIO CÂMARA", email: "jacamara@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI LICEU PROF. DOMINGOS BRASILEIRO", email: "liceupantanal@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI MAL. HUMBERTO DE ALENCAR CASTELO BRANCO", email: "mcastelobranco@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI MARIA ALVES CARIOCA", email: "caicmacarioca@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI MARIA MARGARIDA DE CASTRO ALMEIDA", email: "mmca@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI MARIA THOMÁSIA", email: "mthomasia@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PLÁCIDO ADERALDO CASTELO", email: "uv7placido@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI POETA PATATIVA DO ASSARÉ", email: "patativa@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PRES. HUMBERTO DE ALENCAR CASTELO BRANCO", email: "pcastelobranco@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PROF. EDMILSON GUIMARÃES DE ALMEIDA", email: "uv10edmilson@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PROF. JOCIÊ CAMINHA DE MENESES", email: "jociec@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PROF. JOSÉ MARIA CAMPOS", email: "uv8mcampos@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI PROFª. MARIA ANTONIETA NUNES", email: "uv9anunes@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI SÃO FRANCISCO DE ASSIS – BOM JARDIM", email: "sfassis@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI SÃO JOÃO DO PIAMARTA", email: "sjpiamarta@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI SEN. FERNANDES TÁVORA", email: "ftavora@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI SEN. OSIRES PONTES", email: "osiresp@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "EEMTI LICEU DO CONJUNTO CEARÁ", email: "liceucc@escola.ce.gov.br" },
+            { sefor: "SEFOR 3", nome: "INSTITUTO DE EDUCAÇÃO", email: "iec@escola.ce.gov.br" },
         ];
 
         // 2. FUNÇÃO PARA POPULAR A TABELA AO CARREGAR A PÁGINA
         function popularTabela() {
             const tbody = document.getElementById('escolasTable').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = ''; // Limpa antes de preencher
+            tbody.innerHTML = ''; 
             
             ESCOLAS_DATA.forEach(escola => {
                 let row = tbody.insertRow();
                 
-                // Coluna 1: Nome da Escola
+                // Coluna 1: SEFOR
+                let cellSefor = row.insertCell();
+                cellSefor.innerHTML = `<strong>${escola.sefor}</strong>`;
+
+                // Coluna 2: Nome da Escola
                 let cellNome = row.insertCell();
-                cellNome.innerHTML = `<strong>${escola.nome}</strong>`;
+                cellNome.innerHTML = escola.nome;
                 
-                // Coluna 2: E-mail (com um link "mailto")
+                // Coluna 3: E-mail (com um link "mailto")
                 let cellEmail = row.insertCell();
-                cellEmail.innerHTML = `<a href="mailto:${escola.email}">${escola.email}</a>`;
+                // Verifica se o e-mail existe, se não, exibe uma mensagem
+                if (escola.email && escola.email !== "") {
+                    cellEmail.innerHTML = `<a href="mailto:${escola.email}">${escola.email}</a>`;
+                } else {
+                    cellEmail.innerHTML = `<span style="color: #d9534f; font-weight: bold;">E-MAIL PENDENTE</span>`;
+                }
             });
         }
 
-        // 3. FUNÇÃO PARA FILTRAR A TABELA
+        // 3. FUNÇÃO PARA FILTRAR A TABELA (BUSCA NAS 3 COLUNAS)
         function filtrarTabela() {
             const input = document.getElementById('searchInput');
             const filter = input.value.toUpperCase();
             const table = document.getElementById('escolasTable');
             const tr = table.getElementsByTagName('tr');
 
-            // Itera sobre todas as linhas da tabela, começando da linha 1 (ignora o cabeçalho)
             for (let i = 1; i < tr.length; i++) {
                 let displayRow = false;
-                
-                // Itera sobre as células de cada linha (Nome da Escola e E-mail)
                 let td = tr[i].getElementsByTagName('td');
-                for (let j = 0; j < td.length; j++) {
-                    const cellValue = td[j].textContent || td[j].innerText;
-                    
-                    if (cellValue.toUpperCase().indexOf(filter) > -1) {
-                        displayRow = true;
-                        break; // Se encontrou na célula, não precisa verificar as outras
-                    }
+                
+                // Verificamos a Coluna 1 (SEFOR), Coluna 2 (Nome) e Coluna 3 (E-mail)
+                if (td[0].textContent.toUpperCase().indexOf(filter) > -1 || 
+                    td[1].textContent.toUpperCase().indexOf(filter) > -1 || 
+                    td[2].textContent.toUpperCase().indexOf(filter) > -1) {
+                    displayRow = true;
                 }
                 
-                // Mostra ou esconde a linha
                 tr[i].style.display = displayRow ? "" : "none";
             }
         }
