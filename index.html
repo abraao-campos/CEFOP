@@ -4,46 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Célula de Formação, Programas e Projetos – CEFOP</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/CDySjYKTmRUDbOINhhnkX8x5W9qTjW8cWl2s8sH5O5F4M6U5Zt1hA4c/5+w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
-        /* Estilização básica original mantida para legibilidade */
+        /* Variáveis de Cores mantidas */
+        :root {
+            --cor-principal: #0056b3; 
+            --cor-secundaria: #e0f2ff;
+            --cor-fundo: #f0f2f5; 
+            --cor-texto: #333;
+        }
+
+        /* Estilização Base mantida */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #004a99;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            border-radius: 5px 5px 0 0;
-            /* Adicionado um pequeno margin-bottom para separar do menu */
-            margin-bottom: 20px; 
-        }
-        /* Ajuste do cabeçalho para a inversão do título */
-        header h1 {
-            /* CEFOP em cima (Agora é o h1) */
-            margin-bottom: 0;
-            font-size: 2.2em; 
-        }
-        header p {
-            /* Célula de Formação, Programas e Projetos embaixo (Novo elemento p) */
-            margin-top: 5px;
-            font-size: 1em;
-            opacity: 0.8;
-            margin-bottom: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
         
-        /* Estilização da navegação original (Vertical) */
+        /* Cabeçalho mantido */
+        header {
+            width: 100%;
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 30px 0; 
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+            margin-bottom: 40px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3.5em; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* Navegação (Menu) mantida */
         nav {
-            margin-top: 0; /* Removemos o margin-top, pois o header já tem margin-bottom */
             background-color: white;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 400px; /* Limita a largura para centralizar melhor o menu */
-            margin-left: auto;
-            margin-right: auto;
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+            max-width: 500px;
+            width: 90%;
+            margin: 0 auto;
         }
         nav ul {
             list-style: none;
@@ -51,20 +67,54 @@
             margin: 0;
         }
         nav ul li {
-            margin-bottom: 10px;
+            margin-bottom: 15px; 
         }
+        
+        /* Estilização dos Botões/Links - Ajustada para layout de duas linhas */
         nav ul li a {
-            display: block;
-            padding: 10px 15px;
-            background-color: #e2e2e2;
-            color: #333;
+            display: flex; /* Habilita o Flexbox para organizar ícone/texto */
+            flex-direction: column; /* Coloca os elementos em coluna */
+            align-items: flex-start; /* Alinha o conteúdo à esquerda */
+            padding: 15px 20px;
+            background-color: var(--cor-secundaria); 
+            color: var(--cor-principal); 
             text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-            text-align: left; /* Alinha o texto do link à esquerda */
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.1s;
+            border-left: 5px solid var(--cor-principal); 
         }
+        
+        /* Estilização do Título do Menu */
+        .menu-title {
+            display: flex; /* Para alinhar ícone e título na mesma linha */
+            align-items: center;
+            font-size: 1.2em;
+            font-weight: 700; /* Negrito */
+            text-transform: uppercase; /* Caixa Alta */
+            margin-bottom: 5px; /* Espaço entre o título e a descrição */
+            color: var(--cor-principal); /* Cor principal para o título */
+        }
+
+        /* Estilização da Descrição */
+        .menu-description {
+            font-size: 0.9em;
+            font-weight: 400;
+            color: var(--cor-texto); /* Cor mais escura para a descrição */
+            margin-left: 30px; /* Alinha a descrição com o texto do título */
+        }
+        
+        /* Estilização do Ícone */
+        .menu-icon {
+            font-size: 1.3em;
+            margin-right: 15px;
+            color: var(--cor-principal);
+        }
+        
+        /* Efeito Hover (Interação) mantido */
         nav ul li a:hover {
-            background-color: #d1d1d1;
+            background-color: #cce7ff; 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -77,10 +127,38 @@
 
     <nav>
         <ul>
-            <li><a href="escolas_sefor.html">ESCOLAS – SEFOR</a></li>
-            <li><a href="escolas_emails.html">ESCOLAS – E-MAILS</a></li>
-            <li><a href="mensagem_whatsapp.html">MENSAGEM WHATSAPP</a></li>
-            <li><a href="mensagem_email.html">MENSAGEM E-MAIL</a></li>
+            <li>
+                <a href="escolas_sefor.html">
+                    <span class="menu-title">
+                        <i class="fas fa-university menu-icon"></i> ESCOLAS – SEFOR
+                    </span>
+                    <span class="menu-description">Acesso ao banco de dados de informações SEFOR.</span>
+                </a>
+            </li>
+            <li>
+                <a href="escolas_emails.html">
+                    <span class="menu-title">
+                        <i class="fas fa-envelope-open-text menu-icon"></i> ESCOLAS – E-MAILS
+                    </span>
+                    <span class="menu-description">Listagem e organização dos e-mails institucionais.</span>
+                </a>
+            </li>
+            <li>
+                <a href="mensagem_whatsapp.html">
+                    <span class="menu-title">
+                        <i class="fab fa-whatsapp menu-icon"></i> MENSAGEM WHATSAPP
+                    </span>
+                    <span class="menu-description">Gerador de mensagens padronizadas para WhatsApp.</span>
+                </a>
+            </li>
+            <li>
+                <a href="mensagem_email.html">
+                    <span class="menu-title">
+                        <i class="fas fa-keyboard menu-icon"></i> MENSAGEM E-MAIL
+                    </span>
+                    <span class="menu-description">Gerador de texto de e-mail padronizados.</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
