@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CEFOP - Célula de Formação, Programas e Projetos</title>
-    <!-- Carregando Tailwind CSS para estilização moderna e responsiva -->
+    <!-- Carregando Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* Definindo a fonte "Inter" como padrão e um fundo suave */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f9fb;
         }
-        /* Estilos personalizados para o card do menu */
         .menu-card {
             transition: all 0.3s ease;
             transform-origin: center;
@@ -21,387 +20,300 @@
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
-        /* Estilo para células do calendário com evento */
         .event-day {
             background-color: #4f46e5; /* indigo-600 */
             color: white;
             font-weight: bold;
-            border-radius: 9999px; /* rounded-full */
+            border-radius: 9999px;
             cursor: pointer;
             position: relative;
         }
-        /* Estilo para a data de hoje no calendário */
         .today {
             border: 2px solid #ef4444; /* red-500 */
-            background-color: #fee2e2; /* red-100 */
-            color: #991b1b; /* red-800 */
+            background-color: #fee2e2;
+            color: #991b1b;
             font-weight: bold;
+        }
+        /* Overlay de Senha */
+        #senha-overlay {
+            position: fixed; inset: 0; background-color: rgba(255, 255, 255, 0.98);
+            display: flex; align-items: center; justify-content: center; z-index: 50;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+<body class="min-h-screen flex items-start justify-center p-4 sm:p-8">
 
-    <!-- Container Principal do Conteúdo -->
-    <div class="w-full max-w-6xl bg-white shadow-2xl rounded-xl p-8 sm:p-12 mt-4">
+    <!-- TELA DE SENHA -->
+    <div id="senha-overlay">
+        <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-sm w-full border border-gray-200">
+            <h2 class="text-2xl font-bold text-green-800 mb-2">Acesso Restrito</h2>
+            <p class="text-gray-500 mb-6 text-sm">Insira a senha para acessar o painel CEFOP.</p>
+            <input type="password" id="senhaInput" placeholder="Senha" class="w-full p-3 border border-gray-300 rounded-lg mb-4 text-center focus:ring-2 focus:ring-green-500 outline-none" onkeypress="handleKey(event)">
+            <button onclick="verificarSenha()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition duration-200">Acessar</button>
+            <p id="mensagemErro" class="text-red-500 text-sm mt-3 hidden font-semibold">Senha incorreta.</p>
+        </div>
+    </div>
 
-        <!-- Título Principal da Célula -->
-        <header class="text-center mb-10 p-4 rounded-lg bg-green-100 shadow-md border-b-4 border-green-500">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-green-800 leading-none">
+    <!-- CONTEÚDO PRINCIPAL (Oculto até desbloqueio) -->
+    <div id="conteudo-principal" class="w-full max-w-5xl hidden animate-fade-in">
+        
+        <!-- CABEÇALHO -->
+        <header class="text-center mb-10 p-6 rounded-xl bg-green-50 shadow-sm border-b-4 border-green-500">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-green-800 leading-none tracking-tight">
                 CEFOP
             </h1>
-            <p class="text-base sm:text-xl font-semibold text-green-700 mt-1">
+            <p class="text-lg sm:text-xl font-semibold text-green-700 mt-2">
                 Célula de Formação, Programas e Projetos
             </p>
         </header>
 
-        <!-- Layout Principal: Menu (Esquerda) e Calendário (Direita) -->
-        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- SEÇÃO 1: MENU DE ACESSO RÁPIDO -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 border-l-4 border-blue-500 pl-3 mb-6">Ferramentas</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1: SEFOR (Azul) -->
+                <a href="escolas_sefor.html" class="menu-card p-6 rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white hover:border-blue-300 cursor-pointer flex items-start space-x-4">
+                    <div class="bg-blue-100 p-3 rounded-lg text-blue-600">
+                        <i class="fas fa-university text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold text-gray-800 block">ESCOLAS – SEFOR</span>
+                        <p class="text-sm text-gray-500 mt-1">Busca de dados, contatos de diretores e edição de informações.</p>
+                    </div>
+                </a>
 
-            <!-- Coluna 1: Grid de Opções do Menu (2/3 da largura no desktop) -->
-            <div class="lg:col-span-2 space-y-6">
-                 <h2 class="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-2 mb-4">Acesso Rápido</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    <!-- Card 1: ESCOLAS – SEFOR (Cor: Azul) -->
-                    <a href="escolas_sefor.html" class="menu-card p-6 rounded-xl border-2 border-blue-200 bg-blue-50 hover:bg-blue-100 cursor-pointer block">
-                        <div class="flex items-center space-x-4">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.414 9.497 5 8 5c-4 0-4 4-4 4v10c0 1.105.895 2 2 2h4.184M12 6.253c1.332 0 2.665.414 3.832 1.253M12 6.253C13.626 4.755 15.244 4 17 4c2.51 0 5 1.705 5 4v10c0 .324-.047.636-.123.931M15.42 19.863C15.82 20.65 16 21 17 21h-5.816"></path></svg>
-                            <span class="text-xl font-semibold text-gray-900">ESCOLAS – SEFOR</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mt-2">Acesso ao banco de dados de informações, busca e edição.</p>
-                    </a>
+                <!-- Card 2: E-MAILS (Verde) -->
+                <a href="escolas_emails.html" class="menu-card p-6 rounded-xl border border-green-100 bg-gradient-to-br from-green-50 to-white hover:border-green-300 cursor-pointer flex items-start space-x-4">
+                    <div class="bg-green-100 p-3 rounded-lg text-green-600">
+                        <i class="fas fa-envelope-open-text text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold text-gray-800 block">ESCOLAS – E-MAILS</span>
+                        <p class="text-sm text-gray-500 mt-1">Extrator de e-mails em massa para envio de comunicados.</p>
+                    </div>
+                </a>
 
-                    <!-- Card 2: ESCOLAS – E-MAILS (Cor: Verde) -->
-                    <a href="escolas_emails.html" class="menu-card p-6 rounded-xl border-2 border-green-200 bg-green-50 hover:bg-green-100 cursor-pointer block">
-                        <div class="flex items-center space-x-4">
-                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-1 12H4a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v12a2 2 0 01-2 2z"></path></svg>
-                            <span class="text-xl font-semibold text-gray-900">ESCOLAS – E-MAILS</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mt-2">Extrator de e-mails em massa para uso no campo CCO/CC.</p>
-                    </a>
+                <!-- Card 3: WHATSAPP (Roxo) -->
+                <a href="#" class="menu-card p-6 rounded-xl border border-fuchsia-100 bg-gradient-to-br from-fuchsia-50 to-white hover:border-fuchsia-300 cursor-pointer flex items-start space-x-4">
+                    <div class="bg-fuchsia-100 p-3 rounded-lg text-fuchsia-600">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold text-gray-800 block">MENSAGEM WHATSAPP</span>
+                        <p class="text-sm text-gray-500 mt-1">Gerador de mensagens padronizadas e links diretos.</p>
+                    </div>
+                </a>
 
-                    <!-- Card 3: MENSAGEM WHATSAPP (Cor: Roxo/Fúcsia) -->
-                    <a href="#" class="menu-card p-6 rounded-xl border-2 border-fuchsia-200 bg-fuchsia-50 hover:bg-fuchsia-100 cursor-pointer block">
-                        <div class="flex items-center space-x-4">
-                            <svg class="w-8 h-8 text-fuchsia-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 20l-5.447-2.735A2.999 2.999 0 013 14V8a2 2 0 012-2h14a2 2 0 012 2v6a2 2 0 01-1 1.732L15 20m-6 0h6"></path></svg>
-                            <span class="text-xl font-semibold text-gray-900">MENSAGEM WHATSAPP</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mt-2">Gerador de mensagens padronizadas para WhatsApp.</p>
-                    </a>
+                <!-- Card 4: TEXTO EMAIL (Laranja) -->
+                <a href="#" class="menu-card p-6 rounded-xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white hover:border-orange-300 cursor-pointer flex items-start space-x-4">
+                    <div class="bg-orange-100 p-3 rounded-lg text-orange-600">
+                        <i class="fas fa-file-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold text-gray-800 block">MENSAGEM E-MAIL</span>
+                        <p class="text-sm text-gray-500 mt-1">Modelos de texto para e-mails oficiais.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
 
-                    <!-- Card 4: MENSAGEM E-MAIL (Cor: Laranja) -->
-                    <a href="#" class="menu-card p-6 rounded-xl border-2 border-orange-200 bg-orange-50 hover:bg-orange-100 cursor-pointer block">
-                        <div class="flex items-center space-x-4">
-                            <svg class="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12zm-8 0v1.5a2.5 2.5 0 01-5 0V12zm4 6H5.25A2.25 2.25 0 013 15.75V8.25A2.25 2.25 0 015.25 6h13.5A2.25 2.25 0 0121 8.25v7.5A2.25 2.25 0 0118.75 18H16"></path></svg>
-                            <span class="text-xl font-semibold text-gray-900">MENSAGEM E-MAIL</span>
-                        </div>
-                        <p class="text-sm text-gray-600 mt-2">Gerador de templates de e-mail padronizados.</p>
-                    </a>
-                </div>
+        <!-- SEÇÃO 2: CALENDÁRIO DE PRAZOS -->
+        <section class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-indigo-600 p-4 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-white flex items-center">
+                    <i class="fas fa-calendar-alt mr-2"></i> Agenda de Prazos CEFOP
+                </h2>
+                <span class="text-indigo-200 text-sm bg-indigo-800 px-3 py-1 rounded-full" id="current-date-display">Hoje</span>
             </div>
 
-            <!-- Coluna 2: Calendário de Prazos (1/3 da largura no desktop) -->
-            <div class="lg:col-span-1 bg-gray-50 p-6 rounded-xl shadow-lg border border-gray-200">
-                <h2 class="text-xl font-bold text-indigo-700 mb-4 border-b pb-2">Agenda de Prazos</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3">
+                
+                <!-- Coluna Esquerda: O Calendário Visual -->
+                <div class="lg:col-span-2 p-6 border-b lg:border-b-0 lg:border-r border-gray-200">
+                    <!-- Navegação Mês -->
+                    <div class="flex justify-between items-center mb-6">
+                        <button id="prev-month" class="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="current-month-year" class="text-xl font-bold text-gray-800 capitalize"></h3>
+                        <button id="next-month" class="p-2 rounded-full hover:bg-gray-100 text-gray-600 transition">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
 
-                <!-- Navegação do Calendário -->
-                <div class="flex justify-between items-center mb-4">
-                    <button id="prev-month" class="p-2 rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition duration-150" aria-label="Mês Anterior">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                    </button>
-                    <h3 id="current-month-year" class="text-lg font-semibold text-gray-800">Mês, Ano</h3>
-                    <button id="next-month" class="p-2 rounded-full bg-indigo-100 hover:bg-indigo-200 text-indigo-700 transition duration-150" aria-label="Próximo Mês">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                </div>
+                    <!-- Grid Dias da Semana -->
+                    <div class="grid grid-cols-7 text-center text-xs font-semibold text-gray-400 uppercase mb-2">
+                        <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+                    </div>
 
-                <!-- Tabela do Calendário -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-center text-xs sm:text-sm">
-                        <thead>
-                            <tr class="text-xs font-medium text-gray-500 uppercase">
-                                <th class="py-1">Dom</th>
-                                <th class="py-1">Seg</th>
-                                <th class="py-1">Ter</th>
-                                <th class="py-1">Qua</th>
-                                <th class="py-1">Qui</th>
-                                <th class="py-1">Sex</th>
-                                <th class="py-1">Sáb</th>
-                            </tr>
-                        </thead>
-                        <tbody id="calendar-body" class="text-gray-700">
-                            <!-- Dias serão injetados aqui pelo JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Lista de Eventos/Legenda -->
-                <div class="mt-6 p-3 bg-indigo-50 rounded-lg text-sm text-indigo-800 border-l-4 border-indigo-500">
-                    <p class="font-bold mb-1">Próximos Prazos:</p>
-                    <div id="events-display">
-                        <p class="text-xs text-gray-600 italic">Clique nos dias destacados para ver os detalhes.</p>
-                        <!-- Detalhes dos eventos aparecerão aqui -->
+                    <!-- Grid Dias do Mês -->
+                    <div id="calendar-grid" class="grid grid-cols-7 gap-2 text-sm text-gray-700">
+                        <!-- Dias gerados via JS -->
                     </div>
                 </div>
+
+                <!-- Coluna Direita: Lista de Próximos Prazos -->
+                <div class="lg:col-span-1 p-6 bg-gray-50">
+                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wide mb-4">Próximos Eventos</h3>
+                    
+                    <div id="events-display" class="space-y-4">
+                        <!-- Eventos gerados via JS -->
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-gray-200">
+                        <div class="flex items-start space-x-2 text-xs text-gray-500">
+                            <i class="fas fa-info-circle mt-0.5 text-indigo-500"></i>
+                            <p>Clique nos dias destacados em azul no calendário para ver os detalhes completos.</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </section>
 
-        </main>
-
-        <!-- Rodapé simples -->
-        <footer class="text-center mt-12 pt-6 border-t border-gray-100">
-            <p class="text-xs text-gray-400">&copy; 2025 CEFOP. Todos os direitos reservados.</p>
+        <!-- Rodapé -->
+        <footer class="text-center mt-16 pb-8 text-xs text-gray-400">
+            &copy; 2025 CEFOP - Célula de Formação, Programas e Projetos.
         </footer>
 
     </div>
 
+    <!-- Scripts -->
     <script>
-        // Variáveis globais para o calendário
+        // --- 1. LÓGICA DE SENHA ---
+        const SENHA_CORRETA = "090883"; 
+
+        function verificarSenha() {
+            const senha = document.getElementById('senhaInput').value;
+            if (senha === SENHA_CORRETA) {
+                document.getElementById('senha-overlay').style.display = 'none';
+                document.getElementById('conteudo-principal').style.display = 'block';
+            } else {
+                document.getElementById('mensagemErro').style.display = 'block';
+                document.getElementById('senhaInput').value = '';
+                document.getElementById('senhaInput').focus();
+            }
+        }
+        function handleKey(e) { if(e.key === "Enter") verificarSenha(); }
+
+        // --- 2. LÓGICA DO CALENDÁRIO ---
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
-        const calendarBody = document.getElementById('calendar-body');
+        const calendarGrid = document.getElementById('calendar-grid');
         const monthYearDisplay = document.getElementById('current-month-year');
         const eventsDisplay = document.getElementById('events-display');
-        
+        const currentDateDisplay = document.getElementById('current-date-display');
+
         const MONTHS = [
             "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
             "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
         ];
 
-        // Definição de eventos de exemplo (Hardcoded - Sugestão: conectar ao Firestore para persistência)
+        // EVENTOS (Hardcoded - você pode expandir isso ou conectar a um banco)
         const EVENTS = {
-            // Formato 'DD/MM/YYYY': 'Descrição'
-            '15/10/2025': 'Prazo Final: Relatório Mensal',
-            '28/10/2025': 'Reunião: Planejamento CEFOP',
-            '05/11/2025': 'Entrega: Relatório de Formação',
-            '15/11/2025': 'Prazo Final: Relatório Mensal',
-            '28/11/2025': 'Reunião: Planejamento CEFOP',
+            '15/10/2025': 'Entrega Relatório Mensal',
+            '28/10/2025': 'Reunião Planejamento',
+            '05/11/2025': 'Formação de Gestores',
+            '15/11/2025': 'Entrega Relatório Mensal',
+            '20/11/2025': 'Prazo Censo Escolar',
+            '28/11/2025': 'Reunião Planejamento',
+            '10/12/2025': 'Confraternização Final'
         };
-        
-        // Estado para armazenar os eventos futuros (para exibição na legenda)
-        let futureEvents = [];
 
-        /**
-         * Função para formatar a data para o padrão DD/MM/YYYY.
-         */
-        function formatDateKey(date) {
-            const d = String(date.getDate()).padStart(2, '0');
-            const m = String(date.getMonth() + 1).padStart(2, '0');
-            const y = date.getFullYear();
-            return `${d}/${m}/${y}`;
-        }
-        
-        /**
-         * Atualiza a lista de eventos futuros.
-         */
-        function updateFutureEvents() {
-            const today = new Date();
-            // Reseta as horas para 00:00:00 para comparação de data correta
-            today.setHours(0, 0, 0, 0); 
-            
-            futureEvents = [];
-            for (const dateKey in EVENTS) {
-                const parts = dateKey.split('/');
-                // O mês é base 0, então subtraímos 1.
-                const eventDate = new Date(parts[2], parts[1] - 1, parts[0]);
-                eventDate.setHours(0, 0, 0, 0); 
-
-                // Adiciona apenas eventos de hoje ou do futuro
-                if (eventDate >= today) {
-                    futureEvents.push({
-                        date: eventDate,
-                        key: dateKey,
-                        description: EVENTS[dateKey]
-                    });
-                }
-            }
-
-            // Ordena os eventos por data
-            futureEvents.sort((a, b) => a.date - b.date);
-            
-            // Exibe os 3 próximos eventos
-            renderEventsDisplay();
-        }
-
-        /**
-         * Renderiza a lista de eventos futuros no painel.
-         */
-        function renderEventsDisplay() {
-            if (futureEvents.length === 0) {
-                 eventsDisplay.innerHTML = '<p class="text-xs text-gray-600 italic">Nenhum prazo futuro agendado.</p>';
-                 return;
-            }
-
-            let html = '';
-            // Exibe no máximo 4 eventos para manter o painel compacto
-            futureEvents.slice(0, 4).forEach(event => {
-                const dateParts = event.key.split('/');
-                const day = dateParts[0];
-                const monthName = MONTHS[parseInt(dateParts[1]) - 1].substring(0, 3); // Primeiras 3 letras do mês
-                
-                html += `
-                    <p class="text-sm my-1">
-                        <span class="font-bold text-indigo-700">${day}/${monthName}:</span> ${event.description}
-                    </p>
-                `;
-            });
-            
-            eventsDisplay.innerHTML = html;
-        }
-
-
-        /**
-         * Função para renderizar o calendário.
-         */
+        // Renderiza o Calendário
         function renderCalendar() {
-            // Limpa o body anterior
-            calendarBody.innerHTML = '';
+            calendarGrid.innerHTML = '';
             
-            // Define o primeiro dia do mês e o número de dias no mês
-            const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay(); // 0 = Domingo
+            const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
             const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
             const todayKey = formatDateKey(new Date());
 
-            // Atualiza o cabeçalho
-            monthYearDisplay.textContent = `${MONTHS[currentMonth]} de ${currentYear}`;
-            
-            let html = '';
-            let dayCount = 1;
-            
-            // Cria um loop para até 6 semanas
-            for (let week = 0; week < 6; week++) {
-                html += '<tr>';
-                
-                // Itera pelos 7 dias da semana
-                for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
-                    let cellContent = '';
-                    // Classes básicas para a célula do calendário
-                    let cellClasses = 'p-1 h-8 w-8 text-xs sm:text-sm text-center align-middle transition rounded-full cursor-default';
-                    let dateKey = null;
+            monthYearDisplay.textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+            currentDateDisplay.textContent = `Hoje: ${new Date().toLocaleDateString('pt-BR')}`;
 
-                    // 1. Preenche os dias vazios no início do mês
-                    if (week === 0 && dayOfWeek < firstDayOfMonth) {
-                        cellContent = '';
-                    } 
-                    // 2. Preenche os dias do mês
-                    else if (dayCount <= daysInMonth) {
-                        dateKey = `${String(dayCount).padStart(2, '0')}/${String(currentMonth + 1).padStart(2, '0')}/${currentYear}`;
-                        cellContent = `<span class="block w-6 h-6 mx-auto flex items-center justify-center">${dayCount}</span>`;
-
-                        // Marca o dia atual (Apenas se for o mês sendo exibido)
-                        if (dateKey === todayKey) {
-                            cellClasses += ' today border-2 border-red-500';
-                        }
-                        
-                        // Verifica se há eventos para este dia
-                        if (EVENTS[dateKey]) {
-                            // Se tem evento, adiciona a classe de destaque de evento
-                            cellClasses = cellClasses.replace('hover:bg-gray-200', ''); 
-                            cellClasses += ' event-day cursor-pointer relative shadow-sm';
-                            
-                            // Se o dia de evento é o dia atual, ajusta o destaque
-                            if (dateKey === todayKey) {
-                                cellClasses = cellClasses.replace('today', '');
-                                cellClasses = cellClasses.replace('event-day', 'bg-indigo-700 text-white border-2 border-red-300');
-                            }
-                        } else {
-                            // Dia sem evento
-                             cellClasses += ' hover:bg-gray-200';
-                        }
-                        
-                        dayCount++;
-                    }
-
-                    // Renderiza a célula
-                    const eventDescription = EVENTS[dateKey] ? EVENTS[dateKey] : '';
-                    const finalClasses = cellClasses.trim();
-                    
-                    // Adiciona um listener de clique aos dias com evento
-                    if (eventDescription) {
-                        html += `<td class="${finalClasses}" data-date-key="${dateKey}" onclick="showEventDetails('${dateKey}', '${eventDescription}')">${cellContent}</td>`;
-                    } else {
-                        html += `<td class="${finalClasses}">${cellContent}</td>`;
-                    }
-                    
-                    if (dayCount > daysInMonth && dayOfWeek === 6) break;
-                }
-                
-                html += '</tr>';
-                if (dayCount > daysInMonth) break;
+            // Dias vazios (mês anterior)
+            for (let i = 0; i < firstDayIndex; i++) {
+                const empty = document.createElement('div');
+                calendarGrid.appendChild(empty);
             }
 
-            calendarBody.innerHTML = html;
-        }
+            // Dias do mês
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateKey = `${String(day).padStart(2, '0')}/${String(currentMonth + 1).padStart(2, '0')}/${currentYear}`;
+                const hasEvent = EVENTS[dateKey];
+                const isToday = dateKey === todayKey;
 
-        /**
-         * Exibe os detalhes do evento em uma mensagem temporária customizada.
-         */
-        function showEventDetails(dateString, description) {
-            const message = `Detalhes do Prazo em ${dateString}:\n\n${description}`;
-            alertCustom(message);
-        }
+                const cell = document.createElement('div');
+                cell.className = 'h-10 w-10 flex items-center justify-center rounded-full mx-auto transition-all duration-200 text-sm';
+                cell.textContent = day;
 
-        /**
-         * Função para avançar/voltar o mês.
-         */
-        function changeMonth(delta) {
-            currentMonth += delta;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            } else if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            renderCalendar();
-        }
-
-        /**
-         * Cria e exibe uma caixa de diálogo de alerta customizada. (Substituindo alert())
-         */
-        function alertCustom(message) {
-            const existingAlert = document.getElementById('custom-alert');
-            if (existingAlert) existingAlert.remove();
-
-            const alertDiv = document.createElement('div');
-            alertDiv.id = 'custom-alert';
-            alertDiv.className = 'fixed top-4 right-4 bg-indigo-600 text-white p-4 rounded-lg shadow-xl z-[9999] max-w-sm transition-all duration-300 transform translate-x-full opacity-0';
-            
-            alertDiv.innerHTML = `
-                <p class="font-semibold mb-2">Detalhes do Prazo</p>
-                <p class="text-sm whitespace-pre-wrap">${message}</p>
-                <button onclick="document.getElementById('custom-alert').remove();" class="mt-3 bg-white text-indigo-600 px-3 py-1 text-xs font-bold rounded hover:bg-indigo-100">Fechar</button>
-            `;
-            document.body.appendChild(alertDiv);
-
-            // Animação de entrada
-            setTimeout(() => {
-                alertDiv.classList.remove('translate-x-full', 'opacity-0');
-                alertDiv.classList.add('translate-x-0', 'opacity-100');
-            }, 10);
-
-            // Auto-ocultar após 8 segundos
-            setTimeout(() => {
-                const currentAlert = document.getElementById('custom-alert');
-                if (currentAlert) {
-                     currentAlert.classList.remove('translate-x-0', 'opacity-100');
-                     currentAlert.classList.add('translate-x-full', 'opacity-0');
-                     setTimeout(() => currentAlert.remove(), 300);
+                if (hasEvent) {
+                    cell.className += ' event-day hover:bg-indigo-700 shadow-md';
+                    cell.title = hasEvent;
+                    cell.onclick = () => alert(`📅 ${dateKey}\n📌 ${hasEvent}`);
+                } else if (isToday) {
+                    cell.className += ' today';
+                } else {
+                    cell.className += ' hover:bg-gray-100 text-gray-700';
                 }
-            }, 8000);
-        }
 
-        // --- Inicialização ---
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Inicializa a lista de eventos futuros e renderiza o calendário
+                calendarGrid.appendChild(cell);
+            }
+            
             updateFutureEvents();
+        }
+
+        // Atualiza a lista lateral de eventos
+        function updateFutureEvents() {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            
+            let upcoming = [];
+            for (const [key, desc] of Object.entries(EVENTS)) {
+                const parts = key.split('/');
+                const date = new Date(parts[2], parts[1]-1, parts[0]);
+                if (date >= today) upcoming.push({ date, key, desc });
+            }
+            upcoming.sort((a, b) => a.date - b.date);
+
+            if (upcoming.length === 0) {
+                eventsDisplay.innerHTML = '<p class="text-gray-400 italic text-sm">Sem eventos futuros.</p>';
+                return;
+            }
+
+            eventsDisplay.innerHTML = upcoming.slice(0, 4).map(e => `
+                <div class="flex items-start space-x-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+                    <div class="flex-shrink-0 w-12 text-center">
+                        <span class="block text-xs font-bold text-indigo-500 uppercase">${MONTHS[e.date.getMonth()].substring(0,3)}</span>
+                        <span class="block text-lg font-bold text-gray-800 leading-none">${e.date.getDate()}</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-800 leading-tight">${e.desc}</p>
+                        <p class="text-xs text-gray-400 mt-1">${e.date.toLocaleDateString('pt-BR', {weekday: 'long'})}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatDateKey(date) {
+            return `${String(date.getDate()).padStart(2,'0')}/${String(date.getMonth()+1).padStart(2,'0')}/${date.getFullYear()}`;
+        }
+
+        // Listeners
+        document.getElementById('prev-month').onclick = () => {
+            currentMonth--;
+            if(currentMonth < 0) { currentMonth = 11; currentYear--; }
             renderCalendar();
+        };
+        document.getElementById('next-month').onclick = () => {
+            currentMonth++;
+            if(currentMonth > 11) { currentMonth = 0; currentYear++; }
+            renderCalendar();
+        };
 
-            // Eventos de Navegação do Calendário
-            document.getElementById('prev-month').addEventListener('click', () => changeMonth(-1));
-            document.getElementById('next-month').addEventListener('click', () => changeMonth(1));
-        });
-
+        // Inicializar
+        renderCalendar();
     </script>
 </body>
 </html>
