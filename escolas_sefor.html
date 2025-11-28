@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEFOP - Gerador de Contatos de Escolas</title>
+    <title>CEFOP - Busca e Edição de Escolas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f7f9fb;
+        }
+        /* Estilo para inputs no modo de edição */
+        .editable-input {
+            border: 1px solid #ccc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem;
+            color: #1f2937; /* text-gray-800 */
         }
     </style>
 </head>
@@ -16,185 +26,317 @@
 
     <script src="escolas_data.js"></script>
 
-    <div class="w-full max-w-2xl bg-white shadow-2xl rounded-xl p-6 sm:p-8 mt-10">
+    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl p-6 sm:p-8 mt-10">
 
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">📩 Contatos das Escolas</h1>
-        <p class="text-gray-500 mb-8">Selecione o SEFOR e a Escola para visualizar as informações de contato.</p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">🔍 Busca e Gerenciamento de Escolas</h1>
+        <p id="total-escolas" class="text-lg text-gray-500 mb-4 font-semibold">Carregando total...</p>
 
-        <div class="space-y-6">
-
-            <div>
-                <label for="sefor-select" class="block text-sm font-medium text-gray-700 mb-2">1. Selecione a Regional (SEFOR)</label>
-                <select id="sefor-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-                    <option value="" disabled selected>Escolha o SEFOR</option>
-                    <option value="SEFOR 1">SEFOR 1</option>
-                    <option value="SEFOR 2">SEFOR 2</option>
-                    <option value="SEFOR 3">SEFOR 3</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="escola-select" class="block text-sm font-medium text-gray-700 mb-2">2. Selecione a Escola</label>
-                <select id="escola-select" disabled class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-                    <option value="" disabled selected>Selecione um SEFOR primeiro</option>
-                </select>
-            </div>
-            
-        </div>
-
-        <div id="contato-info" class="mt-8 p-6 border-l-4 border-blue-500 bg-blue-50 rounded-r-lg shadow-md hidden">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">Informações de Contato</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                
-                <div class="flex items-center space-x-3">
-                    <span class="font-medium text-gray-600">Escola:</span>
-                    <p id="info-nome" class="font-bold text-gray-800"></p>
-                </div>
-                
-                <div class="flex items-center space-x-3">
-                    <span class="font-medium text-gray-600">Regional:</span>
-                    <p id="info-sefor" class="font-bold text-blue-600"></p>
-                </div>
-
-                <div class="flex items-center space-x-3">
-                    <span class="font-medium text-gray-600">E-mail:</span>
-                    <p id="info-email" class="text-red-600 font-semibold truncate"></p>
-                </div>
-                
-                <div class="flex items-center space-x-3">
-                    <span class="font-medium text-gray-600">Telefone:</span>
-                    <p id="info-telefone" class="text-gray-800"></p>
-                </div>
-
-                <div class="flex items-center space-x-3">
-                    <span class="font-medium text-gray-600">Diretor(a):</span>
-                    <p id="info-diretor" class="text-gray-800"></p>
-                </div>
-
-                <div class="flex items-center space-x-3">
-                    <span class="font-medium text-gray-600">Celular:</span>
-                    <p id="info-celular" class="text-gray-800"></p>
-                </div>
-            </div>
-            
-            <button id="copy-email-btn" class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 shadow-md disabled:bg-gray-400" disabled>
-                Copiar Endereço de E-mail
+        <div class="mb-6 flex justify-end">
+            <button id="export-json-btn" class="bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md">
+                Exportar Dados Atualizados (JSON)
             </button>
-            <span id="copy-message" class="text-green-600 text-sm mt-2 hidden block">E-mail copiado!</span>
         </div>
 
-        <div id="email-vazio-alerta" class="mt-8 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 hidden rounded-lg" role="alert">
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8 rounded-lg" role="alert">
             <p class="font-bold">Atenção!</p>
-            <p>Esta escola não tem um e-mail registrado no nosso banco de dados.</p>
+            <p class="text-sm">As alterações são salvas apenas no seu navegador via **LocalStorage**. Use o botão "Exportar Dados" para salvar permanentemente.</p>
         </div>
+
+        <div class="mb-6">
+            <label for="search-input" class="block text-sm font-medium text-gray-700 mb-2">Pesquisar por Nome da Escola (parte ou nome completo):</label>
+            <input type="text" id="search-input" placeholder="Ex: liceu, adauto, filomeno..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 text-base">
+        </div>
+        
+        <div id="results-container" class="space-y-4">
+            <p class="text-gray-500">Comece a digitar para buscar escolas.</p>
+        </div>
+        
     </div>
 
     <script>
-        // O array 'escolas_data' é carregado do arquivo escolas_data.js
-        const seforSelect = document.getElementById('sefor-select');
-        const escolaSelect = document.getElementById('escola-select');
-        const contatoInfoDiv = document.getElementById('contato-info');
-        const emailVazioAlerta = document.getElementById('email-vazio-alerta');
-        const copyEmailBtn = document.getElementById('copy-email-btn');
-        const copyMessage = document.getElementById('copy-message');
+        // Variável global que armazenará o array de dados, carregado do localStorage ou do arquivo.
+        let escolasData = [];
+        const LOCAL_STORAGE_KEY = 'escolas_data_updated';
 
-        let escolasFiltradas = [];
+        const searchInput = document.getElementById('search-input');
+        const resultsContainer = document.getElementById('results-container');
+        const totalEscolasElement = document.getElementById('total-escolas');
+        const exportJsonBtn = document.getElementById('export-json-btn');
 
-        // 1. Função para carregar as escolas após a seleção do SEFOR
-        seforSelect.addEventListener('change', (event) => {
-            const seforSelecionado = event.target.value;
-            
-            // Filtra o array global 'escolas_data'
-            escolasFiltradas = escolas_data.filter(escola => escola.sefor === seforSelecionado);
-            
-            // Limpa o select de escolas e o resultado
-            escolaSelect.innerHTML = '<option value="" disabled selected>Selecione a Escola</option>';
-            contatoInfoDiv.classList.add('hidden');
-            emailVazioAlerta.classList.add('hidden');
-            copyMessage.classList.add('hidden');
-
-            if (escolasFiltradas.length > 0) {
-                // Habilita o select e preenche as opções
-                escolaSelect.disabled = false;
-                escolaSelect.classList.remove('bg-gray-100');
-                
-                escolasFiltradas.sort((a, b) => a.nome.localeCompare(b.nome)); // Ordena por nome
-                
-                escolasFiltradas.forEach(escola => {
-                    const option = document.createElement('option');
-                    option.value = escola.nome;
-                    option.textContent = escola.nome;
-                    escolaSelect.appendChild(option);
-                });
-            } else {
-                escolaSelect.disabled = true;
-                escolaSelect.classList.add('bg-gray-100');
-            }
-        });
-
-        // 2. Função para exibir os dados de contato da escola selecionada
-        escolaSelect.addEventListener('change', (event) => {
-            const nomeEscolaSelecionada = event.target.value;
-            const escola = escolasFiltradas.find(e => e.nome === nomeEscolaSelecionada);
-
-            if (escola) {
-                // Atualiza a área de informações
-                document.getElementById('info-nome').textContent = escola.nome || 'N/A';
-                document.getElementById('info-sefor').textContent = escola.sefor || 'N/A';
-                document.getElementById('info-email').textContent = escola.email || 'E-mail não registrado';
-                document.getElementById('info-telefone').textContent = escola.telefone || 'N/A';
-                document.getElementById('info-diretor').textContent = escola.diretor || 'N/A';
-                document.getElementById('info-celular').textContent = escola.celular || 'N/A';
-                
-                contatoInfoDiv.classList.remove('hidden');
-                emailVazioAlerta.classList.add('hidden');
-                copyMessage.classList.add('hidden');
-
-                // Lógica do botão de copiar
-                if (escola.email && escola.email !== 'E-mail não registrado' && escola.email.trim() !== "") {
-                    copyEmailBtn.disabled = false;
-                    copyEmailBtn.classList.remove('disabled:bg-gray-400');
-                } else {
-                    copyEmailBtn.disabled = true;
-                    copyEmailBtn.classList.add('disabled:bg-gray-400');
-                    emailVazioAlerta.classList.remove('hidden');
+        /**
+         * 1. Carrega os dados, priorizando o localStorage
+         */
+        function loadData() {
+            const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (storedData) {
+                try {
+                    escolasData = JSON.parse(storedData);
+                } catch (e) {
+                    escolasData = window.escolas_data; 
                 }
+            } else if (typeof window.escolas_data !== 'undefined') {
+                escolasData = window.escolas_data;
             } else {
-                contatoInfoDiv.classList.add('hidden');
+                escolasData = [];
             }
-        });
 
-        // 3. Funcionalidade para copiar o email
-        copyEmailBtn.addEventListener('click', () => {
-            const email = document.getElementById('info-email').textContent;
+            // Garante que cada escola tenha um índice único
+            escolasData = escolasData.map((escola, index) => ({
+                ...escola,
+                // Usamos o nome da escola como ID primário, mas fallback para o índice
+                data_id: escola.nome ? escola.nome.replace(/\s/g, '_') : index 
+            }));
             
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(email).then(() => {
-                    copyMessage.classList.remove('hidden');
-                    setTimeout(() => {
-                        copyMessage.classList.add('hidden');
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Erro ao copiar o texto: ', err);
-                    alert('Erro ao copiar o e-mail. Tente copiar manualmente.');
-                });
+            if (escolasData.length > 0) {
+                totalEscolasElement.textContent = `Total de Escolas Registradas: ${escolasData.length}`;
             } else {
-                // Fallback para navegadores sem suporte a navigator.clipboard
-                const textarea = document.createElement('textarea');
-                textarea.value = email;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-
-                copyMessage.classList.remove('hidden');
-                setTimeout(() => {
-                    copyMessage.classList.add('hidden');
-                }, 2000);
+                totalEscolasElement.textContent = "Erro: Dados das escolas não encontrados ou vazios.";
+                totalEscolasElement.classList.add('text-red-500');
             }
+        }
+
+        /**
+         * 2. Salva o array de dados no localStorage
+         */
+        function saveData() {
+            try {
+                // Remove o índice temporário 'data_id' antes de salvar
+                const dataToSave = escolasData.map(e => {
+                    const { data_id, ...rest } = e;
+                    return rest;
+                });
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
+            } catch (e) {
+                alert('Erro ao salvar os dados no navegador (localStorage).');
+            }
+        }
+
+        /**
+         * 3. Executa a pesquisa e renderiza os resultados
+         */
+        function searchAndRender() {
+            const searchTerm = searchInput.value.trim().toUpperCase();
+            
+            if (searchTerm.length < 3) {
+                resultsContainer.innerHTML = '<p class="text-gray-500">Continue digitando para refinar a busca.</p>';
+                return;
+            }
+
+            // Filtra as escolas por parte do nome
+            const filteredSchools = escolasData.filter(escola => 
+                escola.nome && escola.nome.toUpperCase().includes(searchTerm)
+            );
+
+            // Ordena por nome para melhor visualização
+            filteredSchools.sort((a, b) => a.nome.localeCompare(b.nome));
+
+            renderSearchResults(filteredSchools);
+        }
+
+        /**
+         * 4. Renderiza a lista plana de escolas (substituindo o accordion)
+         */
+        function renderSearchResults(schools) {
+            if (schools.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-red-500 font-semibold">Nenhuma escola encontrada com o termo pesquisado.</p>';
+                return;
+            }
+
+            let listHtml = '';
+            
+            // Define a cor fixa (azul) para os resultados da busca, pois não estamos agrupando por SEFOR
+            const detailTextColor = 'text-blue-700'; 
+
+            schools.forEach((escola, index) => {
+                listHtml += generateSchoolListItem(escola, detailTextColor, index);
+            });
+
+            resultsContainer.innerHTML = `
+                <p class="text-sm text-gray-600 mb-2 font-medium">Encontradas ${schools.length} escolas:</p>
+                <div class="border border-gray-200 rounded-xl shadow-md overflow-hidden bg-white divide-y divide-gray-200">
+                    ${listHtml}
+                </div>
+            `;
+            
+            // Re-adiciona os listeners de edição para os novos elementos
+            addSchoolActionListeners();
+        }
+
+
+        /**
+         * 5. Gera o HTML de um item da lista de escolas (com botões de edição)
+         */
+        function generateSchoolListItem(escola, detailTextColor, index) {
+            // Este índice (index) é apenas para numeração na lista
+            const schoolIndex = index !== undefined ? index + 1 : ''; 
+
+            return `
+                <li id="school-${escola.data_id}" class="school-list-item p-4 transition duration-150 ease-in-out hover:bg-gray-50 data-id-${escola.data_id}" data-id="${escola.data_id}">
+                    <div class="font-semibold text-gray-800 mb-2">
+                        ${schoolIndex ? `${schoolIndex}. ` : ''} ${escola.nome} 
+                        <span class="text-xs font-medium text-gray-500 ml-2">(${escola.sefor || 'Regional N/A'})</span>
+                    </div>
+
+                    <div class="view-mode space-y-1 text-sm">
+                        <div class="flex flex-wrap gap-x-4">
+                            <span class="${detailTextColor} font-medium">E-mail:</span> 
+                            <span data-field="email">${escola.email || 'N/A'}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-x-4">
+                            <span class="${detailTextColor} font-medium">Telefone:</span> 
+                            <span data-field="telefone">${escola.telefone || 'N/A'}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-x-4">
+                            <span class="${detailTextColor} font-medium">Diretor(a):</span> 
+                            <span data-field="diretor">${escola.diretor || 'N/A'}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-x-4">
+                            <span class="${detailTextColor} font-medium">Celular:</span> 
+                            <span data-field="celular">${escola.celular || 'N/A'}</span>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="btn-edit bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300 shadow-sm" data-action="edit">
+                                Atualizar Informação
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="edit-mode space-y-2 hidden p-3 border border-gray-200 rounded-lg bg-gray-100 mt-2">
+                        </div>
+                </li>
+            `;
+        }
+
+        /**
+         * 6. Adiciona listeners para os botões de ação (Editar/Salvar/Cancelar)
+         */
+        function addSchoolActionListeners() {
+            // Usamos o querySelectorAll na resultsContainer para garantir que pegamos apenas os elementos recém-renderizados
+            resultsContainer.querySelectorAll('.school-list-item').forEach(item => {
+                const schoolId = item.getAttribute('data-id');
+                // Encontra a escola no array global usando o ID único
+                const escola = escolasData.find(e => e.data_id === schoolId);
+                
+                const btnEdit = item.querySelector('.btn-edit');
+                btnEdit.addEventListener('click', () => enterEditMode(item, escola));
+            });
+        }
+
+        /**
+         * 7. Entra no modo de edição (exibe inputs)
+         */
+        function enterEditMode(listItem, escola) {
+            listItem.querySelector('.view-mode').classList.add('hidden');
+            const editModeDiv = listItem.querySelector('.edit-mode');
+            editModeDiv.classList.remove('hidden');
+
+            const fields = ['email', 'telefone', 'diretor', 'celular'];
+            let editHtml = `<h3 class="font-bold text-gray-800 text-sm mb-2">Editar Contatos</h3>`;
+            
+            fields.forEach(field => {
+                const label = field.charAt(0).toUpperCase() + field.slice(1);
+                editHtml += `
+                    <div class="flex items-center">
+                        <label for="edit-${escola.data_id}-${field}" class="w-1/4 font-medium text-gray-700 text-xs">${label}:</label>
+                        <input id="edit-${escola.data_id}-${field}" type="text" value="${escola[field] || ''}" data-field="${field}" class="editable-input w-3/4">
+                    </div>
+                `;
+            });
+
+            // Botões de Salvar e Cancelar
+            editHtml += `
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button class="btn-save bg-green-500 hover:bg-green-600 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300" data-id="${escola.data_id}">
+                        Salvar Alterações
+                    </button>
+                    <button class="btn-cancel bg-gray-400 hover:bg-gray-500 text-white text-xs font-semibold py-1 px-3 rounded-md transition duration-300" data-id="${escola.data_id}">
+                        Cancelar
+                    </button>
+                </div>
+            `;
+            
+            editModeDiv.innerHTML = editHtml;
+
+            // Adiciona listeners para os novos botões no modo de edição
+            listItem.querySelector('.btn-save').addEventListener('click', () => saveChanges(listItem, escola));
+            listItem.querySelector('.btn-cancel').addEventListener('click', () => exitEditMode(listItem, escola));
+        }
+
+        /**
+         * 8. Sai do modo de edição (retorna à visualização)
+         */
+        function exitEditMode(listItem, escola) {
+            listItem.querySelector('.edit-mode').classList.add('hidden');
+            listItem.querySelector('.view-mode').classList.remove('hidden');
+        }
+
+        /**
+         * 9. Salva as alterações
+         */
+        function saveChanges(listItem, escola) {
+            const inputs = listItem.querySelectorAll('.edit-mode input');
+            let updated = false;
+
+            inputs.forEach(input => {
+                const field = input.getAttribute('data-field');
+                const newValue = input.value.trim();
+                
+                if (escola[field] !== newValue) {
+                    escola[field] = newValue;
+                    updated = true;
+                }
+            });
+
+            if (updated) {
+                saveData(); // Salva no localStorage
+                
+                // Re-renderiza APENAS O ITEM (li) que foi alterado
+                const parentDiv = listItem.parentElement;
+                
+                // O problema é que o generateSchoolListItem gera um <li>.
+                // A melhor abordagem é re-renderizar toda a lista de resultados para que a numeração e a estrutura sejam preservadas
+                
+                // Em vez de re-renderizar o painel inteiro, vamos re-executar a pesquisa
+                // Isso garante que a lista de resultados atual seja mantida, mas com os dados novos
+                searchAndRender(); 
+
+                alert(`Informação da escola "${escola.nome}" atualizada e salva no seu navegador.`);
+            } else {
+                alert('Nenhuma alteração detectada.');
+                // Se não houver alteração, apenas sai do modo de edição
+                exitEditMode(listItem, escola); 
+            }
+        }
+
+        /**
+         * 10. Função para exportar os dados atualizados como um arquivo JSON
+         */
+        exportJsonBtn.addEventListener('click', () => {
+            const exportData = escolasData.map(e => {
+                const { data_id, ...rest } = e;
+                return rest;
+            });
+            const json = JSON.stringify(exportData, null, 4);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'escolas_data_atualizado.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Arquivo JSON com os dados atualizados gerado com sucesso!');
         });
 
+        // Adiciona o listener para a pesquisa em tempo real
+        searchInput.addEventListener('input', searchAndRender);
+
+        // Inicializa o carregamento dos dados
+        loadData();
     </script>
 </body>
 </html>
