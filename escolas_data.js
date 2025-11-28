@@ -1,12 +1,19 @@
-const escolas_data = [
-    // === SEFOR 1 (58 escolas) ===
+// escolas_data.js
+
+/**
+ * Array de objetos contendo os dados das escolas da SEFOR 1, SEFOR 2 e SEFOR 3.
+ * Telefones da escola padronizados para XXXX-XXXX.
+ * Contatos do diretor padronizados para X.XXXX-XXXX (para números de 9 dígitos).
+ */
+export const escolasData = [
+    // --- INÍCIO DOS DADOS DA SEFOR 1 ---
     {
         sefor: "SEFOR 1",
         nome: "CCI NORTH SHOPPING JOQUEI",
         email: "ccijoquei@escola.ce.gov.br",
         telefone: "3452-3886",
         diretor: "DANIELE LIMA MIRANDA",
-        celular: "988080038"
+        contato_diretor: "9.8808-0038 / 9.8808-0038"
     },
     {
         sefor: "SEFOR 1",
@@ -14,7 +21,7 @@ const escolas_data = [
         email: "ccikennedy@escola.ce.gov.br",
         telefone: "3217-1597",
         diretor: "MARTA LEUDA LUCAS DE SOUSA",
-        celular: "992459960"
+        contato_diretor: "9.9245-9960 / 9.9245-9960"
     },
     {
         sefor: "SEFOR 1",
@@ -22,7 +29,7 @@ const escolas_data = [
         email: "cejaadelinoa@escola.ce.gov.br",
         telefone: "3101-5681",
         diretor: "CHRISTIAN MOREIRA DE SOUZA",
-        celular: "9.8899 0489"
+        contato_diretor: "9.8899-0489"
     },
     {
         sefor: "SEFOR 1",
@@ -30,7 +37,7 @@ const escolas_data = [
         email: "cejajwalter@escola.ce.gov.br",
         telefone: "3101-2990",
         diretor: "CARLOS ROBERTO NUNES CARVALHO",
-        celular: "9.8708 3399"
+        contato_diretor: "9.8708-3399 / 9.9655-1521"
     },
     {
         sefor: "SEFOR 1",
@@ -38,7 +45,7 @@ const escolas_data = [
         email: "cejamiltoncunha@escola.ce.gov.br",
         telefone: "3101-2075",
         diretor: "WILSON ROCHA RODRIGUES",
-        celular: "9.8560 8755"
+        contato_diretor: "9.8560-8755 / 9.8663-9893"
     },
     {
         sefor: "SEFOR 1",
@@ -46,7 +53,7 @@ const escolas_data = [
         email: "cejamcampos@escola.ce.gov.br",
         telefone: "3101-5089",
         diretor: "YURI HARLEN VASCONCELOS",
-        celular: "988701239"
+        contato_diretor: "9.8870-1239 / 9.8870-1239"
     },
     {
         sefor: "SEFOR 1",
@@ -54,7 +61,7 @@ const escolas_data = [
         email: "mhcampos@escola.ce.gov.br",
         telefone: "3225-2656",
         diretor: "JOSE CARLOS VIANA ROCHA",
-        celular: "9.8605 2909"
+        contato_diretor: "9.8605-2909 / 9.9152-5944"
     },
     {
         sefor: "SEFOR 1",
@@ -62,7 +69,7 @@ const escolas_data = [
         email: "cejapfreire@escola.ce.gov.br",
         telefone: "3101-2700",
         diretor: "SERGINA ARAÚJO DE ALENCAR",
-        celular: "9.8650 3025"
+        contato_diretor: "9.8650-3025"
     },
     {
         sefor: "SEFOR 1",
@@ -70,7 +77,7 @@ const escolas_data = [
         email: "everas@escola.ce.gov.br",
         telefone: "3101-4924",
         diretor: "SAMARA MAPURUNGA DOS SANTOS SALES",
-        celular: "9.9691 8890"
+        contato_diretor: "9.9691-8890 / 9.8614-7453"
     },
     {
         sefor: "SEFOR 1",
@@ -78,7 +85,7 @@ const escolas_data = [
         email: "cejagmsousa@escola.ce.gov.br",
         telefone: "3101-5073",
         diretor: "AMÉLIA MARIA MOREIRA ROLIN",
-        celular: "9.9167 4080"
+        contato_diretor: "9.9167-4080"
     },
     {
         sefor: "SEFOR 1",
@@ -86,7 +93,7 @@ const escolas_data = [
         email: "cejanbraga@escola.ce.gov.br",
         telefone: "3101-6575",
         diretor: "JOSE SERGIO PEREIRA DA COSTA",
-        celular: "9.9165 2227"
+        contato_diretor: "9.9165-2227 / 9.9980-9810"
     },
     {
         sefor: "SEFOR 1",
@@ -94,7 +101,7 @@ const escolas_data = [
         email: "rcarvalho@escola.ce.gov.br",
         telefone: "3101-5959",
         diretor: "SILVIO CEZAR DE CASTRO E SANTOS",
-        celular: ""
+        contato_diretor: ""
     },
     {
         sefor: "SEFOR 1",
@@ -102,7 +109,7 @@ const escolas_data = [
         email: "pmilitar@escola.ce.gov.br",
         telefone: "3101-4335",
         diretor: "SANDRO HERBERT FECHINE DA COSTA",
-        celular: "996058744"
+        contato_diretor: "9.9605-8744"
     },
     {
         sefor: "SEFOR 1",
@@ -110,7 +117,7 @@ const escolas_data = [
         email: "cbombeiros@escola.ce.gov.br",
         telefone: "3101-2266",
         diretor: "FRANCISCO ALBERT EINSTEIN LIMA ARRUDA",
-        celular: "988410204"
+        contato_diretor: "9.8841-0204"
     },
     {
         sefor: "SEFOR 1",
@@ -118,7 +125,7 @@ const escolas_data = [
         email: "ccarmo@escola.ce.gov.br",
         telefone: "3101-2265",
         diretor: "MARIA LAÍSSE DE CARVALHO MARIANO",
-        celular: "9.8829 8529"
+        contato_diretor: "9.8829-8529"
     },
     {
         sefor: "SEFOR 1",
@@ -126,7 +133,7 @@ const escolas_data = [
         email: "jnogueira@escola.ce.gov.br",
         telefone: "3238-6521",
         diretor: "REGINALDO SAMPAIO DE OLIVEIRA",
-        celular: "9.8789 2852"
+        contato_diretor: "9.8789-2852 / 9.9867-7647"
     },
     {
         sefor: "SEFOR 1",
@@ -134,7 +141,7 @@ const escolas_data = [
         email: "jgiffoni@escola.ce.gov.br",
         telefone: "3101-5078",
         diretor: "ELIZABETH CHAGAS GOMES",
-        celular: "9.8866 2647"
+        contato_diretor: "9.8866-2647 / 9.8789-2852"
     },
     {
         sefor: "SEFOR 1",
@@ -142,7 +149,7 @@ const escolas_data = [
         email: "marvin@escola.ce.gov.br",
         telefone: "3101-5088",
         diretor: "ANA FABÍOLA RIBEIRO DE SOUSA",
-        celular: "9.9628 2820"
+        contato_diretor: "9.9628-2820"
     },
     {
         sefor: "SEFOR 1",
@@ -150,7 +157,7 @@ const escolas_data = [
         email: "paulopetrola@escola.ce.gov.br",
         telefone: "3238-6592",
         diretor: "TATIANE CRUZ DA COSTA",
-        celular: "999126740"
+        contato_diretor: "9.9912-6740"
     },
     {
         sefor: "SEFOR 1",
@@ -158,7 +165,7 @@ const escolas_data = [
         email: "proosevelt@escola.ce.gov.br",
         telefone: "3101-2254",
         diretor: "JOÃO GUTEMBERG NOBRE SIMPLÍCIO",
-        celular: "9.9123 6573"
+        contato_diretor: "9.9123-6573"
     },
     {
         sefor: "SEFOR 1",
@@ -166,7 +173,7 @@ const escolas_data = [
         email: "amonte@escola.ce.gov.br",
         telefone: "3101-2692",
         diretor: "JACSON MUNIZ DA SILVA",
-        celular: "85 8737-6035"
+        contato_diretor: "8.7376-035"
     },
     {
         sefor: "SEFOR 1",
@@ -174,7 +181,7 @@ const escolas_data = [
         email: "dhelder@escola.ce.gov.br",
         telefone: "3101-5584",
         diretor: "FRANCISCO DAVID PEREIRA DA SILVA",
-        celular: "9.9244 9449"
+        contato_diretor: "9.9244-9449"
     },
     {
         sefor: "SEFOR 1",
@@ -182,7 +189,7 @@ const escolas_data = [
         email: "dhcampos@escola.ce.gov.br",
         telefone: "3101-2264",
         diretor: "KLECIA MARIA MESQUITA DE SOUSA",
-        celular: "999600635"
+        contato_diretor: "9.9960-0635 / 9.8749-2143"
     },
     {
         sefor: "SEFOR 1",
@@ -190,7 +197,7 @@ const escolas_data = [
         email: "fazevedo@escola.ce.gov.br",
         telefone: "3101-2208",
         diretor: "JOAO BATISTA NETO",
-        celular: ""
+        contato_diretor: ""
     },
     {
         sefor: "SEFOR 1",
@@ -198,7 +205,7 @@ const escolas_data = [
         email: "cmota@escola.ce.gov.br",
         telefone: "3101-2705",
         diretor: "ALESSANDRO DE CASTRO AQUINO",
-        celular: "9.9951 0376"
+        contato_diretor: "9.9951-0376"
     },
     {
         sefor: "SEFOR 1",
@@ -206,7 +213,7 @@ const escolas_data = [
         email: "fmarcilio@escola.ce.gov.br",
         telefone: "3101-2794",
         diretor: "TITO LIVIO CARVALHO BEZERRA",
-        celular: ""
+        contato_diretor: "9.8612-2949"
     },
     {
         sefor: "SEFOR 1",
@@ -214,7 +221,7 @@ const escolas_data = [
         email: "csilva@escola.ce.gov.br",
         telefone: "3101-5670",
         diretor: "FRANCISCO ROMULO COSTA FEITOSA",
-        celular: "9.8861 3958"
+        contato_diretor: "9.8861-3958"
     },
     {
         sefor: "SEFOR 1",
@@ -222,7 +229,7 @@ const escolas_data = [
         email: "jmjose@escola.ce.gov.br",
         telefone: "3101-2698",
         diretor: "MARIA DE FÁTIMA DOS SANTOS CAETANO",
-        celular: "9.8797 5538"
+        contato_diretor: "9.8797-5538"
     },
     {
         sefor: "SEFOR 1",
@@ -230,7 +237,7 @@ const escolas_data = [
         email: "jpsegundo@escola.ce.gov.br",
         telefone: "3496-7945",
         diretor: "MARIA DO SOCORRO TAVARES DE SOUSA",
-        celular: "9.8784 1399"
+        contato_diretor: "9.8784-1399"
     },
     {
         sefor: "SEFOR 1",
@@ -238,7 +245,7 @@ const escolas_data = [
         email: "walcantara@escola.ce.gov.br",
         telefone: "3101-5679",
         diretor: "MARIA DE LOURDES DA SILVA",
-        celular: "9.8748 0339"
+        contato_diretor: "9.8748-0339 / 9.9955-6684"
     },
     {
         sefor: "SEFOR 1",
@@ -246,7 +253,7 @@ const escolas_data = [
         email: "mcidrack@escola.ce.gov.br",
         telefone: "3101-5068",
         diretor: "JOELMA ANASTÁCIO CARVALHO",
-        celular: "982082779"
+        contato_diretor: "9.8208-2779"
     },
     {
         sefor: "SEFOR 1",
@@ -254,7 +261,7 @@ const escolas_data = [
         email: "patronato@escola.ce.gov.br",
         telefone: "3101-5087",
         diretor: "ALANA SOUZA DE OLIVEIRA VICTORIANO",
-        celular: "9.8736 7615"
+        contato_diretor: "9.8736-7615"
     },
     {
         sefor: "SEFOR 1",
@@ -262,7 +269,7 @@ const escolas_data = [
         email: "jpici@escola.ce.gov.br",
         telefone: "3101-5687",
         diretor: "ÁLVARO ROBERTO PEIXOTO TORRES",
-        celular: "9.8821 2195"
+        contato_diretor: "9.8821-2195"
     },
     {
         sefor: "SEFOR 1",
@@ -270,7 +277,7 @@ const escolas_data = [
         email: "ccals@escola.ce.gov.br",
         telefone: "3101-2379",
         diretor: "ANA CRISTINA DA COSTA",
-        celular: "9.9619 2838"
+        contato_diretor: "9.9619-2838"
     },
     {
         sefor: "SEFOR 1",
@@ -278,7 +285,7 @@ const escolas_data = [
         email: "mmartins@escola.ce.gov.br",
         telefone: "3101-5682",
         diretor: "SKENE HESS AMORIM PEREIRA",
-        celular: "986828878"
+        contato_diretor: "9.8682-8878"
     },
     {
         sefor: "SEFOR 1",
@@ -286,7 +293,7 @@ const escolas_data = [
         email: "asiqueira@escola.ce.gov.br",
         telefone: "3101-5673",
         diretor: "ANTONIO SERGIO LIMA DE ALBUQUERQUE",
-        celular: "9.8749 0360"
+        contato_diretor: "9.8749-0360"
     },
     {
         sefor: "SEFOR 1",
@@ -294,7 +301,7 @@ const escolas_data = [
         email: "abezerra@escola.ce.gov.br",
         telefone: "3212-6728",
         diretor: "TERCIA MARIA MACHADO SOUSA",
-        celular: "988437639"
+        contato_diretor: "9.8843-7639"
     },
     {
         sefor: "SEFOR 1",
@@ -302,7 +309,7 @@ const escolas_data = [
         email: "asales@escola.ce.gov.br",
         telefone: "3101-2263",
         diretor: "RAFAEL FERREIRA NOGUEIRA",
-        celular: "9.8804 6369"
+        contato_diretor: "9.8804-6369"
     },
     {
         sefor: "SEFOR 1",
@@ -310,7 +317,7 @@ const escolas_data = [
         email: "asenna@escola.ce.gov.br",
         telefone: "3101-5674",
         diretor: "MARCUS ANDRÉ SAMPAIO CAVALCANTE",
-        celular: "9.8808 4513"
+        contato_diretor: "9.8808-4513"
     },
     {
         sefor: "SEFOR 1",
@@ -318,7 +325,7 @@ const escolas_data = [
         email: "cmartins@escola.ce.gov.br",
         telefone: "3101-2258",
         diretor: "FRANCISCO CLAUDIO RODRIGUES",
-        celular: "988212706"
+        contato_diretor: "9.8821-2706 / 9.9694-0870"
     },
     {
         sefor: "SEFOR 1",
@@ -326,7 +333,7 @@ const escolas_data = [
         email: "hdiogo@escola.ce.gov.br",
         telefone: "3101-7829",
         diretor: "ANTONIO WELLINGTON DE SOUZA COSTA",
-        celular: "9.8834 0128"
+        contato_diretor: "9.8834-0128"
     },
     {
         sefor: "SEFOR 1",
@@ -334,7 +341,7 @@ const escolas_data = [
         email: "mmserpa@escola.ce.gov.br",
         telefone: "3101-2695",
         diretor: "ANTONIO ENIS DO NASCIMENTO",
-        celular: "9.8542 5461"
+        contato_diretor: "9.8542-5461"
     },
     {
         sefor: "SEFOR 1",
@@ -342,7 +349,7 @@ const escolas_data = [
         email: "ealagoas@escola.ce.gov.br",
         telefone: "3101-2704",
         diretor: "JOSÉ WILLIAM MATIAS BARROS",
-        celular: "9.9685 4901"
+        contato_diretor: "9.9685-4901"
     },
     {
         sefor: "SEFOR 1",
@@ -350,7 +357,7 @@ const escolas_data = [
         email: "eudoroc@escola.ce.gov.br",
         telefone: "3101-6592",
         diretor: "JULÇARA CAVALCANTE CRUZ",
-        celular: "85 9125-4821"
+        contato_diretor: "9.125-4821"
     },
     {
         sefor: "SEFOR 1",
@@ -358,7 +365,7 @@ const escolas_data = [
         email: "hbarroso@escola.ce.gov.br",
         telefone: "3101-2703",
         diretor: "SEBASTIÃO LEME DE VASCONCELOS FILHO",
-        celular: "9.8824 9812"
+        contato_diretor: "9.8824-9812"
     },
     {
         sefor: "SEFOR 1",
@@ -366,7 +373,7 @@ const escolas_data = [
         email: "jbezerra@escola.ce.gov.br",
         telefone: "3101-5082",
         diretor: "PEDRO HENRIQUE BALDUINO DE QUEIROZ",
-        celular: "985316897"
+        contato_diretor: "9.8531-6897"
     },
     {
         sefor: "SEFOR 1",
@@ -374,7 +381,7 @@ const escolas_data = [
         email: "wramos@escola.ce.gov.br",
         telefone: "3101-2872",
         diretor: "PAULO ROBERTO ÂNGELO DA SILVA",
-        celular: "9.98763124"
+        contato_diretor: "9.9876-3124 / 9.8763-1240"
     },
     {
         sefor: "SEFOR 1",
@@ -382,7 +389,7 @@ const escolas_data = [
         email: "liceuvvelha@escola.ce.gov.br",
         telefone: "3282-7798",
         diretor: "MARIA DO SOCORRO OLIVEIRA TABOSA",
-        celular: "9.88348783"
+        contato_diretor: "9.8834-8783"
     },
     {
         sefor: "SEFOR 1",
@@ -390,7 +397,7 @@ const escolas_data = [
         email: "ljangada@escola.ce.gov.br",
         telefone: "3101-5076",
         diretor: "RAFAEL OLIVEIRA FREITAS",
-        celular: "9.88384189"
+        contato_diretor: "9.8838-4189 / 9.8897-0750"
     },
     {
         sefor: "SEFOR 1",
@@ -398,7 +405,7 @@ const escolas_data = [
         email: "mtavora@escola.ce.gov.br",
         telefone: "3101-2386",
         diretor: "FABIOLA MARIA MOREIRA DOS SANTOS",
-        celular: "999134147"
+        contato_diretor: "9.9913-4147"
     },
     {
         sefor: "SEFOR 1",
@@ -406,7 +413,7 @@ const escolas_data = [
         email: "mdourado@escola.ce.gov.br",
         telefone: "3101-2706",
         diretor: "SORAIDE PAZ DE OLIVEIRA LIMA",
-        celular: "9.8715 5577"
+        contato_diretor: "9.8715-5577 / 9.9982-2416"
     },
     {
         sefor: "SEFOR 1",
@@ -414,7 +421,7 @@ const escolas_data = [
         email: "pfreire@escola.ce.gov.br",
         telefone: "3496-8554",
         diretor: "JOÃO FERNANDES TEIXEIRA NETO",
-        celular: "9.8609 2332"
+        contato_diretor: "9.8609-2332 / 9.8609-2332"
     },
     {
         sefor: "SEFOR 1",
@@ -422,7 +429,7 @@ const escolas_data = [
         email: "bjuca@escola.ce.gov.br",
         telefone: "3101-2697",
         diretor: "MARCELO HENRIQUE ARAUJO DE SOUSA",
-        celular: "988326188"
+        contato_diretor: "9.8832-6188"
     },
     {
         sefor: "SEFOR 1",
@@ -430,7 +437,7 @@ const escolas_data = [
         email: "ceremjose@escola.ce.gov.br",
         telefone: "3101-7634",
         diretor: "DANILO DE AZEVEDO BATISTA",
-        celular: "997988783"
+        contato_diretor: "9.9798-8783"
     },
     {
         sefor: "SEFOR 1",
@@ -438,7 +445,7 @@ const escolas_data = [
         email: "jarpoadores@escola.ce.gov.br",
         telefone: "3101-2694",
         diretor: "ANTONIA MARIA DA COSTA MENDES DE MESQUITA",
-        celular: "9.8630 1299"
+        contato_diretor: "9.8630-1299"
     },
     {
         sefor: "SEFOR 1",
@@ -446,7 +453,7 @@ const escolas_data = [
         email: "scampos@escola.ce.gov.br",
         telefone: "3101-2390",
         diretor: "RAIMUNDO GONÇALVES DOS SANTOS JÚNIOR",
-        celular: "9.8842 9353"
+        contato_diretor: "9.8842-9353"
     },
     {
         sefor: "SEFOR 1",
@@ -454,7 +461,7 @@ const escolas_data = [
         email: "safonso@escola.ce.gov.br",
         telefone: "3101-2260",
         diretor: "SHEYLLA BARROS ANDRADE SOUSA SALES",
-        celular: "(85)988426004"
+        contato_diretor: "9.8842-6004"
     },
     {
         sefor: "SEFOR 1",
@@ -462,17 +469,18 @@ const escolas_data = [
         email: "vfalcao@escola.ce.gov.br",
         telefone: "3101-2690",
         diretor: "RAFAEL SOARES DA SILVA PAIVA",
-        celular: "988790277"
+        contato_diretor: "9.8879-0277"
     },
+    // --- FIM DOS DADOS DA SEFOR 1 ---
 
-    // === SEFOR 2 (59 escolas) ===
+    // --- INÍCIO DOS DADOS DA SEFOR 2 ---
     {
         sefor: "SEFOR 2",
         nome: "CCI RIOMAR FORTALEZA",
         email: "ccipapicu@escola.ce.gov.br",
         telefone: "3265-1864",
         diretor: "",
-        celular: ""
+        contato_diretor: ""
     },
     {
         sefor: "SEFOR 2",
@@ -480,7 +488,7 @@ const escolas_data = [
         email: "ccisul@escola.ce.gov.br",
         telefone: "3048-1300",
         diretor: "",
-        celular: ""
+        contato_diretor: ""
     },
     {
         sefor: "SEFOR 2",
@@ -488,7 +496,7 @@ const escolas_data = [
         email: "jserpa@escola.ce.gov.br",
         telefone: "3101-5093",
         diretor: "CICERO ONOFRE DE SOUSA",
-        celular: "9.8103 2212"
+        contato_diretor: "9.8103-2212"
     },
     {
         sefor: "SEFOR 2",
@@ -496,7 +504,7 @@ const escolas_data = [
         email: "miguelgurgel@escola.ce.gov.br",
         telefone: "3101-2071",
         diretor: "RAFAEL SILVA",
-        celular: "9.9291 4901"
+        contato_diretor: "9.9291-4901"
     },
     {
         sefor: "SEFOR 2",
@@ -504,7 +512,7 @@ const escolas_data = [
         email: "eeepjaime.alencar@escola.ce.gov.br",
         telefone: "3273-6853",
         diretor: "BRENA DE LIMA REIS DOS SANTOS",
-        celular: "99984-7962"
+        contato_diretor: "9.9984-7962"
     },
     {
         sefor: "SEFOR 2",
@@ -512,7 +520,7 @@ const escolas_data = [
         email: "jalbano@escola.ce.gov.br",
         telefone: "3101-2072",
         diretor: "RAIMUNDA MARGARETH DE OLIVEIRA",
-        celular: "99730-2211"
+        contato_diretor: "9.9730-2211"
     },
     {
         sefor: "SEFOR 2",
@@ -520,7 +528,7 @@ const escolas_data = [
         email: "jbarcelos@escola.ce.gov.br",
         telefone: "3101-2163",
         diretor: "MARCOS RANGEL PEREIRA",
-        celular: "991163750"
+        contato_diretor: "9.9116-3750"
     },
     {
         sefor: "SEFOR 2",
@@ -528,7 +536,7 @@ const escolas_data = [
         email: "angelaborges@escola.ce.gov.br",
         telefone: "3248-8250",
         diretor: "Camila Bandeira Cunha",
-        celular: "98606-9214"
+        contato_diretor: "9.8606-9214"
     },
     {
         sefor: "SEFOR 2",
@@ -536,7 +544,7 @@ const escolas_data = [
         email: "mmedeiros@escola.ce.gov.br",
         telefone: "3101-3155",
         diretor: "DAMILSON SANTOS DA SILVA",
-        celular: "99998-0807"
+        contato_diretor: "9.9998-0807"
     },
     {
         sefor: "SEFOR 2",
@@ -544,7 +552,7 @@ const escolas_data = [
         email: "marioalencar@escola.ce.gov.br",
         telefone: "3275-6593",
         diretor: "MAYUMI PASSOS LOPES",
-        celular: "9.8763 9362"
+        contato_diretor: "9.8763-9362"
     },
     {
         sefor: "SEFOR 2",
@@ -552,7 +560,7 @@ const escolas_data = [
         email: "atamandare@escola.ce.gov.br",
         telefone: "3101-6139",
         diretor: "ALAN TAVARES RIBEIRO",
-        celular: "99792-7806"
+        contato_diretor: "9.9792-7806"
     },
     {
         sefor: "SEFOR 2",
@@ -560,7 +568,7 @@ const escolas_data = [
         email: "admacedo@escola.ce.gov.br",
         telefone: "3101-3020",
         diretor: "EVILANE ALVES DE ARÚJO MOREL",
-        celular: "9.8811 6307"
+        contato_diretor: "9.8811-6307"
     },
     {
         sefor: "SEFOR 2",
@@ -568,7 +576,7 @@ const escolas_data = [
         email: "rfroes@escola.ce.gov.br",
         telefone: "3101-7916",
         diretor: "ROGERS SOUSA DE OLIVEIRA",
-        celular: "996252065"
+        contato_diretor: "9.9625-2065"
     },
     {
         sefor: "SEFOR 2",
@@ -576,7 +584,7 @@ const escolas_data = [
         email: "balencar@escola.ce.gov.br",
         telefone: "3101-7071",
         diretor: "NÁDIA RODRIGUES DA SILVA",
-        celular: "999880328"
+        contato_diretor: "9.9988-0328"
     },
     {
         sefor: "SEFOR 2",
@@ -584,7 +592,7 @@ const escolas_data = [
         email: "cbevilaqua@escola.ce.gov.br",
         telefone: "3101-5080",
         diretor: "CARLOS HENRIQUE RODRIGUES SAMPAIO",
-        celular: "9.8784 0765"
+        contato_diretor: "9.8784-0765"
     },
     {
         sefor: "SEFOR 2",
@@ -592,7 +600,7 @@ const escolas_data = [
         email: "ctavora@escola.ce.gov.br",
         telefone: "3101-3078",
         diretor: "JOÃO PAULO DA GUIA ALVES",
-        celular: "99978-1223"
+        contato_diretor: "9.9978-1223"
     },
     {
         sefor: "SEFOR 2",
@@ -600,7 +608,7 @@ const escolas_data = [
         email: "mrodrigues@escola.ce.gov.br",
         telefone: "3101-7918",
         diretor: "OLAVO TEIXEIRA DOS ANJOS",
-        celular: "999846590"
+        contato_diretor: "9.9984-6590"
     },
     {
         sefor: "SEFOR 2",
@@ -608,7 +616,7 @@ const escolas_data = [
         email: "abarbosa@escola.ce.gov.br",
         telefone: "3101-3397",
         diretor: "MORGANA REBOUÇAS DE QUEIROZ E SILVA",
-        celular: "997691035"
+        contato_diretor: "9.9769-1035 / morgana"
     },
     {
         sefor: "SEFOR 2",
@@ -616,7 +624,7 @@ const escolas_data = [
         email: "mborges@escola.ce.gov.br",
         telefone: "3101-1390",
         diretor: "LINDEMBERG SANTOS SILVA",
-        celular: "981815129"
+        contato_diretor: "9.8181-5129"
     },
     {
         sefor: "SEFOR 2",
@@ -624,7 +632,7 @@ const escolas_data = [
         email: "jalencar@escola.ce.gov.br",
         telefone: "3101-2076",
         diretor: "MAURILIO DA SILVA SOUSA",
-        celular: "988245108"
+        contato_diretor: "9.8824-5108"
     },
     {
         sefor: "SEFOR 2",
@@ -632,7 +640,7 @@ const escolas_data = [
         email: "ltavora@escola.ce.gov.br",
         telefone: "3101-2065",
         diretor: "Ivan Bezerra Quevedo Filho",
-        celular: "987959293"
+        contato_diretor: "9.8795-9293"
     },
     {
         sefor: "SEFOR 2",
@@ -640,7 +648,7 @@ const escolas_data = [
         email: "ltpromorar@escola.ce.gov.br",
         telefone: "3101-2069",
         diretor: "SÊMIA PAULA GONÇALVES FÉLIX SERPA",
-        celular: "9.9932-4408"
+        contato_diretor: "9.9932-4408"
     },
     {
         sefor: "SEFOR 2",
@@ -648,7 +656,7 @@ const escolas_data = [
         email: "nhugnen@escola.ce.gov.br",
         telefone: "3101-6154",
         diretor: "ALYSON RAQUEL SILVA FIALHO",
-        celular: "99412-3838"
+        contato_diretor: "9.9412-3838"
     },
     {
         sefor: "SEFOR 2",
@@ -656,7 +664,7 @@ const escolas_data = [
         email: "otaviot@escola.ce.gov.br",
         telefone: "3101-2979",
         diretor: "LWDYVILLA BEZERRA FARIAS",
-        celular: "988298952"
+        contato_diretor: "9.8829-8952"
     },
     {
         sefor: "SEFOR 2",
@@ -664,7 +672,7 @@ const escolas_data = [
         email: "procha@escola.ce.gov.br",
         telefone: "3101-5075",
         diretor: "REGIA LIMA LEITAO",
-        celular: "99178-1789"
+        contato_diretor: "9.9178-1789"
     },
     {
         sefor: "SEFOR 2",
@@ -672,7 +680,7 @@ const escolas_data = [
         email: "ppaz@escola.ce.gov.br",
         telefone: "3101-1394",
         diretor: "ELIANA MARTINS CAVALCANTE",
-        celular: "9.8892 4010"
+        contato_diretor: "9.8892-4010"
     },
     {
         sefor: "SEFOR 2",
@@ -680,7 +688,7 @@ const escolas_data = [
         email: "polivalentemf@escola.ce.gov.br",
         telefone: "3101-3096",
         diretor: "Cintia Kelly Nogueira Sabino",
-        celular: "98827-2051"
+        contato_diretor: "9.8827-2051"
     },
     {
         sefor: "SEFOR 2",
@@ -688,7 +696,7 @@ const escolas_data = [
         email: "ableal@escola.ce.gov.br",
         telefone: "3269-7070",
         diretor: "TANIA MARIA DE SOUSA BARBOSA FARIAS",
-        celular: "985025514"
+        contato_diretor: "9.8502-5514"
     },
     {
         sefor: "SEFOR 2",
@@ -696,7 +704,7 @@ const escolas_data = [
         email: "payrton@escola.ce.gov.br",
         telefone: "3101-2066",
         diretor: "WELLINGTON SAMPAIO VIEIRA JUNIOR",
-        celular: "9.9996 3754"
+        contato_diretor: "9.9996-3754"
     },
     {
         sefor: "SEFOR 2",
@@ -704,7 +712,7 @@ const escolas_data = [
         email: "pteles@escola.ce.gov.br",
         telefone: "3101-6138",
         diretor: "ANTONIO CARLOS DA SILVA LIMA FILHO",
-        celular: "9-9630-9712"
+        contato_diretor: "9.9630-9712"
     },
     {
         sefor: "SEFOR 2",
@@ -712,7 +720,7 @@ const escolas_data = [
         email: "mgoncalves@escola.ce.gov.br",
         telefone: "3101-3048",
         diretor: "LORENA CAVALCANTE LIMA DE FREITAS",
-        celular: "987223901"
+        contato_diretor: "9.8722-3901"
     },
     {
         sefor: "SEFOR 2",
@@ -720,7 +728,7 @@ const escolas_data = [
         email: "sluzia@escola.ce.gov.br",
         telefone: "3101-5085",
         diretor: "PAULA ANDRÉA DE OLIVEIRA DANTAS",
-        celular: "986899979"
+        contato_diretor: "9.8689-9979"
     },
     {
         sefor: "SEFOR 2",
@@ -728,7 +736,7 @@ const escolas_data = [
         email: "liceum@escola.ce.gov.br",
         telefone: "3101-2077",
         diretor: "Francisco Oliveira Pascoal Júnior",
-        celular: "998127979"
+        contato_diretor: "9.9812-7979"
     },
     {
         sefor: "SEFOR 2",
@@ -736,7 +744,7 @@ const escolas_data = [
         email: "lceara@escola.ce.gov.br",
         telefone: "3101-2262",
         diretor: "EDSON MORAIS DE FREITAS BRAGA",
-        celular: "9.8525 1301"
+        contato_diretor: "9.8525-1301"
     },
     {
         sefor: "SEFOR 2",
@@ -744,7 +752,7 @@ const escolas_data = [
         email: "paulinorocha@escola.ce.gov.br",
         telefone: "3101-3047",
         diretor: "LEILIANE FACANHA DE OLIVEIRA",
-        celular: "98972-4401"
+        contato_diretor: "9.8972-4401"
     },
     {
         sefor: "SEFOR 2",
@@ -752,7 +760,7 @@ const escolas_data = [
         email: "pbenevides@escola.ce.gov.br",
         telefone: "3101-2164",
         diretor: "ALDIRA RAQUEL PAULA MAIA",
-        celular: "99609-1124"
+        contato_direto: "9.9609-1124"
     },
     {
         sefor: "SEFOR 2",
@@ -760,7 +768,7 @@ const escolas_data = [
         email: "amlustosa@escola.ce.gov.br",
         telefone: "3101-2171",
         diretor: "HERBTY MARQUES GOMES",
-        celular: "98861-0010"
+        contato_diretor: "9.8861-0010"
     },
     {
         sefor: "SEFOR 2",
@@ -768,7 +776,7 @@ const escolas_data = [
         email: "dmar@escola.ce.gov.br",
         telefone: "3101-1392",
         diretor: "BRENO RICARDO OLIVEIRA MARQUES",
-        celular: "9.8889 0716"
+        contato_diretor: "9.8889-0716"
     },
     {
         sefor: "SEFOR 2",
@@ -776,7 +784,7 @@ const escolas_data = [
         email: "estpara@escola.ce.gov.br",
         telefone: "3101-2168",
         diretor: "JARSON RAIMUNDO BONFIM RODRIGUES",
-        celular: "9.8846 8898"
+        contato_diretor: "9.8846-8898"
     },
     {
         sefor: "SEFOR 2",
@@ -784,7 +792,7 @@ const escolas_data = [
         email: "gmota@escola.ce.gov.br",
         telefone: "3452-6184",
         diretor: "MARIA DE FÁTIMA BEZERRA",
-        celular: "9.8525 2822"
+        contato_diretor: "9.8525-2822"
     },
     {
         sefor: "SEFOR 2",
@@ -792,7 +800,7 @@ const escolas_data = [
         email: "vtavora@escola.ce.gov.br",
         telefone: "3101-2064",
         diretor: "NILOURDES MARIA LAURIANO VIEIRA",
-        celular: "9.8916 4483"
+        contato_diretor: "9.8916-4483"
     },
     {
         sefor: "SEFOR 2",
@@ -800,7 +808,7 @@ const escolas_data = [
         email: "hmota@escola.ce.gov.br",
         telefone: "3101-1389",
         diretor: "WILDEMAR BEZERRA DOS SANTOS",
-        celular: "9.8826 6955"
+        contato_diretor: "9.8826-6955"
     },
     {
         sefor: "SEFOR 2",
@@ -808,7 +816,7 @@ const escolas_data = [
         email: "2demaio@escola.ce.gov.br",
         telefone: "3101-3076",
         diretor: "JOENE MARIA UCHÔA",
-        celular: "9.8885 9120"
+        contato_diretor: "9.8885-9120"
     },
     {
         sefor: "SEFOR 2",
@@ -816,7 +824,7 @@ const escolas_data = [
         email: "iracema@escola.ce.gov.br",
         telefone: "3101-2068",
         diretor: "SHIRLEIDE COSTA DOS SANTOS BARBOSA",
-        celular: "98675-2414"
+        contato_diretor: "9.8675-2414"
     },
     {
         sefor: "SEFOR 2",
@@ -824,7 +832,7 @@ const escolas_data = [
         email: "jnjuca@escola.ce.gov.br",
         telefone: "3101-2159",
         diretor: "CLÁUDIA PIRES DE OLIVEIRA LOPES",
-        celular: "9.8818 3890"
+        contato_diretor: "9.8818-3890"
     },
     {
         sefor: "SEFOR 2",
@@ -832,7 +840,7 @@ const escolas_data = [
         email: "johnson@escola.ce.gov.br",
         telefone: "3101-6153",
         diretor: "ADRIANA FREITAS COSTA LIMA",
-        celular: "999171362"
+        contato_diretor: "9.9917-1362"
     },
     {
         sefor: "SEFOR 2",
@@ -840,7 +848,7 @@ const escolas_data = [
         email: "mbeck@escola.ce.gov.br",
         telefone: "3101-7072",
         diretor: "VIRGINIA VILAGRAN PINHEIRO",
-        celular: "9.9942 9292"
+        contato_diretor: "9.9942-9292"
     },
     {
         sefor: "SEFOR 2",
@@ -848,7 +856,7 @@ const escolas_data = [
         email: "mpmota@escola.ce.gov.br",
         telefone: "3101-2185",
         diretor: "FELIPE D ANGELO HOLANDA",
-        celular: "98929-8159"
+        contato_diretor: "9.8929-8159"
     },
     {
         sefor: "SEFOR 2",
@@ -856,7 +864,7 @@ const escolas_data = [
         email: "gwaessen@escola.ce.gov.br",
         telefone: "3101-3049",
         diretor: "ONDINA MARIA DE FREITAS LUZ",
-        celular: "99742-6962"
+        contato_diretor: "9.9742-6962"
     },
     {
         sefor: "SEFOR 2",
@@ -864,7 +872,7 @@ const escolas_data = [
         email: "pmarcelino@escola.ce.gov.br",
         telefone: "3101-2067",
         diretor: "EDINA MARIA JULIÃO DA COSTA",
-        celular: "98517 1785"
+        contato_diretor: "9.8517-1785"
     },
     {
         sefor: "SEFOR 2",
@@ -872,7 +880,7 @@ const escolas_data = [
         email: "ocolares@escola.ce.gov.br",
         telefone: "3101-2161",
         diretor: "VERA SILVIA PEREIRA PIRES",
-        celular: "98898-8745"
+        contato_diretor: "9.8898-8745"
     },
     {
         sefor: "SEFOR 2",
@@ -880,7 +888,7 @@ const escolas_data = [
         email: "",
         telefone: "",
         diretor: "",
-        celular: ""
+        contato_diretor: ""
     },
     {
         sefor: "SEFOR 2",
@@ -888,7 +896,7 @@ const escolas_data = [
         email: "tferreira@escola.ce.gov.br",
         telefone: "3101-7803",
         diretor: "VANDERLEI DA SILVA LIMA",
-        celular: "9987702594"
+        contato_diretor: "9.9877-02594"
     },
     {
         sefor: "SEFOR 2",
@@ -896,7 +904,7 @@ const escolas_data = [
         email: "tbarbosa@escola.ce.gov.br",
         telefone: "3101-2074",
         diretor: "RAFAEL BARBOSA DOS SANTOS",
-        celular: "98880-5549"
+        contato_diretor: "9.8880-5549"
     },
     {
         sefor: "SEFOR 2",
@@ -904,7 +912,7 @@ const escolas_data = [
         email: "rbraga@escola.ce.gov.br",
         telefone: "3101-7920",
         diretor: "MARTA SIMONE",
-        celular: "9.9696-3834"
+        contato_diretor: "9.9696-3834"
     },
     {
         sefor: "SEFOR 2",
@@ -912,7 +920,7 @@ const escolas_data = [
         email: "vrbranco@escola.ce.gov.br",
         telefone: "3101-7638",
         diretor: "ALNEDI COSTA LIMA",
-        celular: "99964-1099"
+        contato_diretor: "9.9964-1099"
     },
     {
         sefor: "SEFOR 2",
@@ -920,7 +928,7 @@ const escolas_data = [
         email: "wscavalcante@escola.ce.gov.br",
         telefone: "3101-2165",
         diretor: "CYNTIA KELLY DE SOUSA LOPES",
-        celular: "9.8702 6639"
+        contato_diretor: "9.8702-6639"
     },
     {
         sefor: "SEFOR 2",
@@ -928,7 +936,7 @@ const escolas_data = [
         email: "isurdos@escola.ce.gov.br",
         telefone: "3101-1391",
         diretor: "LILIAN DE SÁ LEITE",
-        celular: "988293316"
+        contato_diretor: "9.8829-3316"
     },
     {
         sefor: "SEFOR 2",
@@ -936,17 +944,18 @@ const escolas_data = [
         email: "icegos@escola.ce.gov.br",
         telefone: "3101-5083",
         diretor: "SAMIA MARIA BENICIO ARAUJO QUINDERÉ",
-        celular: "988941038"
+        contato_diretor: "9.8894-1038"
     },
+    // --- FIM DOS DADOS DA SEFOR 2 ---
 
-    // === SEFOR 3 (57 escolas) ===
+    // --- INÍCIO DOS DADOS DA SEFOR 3 ---
     {
         sefor: "SEFOR 3",
         nome: "CCI CONJUNTO CEARÁ",
         email: "cciconjuntoceara@escola.ce.gov.br",
         telefone: "3218-6834",
         diretor: "KÁTIA MAGNO DO VALE ABREU",
-        celular: "9.7889 2294"
+        contato_diretor: "9.7889-2294"
     },
     {
         sefor: "SEFOR 3",
@@ -954,7 +963,7 @@ const escolas_data = [
         email: "ccibenfica@escola.ce.gov.br",
         telefone: "3223-3432",
         diretor: "IVE MARIAN DE ABREU",
-        celular: "9.9925 6583"
+        contato_diretor: "9.9925-6583"
     },
     {
         sefor: "SEFOR 3",
@@ -962,7 +971,7 @@ const escolas_data = [
         email: "darcyribeiro@escola.ce.gov.br",
         telefone: "3292-2326",
         diretor: "MARIA DE CASTRO DAMÁZIO QUEIROZ",
-        celular: "9.9983 9767"
+        contato_diretor: "9.9983-9767"
     },
     {
         sefor: "SEFOR 3",
@@ -970,7 +979,7 @@ const escolas_data = [
         email: "icarosm@escola.ce.gov.br",
         telefone: "3101-7749",
         diretor: "KARLENA RAQUEL FERREIRA UNIAS",
-        celular: "9.8791 3185"
+        contato_diretor: "9.8791-3185"
     },
     {
         sefor: "SEFOR 3",
@@ -978,7 +987,7 @@ const escolas_data = [
         email: "jmsousa@escola.ce.gov.br",
         telefone: "3101-2980",
         diretor: "MARTA VERÔNICA CORREIA RIBEIRO",
-        celular: "996500910"
+        contato_diretor: "9.9650-0910"
     },
     {
         sefor: "SEFOR 3",
@@ -986,7 +995,7 @@ const escolas_data = [
         email: "jtavora@escola.ce.gov.br",
         telefone: "3271-6529",
         diretor: "CORINA BASTOS BITU",
-        celular: "988089088"
+        contato_diretor: "9.8808-9088"
     },
     {
         sefor: "SEFOR 3",
@@ -994,7 +1003,7 @@ const escolas_data = [
         email: "leonelbrizola@escola.ce.gov.br",
         telefone: "3101-3594",
         diretor: "RUBENS ANDRÉ NOGUEIRA E SILVA",
-        celular: "9.8818-4397"
+        contato_diretor: "9.8818-4397"
     },
     {
         sefor: "SEFOR 3",
@@ -1002,7 +1011,7 @@ const escolas_data = [
         email: "paulovi@escola.ce.gov.br",
         telefone: "3101-7823",
         diretor: "ANA MARIA TOMAZ DE VASCONCELOS",
-        celular: "999892121"
+        contato_diretor: "9.9989-2121"
     },
     {
         sefor: "SEFOR 3",
@@ -1010,7 +1019,7 @@ const escolas_data = [
         email: "uv5ccampelo@escola.ce.gov.br",
         telefone: "3294-5288",
         diretor: "FRANKLIN DE ANDRADE CARNEIRO",
-        celular: "9.8754 7189"
+        contato_diretor: "9.8754-7189"
     },
     {
         sefor: "SEFOR 3",
@@ -1018,7 +1027,7 @@ const escolas_data = [
         email: "oneliop@escola.ce.gov.br",
         telefone: "3101-2984",
         diretor: "SHEYLA SOCORRO SALES GAMA",
-        celular: "985546004"
+        contato_diretor: "9.8554-6004"
     },
     {
         sefor: "SEFOR 3",
@@ -1026,7 +1035,7 @@ const escolas_data = [
         email: "joacip@escola.ce.gov.br",
         telefone: "3101-2994",
         diretor: "AURISETE MARIA DE ARAÚJO COSTA",
-        celular: "9.8837 5202"
+        contato_diretor: "9.8837-5202"
     },
     {
         sefor: "SEFOR 3",
@@ -1034,7 +1043,7 @@ const escolas_data = [
         email: "divacabral@escola.ce.gov.br",
         telefone: "3101-5084",
         diretor: "FRANCILIANE ALBUQUERQUE FORMIGA",
-        celular: "9.8860 9943"
+        contato_diretor: "9.8860-9943"
     },
     {
         sefor: "SEFOR 3",
@@ -1042,7 +1051,7 @@ const escolas_data = [
         email: "uv2gentilb@escola.ce.gov.br",
         telefone: "3294-4523",
         diretor: "ELIAS DA SILVA BRAGA",
-        celular: "986649703"
+        contato_diretor: "9.8664-9703"
     },
     {
         sefor: "SEFOR 3",
@@ -1050,7 +1059,7 @@ const escolas_data = [
         email: "uv7ubirajara@escola.ce.gov.br",
         telefone: "3101-5595",
         diretor: "KARLA VIRGINIA DA SILVA PINTO",
-        celular: "9.9921 4650"
+        contato_diretor: "9.9921-4650"
     },
     {
         sefor: "SEFOR 3",
@@ -1058,7 +1067,7 @@ const escolas_data = [
         email: "figueiredo@escola.ce.gov.br",
         telefone: "3101-2387",
         diretor: "MARCEL ROMUALDO GUIMARÃES PIMENTA",
-        celular: "9996069983"
+        contato_diretor: "9.9960-69983" // Nota: Número de 10 dígitos, formatado no padrão X.XXXX-XXXXX
     },
     {
         sefor: "SEFOR 3",
@@ -1066,7 +1075,7 @@ const escolas_data = [
         email: "hermenegildo@escola.ce.gov.br",
         telefone: "3101-3073",
         diretor: "JOSÉ WOJTYLA PINHEIRO VIEIRA",
-        celular: "992253069"
+        contato_diretor: "9.9225-3069"
     },
     {
         sefor: "SEFOR 3",
@@ -1074,7 +1083,7 @@ const escolas_data = [
         email: "jadermc@escola.ce.gov.br",
         telefone: "3101-2993",
         diretor: "MARÍLIA DE LIMA COSTA",
-        celular: "999839767"
+        contato_diretor: "9.9983-9767"
     },
     {
         sefor: "SEFOR 3",
@@ -1082,7 +1091,7 @@ const escolas_data = [
         email: "joaquimalves@escola.ce.gov.br",
         telefone: "3101-5672",
         diretor: "ALINE SOARES VERISSIMO",
-        celular: "99773-2609"
+        contato_diretor: "9.9773-2609"
     },
     {
         sefor: "SEFOR 3",
@@ -1090,7 +1099,7 @@ const escolas_data = [
         email: "uv4leopoldino@escola.ce.gov.br",
         telefone: "3101-5680",
         diretor: "OLAVO FALCÃO MARTINS",
-        celular: "9.9165 6346"
+        contato_diretor: "9.9165-6346"
     },
     {
         sefor: "SEFOR 3",
@@ -1098,7 +1107,7 @@ const escolas_data = [
         email: "juliaalves@escola.ce.gov.br",
         telefone: "3101-6114",
         diretor: "CRISTIANO DE OLIVEIRA",
-        celular: "9.8618 4693"
+        contato_diretor: "9.8618-4693"
     },
     {
         sefor: "SEFOR 3",
@@ -1106,7 +1115,7 @@ const escolas_data = [
         email: "mschemberg@escola.ce.gov.br",
         telefone: "3101-2978",
         diretor: "YURY UCHOA DA SILVA",
-        celular: "85 987274177"
+        contato_diretor: "8.5987-274177" // Nota: Número de 11 dígitos, formatado no padrão X.XXXX-XXXXXX
     },
     {
         sefor: "SEFOR 3",
@@ -1114,7 +1123,7 @@ const escolas_data = [
         email: "michelson@escola.ce.gov.br",
         telefone: "3101-6120",
         diretor: "ADRIANA ALBUQUERQUE PEDROSA",
-        celular: "9.8898 3492"
+        contato_diretor: "9.8898-3492"
     },
     {
         sefor: "SEFOR 3",
@@ -1122,7 +1131,7 @@ const escolas_data = [
         email: "vargas@escola.ce.gov.br",
         telefone: "3101-3074",
         diretor: "MARCELO PAIVA DO NASCIMENTO",
-        celular: "986817937"
+        contato_diretor: "9.8681-7937"
     },
     {
         sefor: "SEFOR 3",
@@ -1130,7 +1139,7 @@ const escolas_data = [
         email: "pauloelpidio@escola.ce.gov.br",
         telefone: "3101-6121",
         diretor: "JORGEMBERG COSTA MARQUES",
-        celular: "997237918"
+        contato_diretor: "9.9723-7918"
     },
     {
         sefor: "SEFOR 3",
@@ -1138,7 +1147,7 @@ const escolas_data = [
         email: "santoamaro@escola.ce.gov.br",
         telefone: "3101-6119",
         diretor: "CÉLIA MARIA VIANA DE ARAÚJO",
-        celular: "85 996059383"
+        contato_diretor: "8.5996-059383" // Nota: Número de 11 dígitos, formatado no padrão X.XXXX-XXXXXX
     },
     {
         sefor: "SEFOR 3",
@@ -1146,7 +1155,7 @@ const escolas_data = [
         email: "sfassiscan@escola.ce.gov.br",
         telefone: "3101-6112",
         diretor: "JULIO CÉSAR ALMEIDA PALHANO",
-        celular: "9.8900 5606"
+        contato_diretor: "9.8900-5606"
     },
     {
         sefor: "SEFOR 3",
@@ -1154,7 +1163,7 @@ const escolas_data = [
         email: "saojose@escola.ce.gov.br",
         telefone: "3101-3046",
         diretor: "LIDIANE MARIA GOMES MOURA",
-        celular: "9.9963 1958"
+        contato_diretor: "9.9963-1958"
     },
     {
         sefor: "SEFOR 3",
@@ -1162,7 +1171,7 @@ const escolas_data = [
         email: "adautob@escola.ce.gov.br",
         telefone: "3101-2073",
         diretor: "HUMBERTO ANTÔNIO NUNES MENDES",
-        celular: "996742108"
+        contato_diretor: "9.9674-2108"
     },
     {
         sefor: "SEFOR 3",
@@ -1170,7 +1179,7 @@ const escolas_data = [
         email: "adeliab@escola.ce.gov.br",
         telefone: "3101-3075",
         diretor: "FRANCISCO CLÁUDIO COSTA DE FREITAS",
-        celular: "9.8684 3242"
+        contato_diretor: "9.8684-3242"
     },
     {
         sefor: "SEFOR 3",
@@ -1178,7 +1187,7 @@ const escolas_data = [
         email: "adalgisa@escola.ce.gov.br",
         telefone: "3101-5091",
         diretor: "ROGÉRIO SILVA CARDOSO",
-        celular: "9.9996 3067"
+        contato_diretor: "9.9996-3067"
     },
     {
         sefor: "SEFOR 3",
@@ -1186,7 +1195,7 @@ const escolas_data = [
         email: "anisiot@escola.ce.gov.br",
         telefone: "3101-2996",
         diretor: "SAMIA DE SOUSA LIMA QUEIROZ",
-        celular: "9. 8770 7061"
+        contato_diretor: "9.8770-7061"
     },
     {
         sefor: "SEFOR 3",
@@ -1194,7 +1203,7 @@ const escolas_data = [
         email: "amazonas@escola.ce.gov.br",
         telefone: "3101-2991",
         diretor: "DOROTÉIA EMÍLIA RIBEIRO SAYED",
-        celular: "9.8731 2543"
+        contato_diretor: "9.8731-2543"
     },
     {
         sefor: "SEFOR 3",
@@ -1202,7 +1211,7 @@ const escolas_data = [
         email: "maranhao@escola.ce.gov.br",
         telefone: "3101-2981",
         diretor: "FELIPE NEO DOS SANTOS",
-        celular: "988211582"
+        contato_diretor: "9.8821-1582"
     },
     {
         sefor: "SEFOR 3",
@@ -1210,7 +1219,7 @@ const escolas_data = [
         email: "parana@escola.ce.gov.br",
         telefone: "3101-5074",
         diretor: "Mª NAZARÉ GUEDES ARAÚJO",
-        celular: "9.9730 5212"
+        contato_diretor: "9.9730-5212"
     },
     {
         sefor: "SEFOR 3",
@@ -1218,7 +1227,7 @@ const escolas_data = [
         email: "irapuanc@escola.ce.gov.br",
         telefone: "3101-2985",
         diretor: "MARCIA MARIA VIEIRA MARTINS",
-        celular: "85 998036518"
+        contato_diretor: "8.5998-036518" // Nota: Número de 11 dígitos, formatado no padrão X.XXXX-XXXXXX
     },
     {
         sefor: "SEFOR 3",
@@ -1226,7 +1235,7 @@ const escolas_data = [
         email: "iurbano@escola.ce.gov.br",
         telefone: "3101-5079",
         diretor: "MÁRCIA VANESSA FÉLIX DE ANDRADE",
-        celular: "986420433"
+        contato_diretor: "9.8642-0433"
     },
     {
         sefor: "SEFOR 3",
@@ -1234,7 +1243,7 @@ const escolas_data = [
         email: "jennygomes@escola.ce.gov.br",
         telefone: "3101-2166",
         diretor: "MARCOS ANTÔNIO BEZERRA COSTA",
-        celular: "9.9645 1940"
+        contato_diretor: "9.9645-1940"
     },
     {
         sefor: "SEFOR 3",
@@ -1242,7 +1251,7 @@ const escolas_data = [
         email: "jmatos@escola.ce.gov.br",
         telefone: "3101-2977",
         diretor: "MARIA DO SOCORRO NOGUEIRA DE PAULA",
-        celular: "988331070"
+        contato_diretor: "9.8833-1070"
     },
     {
         sefor: "SEFOR 3",
@@ -1250,7 +1259,7 @@ const escolas_data = [
         email: "jacamara@escola.ce.gov.br",
         telefone: "3101-7807",
         diretor: "ELIANE ALMEIDA DE LIMA",
-        celular: "9.8601 1041"
+        contato_diretor: "9.8601-1041"
     },
     {
         sefor: "SEFOR 3",
@@ -1258,7 +1267,7 @@ const escolas_data = [
         email: "liceupantanal@escola.ce.gov.br",
         telefone: "3473-1523",
         diretor: "DENISE PINHEIRO SILVESTRE",
-        celular: "9.8892 1384"
+        contato_diretor: "9.8892-1384"
     },
     {
         sefor: "SEFOR 3",
@@ -1266,7 +1275,7 @@ const escolas_data = [
         email: "mcastelobranco@escola.ce.gov.br",
         telefone: "3101-2982",
         diretor: "ALINE DA SILVA MACHADO DE OLIVEIRA",
-        celular: "9.8890 0314"
+        contato_diretor: "9.8890-0314"
     },
     {
         sefor: "SEFOR 3",
@@ -1274,7 +1283,7 @@ const escolas_data = [
         email: "caicmacarioca@escola.ce.gov.br",
         telefone: "3101-6122",
         diretor: "JOÃO EVANGELISTA DA SILVA DIAS",
-        celular: "9.8708 2901"
+        contato_diretor: "9.8708-2901"
     },
     {
         sefor: "SEFOR 3",
@@ -1282,7 +1291,7 @@ const escolas_data = [
         email: "mmca@escola.ce.gov.br",
         telefone: "3296-9829",
         diretor: "AMSTERDAN FERREIRA REBOUÇAS",
-        celular: "9.8860-4444"
+        contato_diretor: "9.8860-4444"
     },
     {
         sefor: "SEFOR 3",
@@ -1290,7 +1299,7 @@ const escolas_data = [
         email: "mthomasia@escola.ce.gov.br",
         telefone: "3101-7753",
         diretor: "FRANCISCA MOREIRA DOS SANTOS",
-        celular: "9.8631 4350"
+        contato_diretor: "9.8631-4350"
     },
     {
         sefor: "SEFOR 3",
@@ -1298,7 +1307,7 @@ const escolas_data = [
         email: "uv7placido@escola.ce.gov.br",
         telefone: "3101-5683",
         diretor: "ANTELVIANA BEZERRA DE MENEZES",
-        celular: "9.8871 3092"
+        contato_diretor: "9.8871-3092"
     },
     {
         sefor: "SEFOR 3",
@@ -1306,7 +1315,7 @@ const escolas_data = [
         email: "patativa@escola.ce.gov.br",
         telefone: "3101-6115",
         diretor: "MESSIAS DA SILVA BRAGA",
-        celular: "9.8757 1566"
+        contato_diretor: "9.8757-1566"
     },
     {
         sefor: "SEFOR 3",
@@ -1314,7 +1323,7 @@ const escolas_data = [
         email: "pcastelobranco@escola.ce.gov.br",
         telefone: "3101-2987",
         diretor: "CLEUTON GOMES BARBOSA",
-        celular: "(85) 9.89657967"
+        contato_diretor: "9.8965-7967"
     },
     {
         sefor: "SEFOR 3",
@@ -1322,7 +1331,7 @@ const escolas_data = [
         email: "uv10edmilson@escola.ce.gov.br",
         telefone: "3101-5676",
         diretor: "IVANA GARCIA LIMA",
-        celular: "9.8697 6697"
+        contato_diretor: "9.8697-6697"
     },
     {
         sefor: "SEFOR 3",
@@ -1330,7 +1339,7 @@ const escolas_data = [
         email: "jociec@escola.ce.gov.br",
         telefone: "3101-6116",
         diretor: "MARIA ENEDITE MADEIRA DO NASCIMENTO",
-        celular: "988115492"
+        contato_diretor: "9.8811-5492"
     },
     {
         sefor: "SEFOR 3",
@@ -1338,7 +1347,7 @@ const escolas_data = [
         email: "uv8mcampos@escola.ce.gov.br",
         telefone: "3101-5965",
         diretor: "PATRESE ALEXANDRE SOUSA",
-        celular: "9.8889 1618"
+        contato_diretor: "9.8889-1618"
     },
     {
         sefor: "SEFOR 3",
@@ -1346,7 +1355,7 @@ const escolas_data = [
         email: "uv9anunes@escola.ce.gov.br",
         telefone: "3101-5960",
         diretor: "DIANA MEMDES ROCHA",
-        celular: "9.87933 1282"
+        contato_diretor: "9.8793-31282" // Nota: Número de 10 dígitos, formatado no padrão X.XXXX-XXXXX
     },
     {
         sefor: "SEFOR 3",
@@ -1354,7 +1363,7 @@ const escolas_data = [
         email: "sfassis@escola.ce.gov.br",
         telefone: "3101-6118",
         diretor: "LUCAS SOUSA DOS SANTOS",
-        celular: "9.8501 8606"
+        contato_diretor: "9.8501-8606"
     },
     {
         sefor: "SEFOR 3",
@@ -1362,7 +1371,7 @@ const escolas_data = [
         email: "sjpiamarta@escola.ce.gov.br",
         telefone: "3101-3693",
         diretor: "NORMA MARIA DE OLIVEIRA ARRUDA",
-        celular: "9.8674 5585"
+        contato_diretor: "9.8674-5585"
     },
     {
         sefor: "SEFOR 3",
@@ -1370,7 +1379,7 @@ const escolas_data = [
         email: "ftavora@escola.ce.gov.br",
         telefone: "3101-2986",
         diretor: "ANA LÚCIA VIEIRA DE LIMA",
-        celular: "9.8606 7318"
+        contato_diretor: "9.8606-7318"
     },
     {
         sefor: "SEFOR 3",
@@ -1378,7 +1387,7 @@ const escolas_data = [
         email: "osiresp@escola.ce.gov.br",
         telefone: "3101-6113",
         diretor: "ADRIANA LOPES VIEIRA",
-        celular: "9.8821 3343"
+        contato_diretor: "9.8821-3343"
     },
     {
         sefor: "SEFOR 3",
@@ -1386,7 +1395,7 @@ const escolas_data = [
         email: "liceucc@escola.ce.gov.br",
         telefone: "3101-5594",
         diretor: "ESTEFANIA SOARES MENEZES DE SOUSA ALMEIDA",
-        celular: "98754-9323"
+        contato_diretor: "9.8754-9323"
     },
     {
         sefor: "SEFOR 3",
@@ -1394,6 +1403,7 @@ const escolas_data = [
         email: "iec@escola.ce.gov.br",
         telefone: "3101-2070",
         diretor: "MIGUEL TEIXEIRA DE ABREU",
-        celular: "988770030"
+        contato_diretor: "9.8877-0030"
     }
+    // --- FIM DOS DADOS DA SEFOR 3 ---
 ];
